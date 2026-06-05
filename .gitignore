@@ -1,0 +1,19 @@
+# Logs
+*.log
+*.env
+.nuxt
+npm-debug.log*
+node_modules
+dist
+dist-ssr
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
