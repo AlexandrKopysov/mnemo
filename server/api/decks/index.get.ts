@@ -1,5 +1,6 @@
 import { prisma } from '@utils/db'
 import { getSessionUserId } from '@utils/server-session'
+import { calculatePercentForDeck } from "../../service/deck.service"
 
 
 export default defineEventHandler(async (event) => {
@@ -16,5 +17,5 @@ export default defineEventHandler(async (event) => {
         },
     })
 
-    return decks
+    return calculatePercentForDeck(decks)
 })

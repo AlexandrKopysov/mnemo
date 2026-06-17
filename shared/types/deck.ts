@@ -1,9 +1,11 @@
 export interface IDeck {
     id?: string
     title: string
-    description: string
+    description: string | null
     icon?: string
     color?: string
+    percentCompleet?: number
+    total?: number
 }
 
 export interface IDeckResponse {

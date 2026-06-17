@@ -16,8 +16,15 @@
             />
         </template>
         <template v-slot:default>
-            <div v-for="deck in decks" :key="deck.id">
-                {{ deck }}
+            <div class="decks-grid">
+                <div v-for="deck in decks" :key="deck.id">
+                    <deck-tile 
+                        :deck="deck"
+                        @click="onDeckClick(deck.id)"
+                        @edit="onDeckEdit(deck.id)"
+                        @delete="onDeckDelete(deck.id)"
+                    />
+                </div>
             </div>
         </template>
     </mnemo-form>
@@ -27,7 +34,8 @@
 import MnemoForm from "@components/form/mnemo-form.vue" 
 import MnemoButton from "@components/ui/mnemo-button.vue"
 import MnemoInput from "@components/ui/mnemo-input.vue"
-import { getDecks } from "~/entities/decks/api/api"
+import DeckTile from "@components/decks/deck-tile.vue"
+import { deleteDeck, getDecks } from "~/entities/decks/api/api"
 
 definePageMeta({
     title: 'Ваши колоды',
@@ -40,14 +48,39 @@ definePageMeta({
     ]
 })
 
-const decks = ref<IDeckResponse[]>([])
+const decks = ref<IDeck[]>([])
+
+async function getAllDecks() {
+    decks.value = await getDecks()
+}
 
 onMounted(async () => {
-    decks.value = await getDecks()
+    await getAllDecks()
 })
 
 function addDeck() {
     return navigateTo('/decks/new')
 }
 
+function onDeckClick(id: string | undefined) {
+
+}
+
+function onDeckEdit(id: string | undefined) {
+    return navigateTo(`/decks/${id}/edit`)
+}
+
+async function onDeckDelete(id: string | undefined) {
+    await deleteDeck(id as string)
+    await getAllDecks()
+}
+
 </script>
+
+<style lang="scss" scoped>
+    .decks-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+</style>
