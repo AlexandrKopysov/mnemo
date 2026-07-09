@@ -39,7 +39,7 @@ import MnemoForm from '@components/form/mnemo-form.vue'
 import MnemoButton from '@components/ui/mnemo-button.vue'
 import MnemoInput from '@components/ui/mnemo-input.vue'
 import { getDeck } from '~/entities/decks/api/api'
-import { getCardList } from '~/entities/cards/api/api'
+import { getCardList, deleteCard } from '~/entities/cards/api/api'
 import type { ICardList } from '@shared/types'
 
 const title = computed(() => deck.value?.title)
@@ -66,7 +66,13 @@ const onAddCard = async () => {
 }
 
 function onCardClick(cardId: string) {
-    return onCardEdit(cardId)
+    return navigateTo({
+        name: 'decks-deckId-cards-cardId-learn',
+        params: {
+            deckId: deckId.value,
+            cardId,
+        },
+    })
 }
 
 function onCardEdit(cardId: string) {
@@ -79,12 +85,17 @@ function onCardEdit(cardId: string) {
     })
 }
 
-function onCardDelete(cardId: string) {
-    console.log('delete card', cardId)
+async function onCardDelete(cardId: string) {
+    await deleteCard(deckId.value, cardId)
+    await getData()
+}
+
+async function getData() {
+    deck.value = await getDeck(deckId.value)
+    cards.value = await getCardList(deckId.value)
 }
 
 onMounted(async () => {
-    deck.value = await getDeck(deckId.value)
-    cards.value = await getCardList(deckId.value)
+    await getData()
 })
 </script>

@@ -1,28 +1,7 @@
-import type { ICardList, ICard , CardKnowledgeLevel} from "@shared/types/card"
+import { type ICardList, type ICard } from "@shared/types/card"
+import { calculateKnowledgeScore } from "./review/calculate-knowledge-score"
 
-function calculateKnowledgeScore(card: ICard): number {
-    if (card.status === 'NEW') {
-        return 0
-    }
-
-    if (card.lapses >= 3) {
-    return 1
-    }
-
-    if (card.intervalDays >= 30 && card.repetitions >= 4) {
-    return 4
-    }
-
-    if (card.intervalDays >= 7 && card.repetitions >= 3) {
-    return 3
-    }
-
-    if (card.intervalDays >= 1 && card.repetitions >= 1) {
-    return 2
-    }
-
-    return 1
-}
+export { calculateNextReview } from "./review/calculate-next-review"
 
 export function calculateCardKnowledgeLevel(cards: ICard[]): ICardList[] {
     let newCardList: ICardList[] = []

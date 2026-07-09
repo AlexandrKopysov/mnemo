@@ -39,6 +39,20 @@ function handleClick() {
 
 const variantConfig = computed(() => {
   switch (props.variant) {
+    case BUTTON_VARIANT.DANGER:
+      return {
+        vuetifyVariant: 'flat' as const,
+        color: 'mnemo-danger',
+        className: 'mnemo-btn--danger',
+      }
+
+    case BUTTON_VARIANT.DARK:
+      return {
+        vuetifyVariant: 'flat' as const,
+        color: 'mnemo-dark',
+        className: 'mnemo-btn--dark',
+      }
+
     case BUTTON_VARIANT.OUTLINE:
       return {
         vuetifyVariant: 'outlined' as const,
@@ -51,6 +65,13 @@ const variantConfig = computed(() => {
         vuetifyVariant: 'flat' as const,
         color: 'mnemo-secondary',
         className: 'mnemo-btn--secondary',
+      }
+
+    case BUTTON_VARIANT.SUCCESS:
+      return {
+        vuetifyVariant: 'flat' as const,
+        color: 'mnemo-success',
+        className: 'mnemo-btn--success',
       }
 
     case BUTTON_VARIANT.PRIMARY:
@@ -147,6 +168,40 @@ const buttonClass = computed(() => [
 }
 
 /* =========================
+   DANGER
+========================= */
+
+.mnemo-btn--danger {
+  background: $danger;
+  color: $text-light;
+
+  &:hover {
+    background: $danger-hover;
+  }
+
+  &:active {
+    background: $danger-active;
+  }
+}
+
+/* =========================
+   DARK
+========================= */
+
+.mnemo-btn--dark {
+  background: $dark;
+  color: $text-light;
+
+  &:hover {
+    background: $dark-hover;
+  }
+
+  &:active {
+    background: $dark-active;
+  }
+}
+
+/* =========================
    OUTLINE
 ========================= */
 
@@ -161,6 +216,23 @@ const buttonClass = computed(() => [
 
   &:active {
     background: #e8eef3;
+  }
+}
+
+/* =========================
+   SUCCESS
+========================= */
+
+.mnemo-btn--success {
+  background: $success;
+  color: $text-light;
+
+  &:hover {
+    background: $success-hover;
+  }
+
+  &:active {
+    background: $success-active;
   }
 }
 </style>

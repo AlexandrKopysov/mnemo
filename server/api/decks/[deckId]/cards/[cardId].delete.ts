@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
         where: {
             id: cardId,
             deckId: deckId,
-            userId: sessionUserId,
         },
     })
 

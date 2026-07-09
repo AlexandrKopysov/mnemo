@@ -23,6 +23,9 @@
       ],
       "@api/*": [
         "server/api/*"
+      ],
+      "@service/*": [
+        "server/service/*"
       ]
     }
   },

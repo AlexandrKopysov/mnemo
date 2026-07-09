@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     // '@types': resolve(__dirname, './app/types/'),
     '@shared': resolve(__dirname, './shared/'),
     '@utils': resolve(__dirname, './server/utils/'),
+    '@service': resolve(__dirname, './server/service/'),
     // '@api': resolve(__dirname, './server/api/'),
   },
 
@@ -53,7 +54,10 @@ export default defineNuxtConfig({
               primary: '#4CAF50',
               'mnemo-primary': '#2563EB',
               'mnemo-secondary': '#64748B',
-              'mnemo-outline': '#CBD5E1'
+              'mnemo-outline': '#CBD5E1',
+              'mnemo-danger': '#9f2f33',
+              'mnemo-dark': '#344556',
+              'mnemo-success': '#5fae9a'
             },
           },
         },

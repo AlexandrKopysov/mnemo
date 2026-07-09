@@ -5,7 +5,7 @@
             :title="title"
         />
         <div class="form">
-            <div class="flex justify-between">
+            <div class="flex justify-between mb-10">
                 <div>
                     <slot name="toolbar-left"></slot>
                 </div>
@@ -13,7 +13,7 @@
                     <slot name="toolbar-right"></slot>
                 </div>
             </div>
-            <div class="mt-10 form-content">
+            <div class="form-content">
                 <slot />
             </div>
         </div>

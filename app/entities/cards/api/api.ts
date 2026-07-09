@@ -29,3 +29,16 @@ export async function getCardList(deckId: string) {
         method: 'GET'
     })
 }
+
+export async function deleteCard(deckId: string, cardId: string) {
+    return await $fetch(`/api/decks/${deckId}/cards/${cardId}`, {
+        method: 'DELETE'
+    })
+}
+
+export async function reviewCard(deckId: string, cardId: string, answer: Answer) {
+    return await $fetch(`/api/decks/${deckId}/cards/${cardId}/review`, {
+        method: 'POST',
+        body: { answer }
+    })
+}

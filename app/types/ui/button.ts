@@ -2,6 +2,9 @@ export const BUTTON_VARIANT = {
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
   OUTLINE: 'outline',
+  DANGER: 'danger',
+  DARK: 'dark',
+  SUCCESS: 'success',
 } as const
 
 export type ButtonVariant =

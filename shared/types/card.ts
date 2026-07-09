@@ -14,13 +14,19 @@ export type ICard = {
   front: string,
   back: string,
   dueAt: Date, 
-  status: string,
+  status: CardStatus,
+  lastReviewedAt: Date,
   intervalDays: number,
   easeFactor: number,
   repetitions: number, 
   lapses: number,
   createdAt: Date,
 }
+
+export type ReviewCardInput = Pick<
+    ICard,
+    "intervalDays" | "easeFactor" | "repetitions" | "lapses"
+>
 
 export type CardKnowledgeLevel = 'unknown' | 'weak' | 'medium' | 'good' | 'strong'
 
@@ -30,9 +36,22 @@ export type ICardList = Omit<ICard,
   'repetitions' | 
   'lapses' | 
   'dueAt' |
+  'lastReviewedAt' |
   'createdAt'
   > & {
   knowledgeScore: number,
   dueAt: string,
   createdAt: string,
+}
+
+export enum Answer {
+  EASY = 'easy',
+  NORMAL = 'normal',
+  HARD = 'hard',
+}
+
+export type ICardReview = {
+  cardId: string,
+  deckId: string,
+  answer: Answer,
 }
