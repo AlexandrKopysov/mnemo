@@ -1,0 +1,90 @@
+<template>
+    <mnemo-form
+        :title="title"
+        :breadcrumbs="breadcrumbs"
+    >
+        <template v-slot:toolbar-left>
+            <mnemo-button 
+                @click="onAddCard"
+                width="150"
+            >
+                Добавить карточку
+            </mnemo-button>
+        </template>
+        <template v-slot:toolbar-right>
+            <mnemo-input
+                v-model="search"
+                width="380"
+                placeholder="Поиск"
+                prepend-inner-icon="mdi-magnify"
+            />
+        </template>
+        <template v-slot:default>
+            <div class="decks-grid">
+                <card-tile 
+                    v-for="card in cards" :key="card.id"
+                    class="mb-4"
+                    :card="card"
+                    @click="onCardClick(card.id)"
+                    @edit="onCardEdit(card.id)"
+                    @delete="onCardDelete(card.id)"
+                />
+            </div>
+        </template> 
+    </mnemo-form>
+</template>
+
+<script lang="ts" setup>
+import MnemoForm from '@components/form/mnemo-form.vue'
+import MnemoButton from '@components/ui/mnemo-button.vue'
+import MnemoInput from '@components/ui/mnemo-input.vue'
+import { getDeck } from '~/entities/decks/api/api'
+import { getCardList } from '~/entities/cards/api/api'
+import type { ICardList } from '@shared/types'
+
+const title = computed(() => deck.value?.title)
+const breadcrumbs = [
+    {
+        title: 'Главная',
+        to: '/'
+    }
+]
+
+const route = useRoute()
+const deckId = computed(() => String(route.params.deckId))
+const deck = ref<IDeck>()
+const cards = ref<ICardList[]>([])
+const search = ref('')
+
+const onAddCard = async () => {
+    return navigateTo({
+        name: 'decks-deckId-cards-new',
+        params: {
+            deckId: deckId.value,
+        },
+    })
+}
+
+function onCardClick(cardId: string) {
+    return onCardEdit(cardId)
+}
+
+function onCardEdit(cardId: string) {
+    return navigateTo({
+        name: 'decks-deckId-cards-cardId-edit',
+        params: {
+            deckId: deckId.value,
+            cardId,
+        },
+    })
+}
+
+function onCardDelete(cardId: string) {
+    console.log('delete card', cardId)
+}
+
+onMounted(async () => {
+    deck.value = await getDeck(deckId.value)
+    cards.value = await getCardList(deckId.value)
+})
+</script>

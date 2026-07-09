@@ -57,10 +57,8 @@ const form = ref<IDeck>({
 const buttonName = computed(() => props.mode === 'create' ? 'Создать' : 'Сохранить')
 
 onMounted(async () => {
-    if (props.mode === 'edit') {
-        const deck = await getDeck(props.deckId as string)
-        form.value = deck
-    }
+    if (props.mode != 'edit') return 
+    form.value = await getDeck(props.deckId as string)
 })
 
 const onSave = async () => {

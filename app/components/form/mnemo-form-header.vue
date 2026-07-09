@@ -1,5 +1,5 @@
 <template>
-    <div><h1>{{ title }}</h1></div>
+    <h1>{{ title }}</h1>
     <mnemo-breadcrumbs
         :breadcrumbs="breadcrumbs"
     />
@@ -7,9 +7,21 @@
 
 <script lang="ts" setup>
 import MnemoBreadcrumbs from './mnemo-breadcrumbs.vue';
-const route = useRoute()
+import type { IBreadcrumb } from './mnemo-breadcrumbs.vue'
 
-const title = computed(() => route.meta.title ?? "")
-const breadcrumbs = computed(() => route.meta.breadcrumbs as [] ?? []) 
+export interface IPropsHeader {
+    title?: string,
+    breadcrumbs?: IBreadcrumb[]
+}
 
+const props = withDefaults(defineProps<IPropsHeader>(), {
+    title: '',
+    breadcrumbs: () => [],
+})
 </script>
+
+<style lang="scss" scoped>
+    h1 {
+        min-height: 48px;
+    }
+</style>

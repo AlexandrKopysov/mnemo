@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   alias: {
     '@components': resolve(__dirname, './app/components/'),
-    // '@composables': resolve(__dirname, './app/composables/'),
+    '@composables': resolve(__dirname, './app/composables/'),
     // '@types': resolve(__dirname, './app/types/'),
     '@shared': resolve(__dirname, './shared/'),
     '@utils': resolve(__dirname, './server/utils/'),

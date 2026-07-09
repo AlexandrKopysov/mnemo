@@ -1,0 +1,1 @@
+import{D as e}from"./8n2kHnSQ.js";import{d as o,M as r,x as t}from"./3Ivq-jpN.js";import"./WxWnfOeK.js";import"./DkzWTVOg.js";import"./Cet5vCip.js";import"./D4VTr5w5.js";const d=o({__name:"new",setup(m){return(p,a)=>(t(),r(e,{mode:"create"}))}});export{d as default};

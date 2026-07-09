@@ -62,12 +62,30 @@ function addDeck() {
     return navigateTo('/decks/new')
 }
 
-function onDeckClick(id: string | undefined) {
+function onDeckClick(deckId: string | undefined) {
+    if (!deckId) {
+        return
+    }
 
+    return navigateTo({
+        name: 'decks-deckId-cards',
+        params: {
+            deckId,
+        },
+    })
 }
 
-function onDeckEdit(id: string | undefined) {
-    return navigateTo(`/decks/${id}/edit`)
+function onDeckEdit(deckId: string | undefined) {
+    if (!deckId) {
+        return
+    }
+
+    return navigateTo({
+        name: 'decks-deckId-edit',
+        params: {
+            deckId,
+        },
+    })
 }
 
 async function onDeckDelete(id: string | undefined) {

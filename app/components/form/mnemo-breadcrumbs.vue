@@ -6,11 +6,13 @@
 
 <script lang="ts" setup>
 
+export interface IBreadcrumb {
+    title: string,
+    to: string
+}
+
 interface IProps {
-    breadcrumbs?: {
-        title: string,
-        to: string
-    }[]
+    breadcrumbs?: IBreadcrumb[]
 }
 
 const props = withDefaults(defineProps<IProps>(), {
