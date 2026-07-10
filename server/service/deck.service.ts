@@ -1,20 +1,23 @@
-import type { IDeck } from "@shared/types"
+import type { IDeck, IDeckCalculate } from "@shared/types"
+import { calculateKnowledgeScore } from "@service/review/calculate-knowledge-score"
 
-export function calculatePercentForDeck(decks: IDeck[]) {
-  let newDeckList: IDeck[] = []
+export function calculatePercentForDeck(decks: IDeckCalculate[]) {
+  const newDeckList: IDeck[] = decks.map((deck) => {
+    const knowledgeScoreSum = deck.cards.reduce((acc, card) => {
+      return acc + calculateKnowledgeScore(card)
+    }, 0)
 
-  //TO-DO
-  //Здесь будет рассчет процента выполнения колоды на основе количества запомненных карточек
+    const total = deck._count.cards
+    const maxKnowledgeScore = total * 4
 
-  newDeckList = decks.map((deck) => {
     return {
       id: deck.id,
       title: deck.title,
       description: deck.description,
-      // Процент выполнения записываем в это поле
-      percentCompleet: 75,
-      // Всего карточек в этой деке
-      total: 25
+      percentCompleet: maxKnowledgeScore === 0
+        ? 0
+        : Math.round((knowledgeScoreSum / maxKnowledgeScore) * 100),
+      total,
     }
   })
 

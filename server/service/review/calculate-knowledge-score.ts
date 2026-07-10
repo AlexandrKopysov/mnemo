@@ -1,6 +1,6 @@
-import type { ICard } from "@shared/types/card"
+import type { ICardCalculate } from "@shared/types/deck"
 
-export function calculateKnowledgeScore(card: ICard): number {
+export function calculateKnowledgeScore(card: ICardCalculate): number {
     if (card.status === "NEW") {
         return 0
     }

@@ -22,6 +22,19 @@ export default defineEventHandler(async (event) => {
             id: true,
             title: true,
             description: true,
+            cards: {
+                select: {
+                    status: true,
+                    lapses: true,
+                    intervalDays: true,
+                    repetitions: true,
+                }
+            },
+            _count: {
+                select: {
+                    cards: true,
+                },
+            },
         },
     })
 
