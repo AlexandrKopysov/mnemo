@@ -9,6 +9,7 @@ export function calculatePercentForDeck(decks: IDeckCalculate[]) {
 
     const total = deck._count.cards
     const maxKnowledgeScore = total * 4
+    const nowDate = new Date()
 
     return {
       id: deck.id,
@@ -18,6 +19,7 @@ export function calculatePercentForDeck(decks: IDeckCalculate[]) {
         ? 0
         : Math.round((knowledgeScoreSum / maxKnowledgeScore) * 100),
       total,
+      dueCardsCount: deck.cards.filter((card) => card.dueAt <= nowDate).length,
     }
   })
 

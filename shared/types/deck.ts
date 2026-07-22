@@ -8,6 +8,7 @@ export interface IDeck {
     color?: string
     percentCompleet?: number
     total?: number
+    dueCardsCount?: number
 }
 
 export type ICardCalculate = {
@@ -15,6 +16,7 @@ export type ICardCalculate = {
     lapses: number
     intervalDays: number
     repetitions: number
+    dueAt: Date
 }
 
 export interface IDeckCalculate {

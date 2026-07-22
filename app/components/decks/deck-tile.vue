@@ -7,15 +7,7 @@
       <div class="tile-title">
         {{ deck.title }}
       </div>
-      <div class="tile-subtitle">
-        Всего: {{ deck.total }}
-      </div>
-    </div>
-    <div class="tile-left-container">
-        <deck-tile-circle-compleet
-          :value="deck.percentCompleet"
-        />
-        <v-menu location="bottom end">
+      <v-menu location="bottom end">
           <template #activator="{ props: menuProps }">
             <v-btn
               icon
@@ -46,6 +38,19 @@
             />
           </v-list>
         </v-menu>
+    </div>
+    <div class="tile-content">
+      <div>
+        <p class="m-0">
+          Всего: {{ deck.total }} 
+        </p>
+        <div class="tile-due">
+          {{ deck.dueCardsCount }} на сегодня
+        </div>
+      </div>
+      <deck-tile-circle-compleet
+          :value="deck.percentCompleet"
+        />
     </div>
   </div>
 </template>
@@ -86,12 +91,11 @@ const onDeleteClick = () => {
   $deck-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   $deck-shadow-hover: 0 0 15px rgba(0, 0, 0, 0.35);
   $deck-font-color: rgba(22, 38, 55, 0.75);
+  $deck-due: rgba(217, 240, 228);
+  $deck-due-color: rgba(77, 164, 117);
 
   .tile-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 100px;
+    min-height: 160px;
     padding: 0px 20px;
     border-radius: 10px;
     background-color: $deck-bg;
@@ -107,10 +111,27 @@ const onDeleteClick = () => {
   }
 
   .tile-info {
+    margin-top: 10px;
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     gap: 4px;
     color: $deck-font-color;
+  }
+
+  .tile-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px
+  }
+
+  .tile-due {
+    border-radius: 10px;
+    background-color: $deck-due;
+    color: $deck-due-color;
+    padding: 5px 25px;
+    margin-top: 10px;
   }
 
   .tile-title {
@@ -133,6 +154,7 @@ const onDeleteClick = () => {
   }
 
   .dot-menu-btn {
+    width: 16px;
     &:deep(.v-btn__overlay),
     &:deep(.v-btn__underlay),
     &:deep(.v-ripple__container) {

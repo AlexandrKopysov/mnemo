@@ -1,41 +1,48 @@
 <template>
-    <mnemo-form>
-        <template v-slot:toolbar-left>
-            <mnemo-button 
-                @click="addDeck"
-                width="150"
-            >
-                Добавить колоду
-            </mnemo-button>
-        </template>
-        <template v-slot:toolbar-right>
-            <mnemo-input
-                width="380"
-                placeholder="Поиск"
-                prepend-inner-icon="mdi-magnify"
-            />
-        </template>
-        <template v-slot:default>
-            <div class="decks-grid">
-                <div v-for="deck in decks" :key="deck.id">
-                    <deck-tile 
-                        :deck="deck"
-                        @click="onDeckClick(deck.id)"
-                        @edit="onDeckEdit(deck.id)"
-                        @delete="onDeckDelete(deck.id)"
-                    />
+    <div>
+        <mnemo-repeat-form class="mt-6"/>
+        <mnemo-form class="mt-6">
+            <template v-slot:toolbar-left>
+                <mnemo-button 
+                    @click="addDeck"
+                    width="150"
+                >
+                    Добавить колоду
+                </mnemo-button>
+            </template>
+            <template v-slot:toolbar-right>
+                <mnemo-input
+                    width="380"
+                    placeholder="Поиск"
+                    prepend-inner-icon="mdi-magnify"
+                />
+            </template>
+            <template v-slot:default>
+                <div class="decks-grid">
+                    <div v-for="deck in decks" :key="deck.id">
+                        <deck-tile 
+                            :deck="deck"
+                            @click="onDeckClick(deck.id)"
+                            @edit="onDeckEdit(deck.id)"
+                            @delete="onDeckDelete(deck.id)"
+                        />
+                    </div>
                 </div>
-            </div>
-        </template>
-    </mnemo-form>
+            </template>
+        </mnemo-form>
+    </div>
 </template>
 
 <script lang="ts" setup>
+import MnemoRepeatForm from "@components/widgets/mnemo-repeat-form/index.vue"
 import MnemoForm from "@components/form/mnemo-form.vue" 
 import MnemoButton from "@components/ui/mnemo-button.vue"
 import MnemoInput from "@components/ui/mnemo-input.vue"
 import DeckTile from "@components/decks/deck-tile.vue"
 import { deleteDeck, getDecks } from "~/entities/decks/api/api"
+import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repeat-store"
+
+const { getSessionData } = useMnemoSessionStore()
 
 definePageMeta({
     title: 'Ваши колоды',
@@ -52,6 +59,7 @@ const decks = ref<IDeck[]>([])
 
 async function getAllDecks() {
     decks.value = await getDecks()
+    await getSessionData()
 }
 
 onMounted(async () => {
@@ -98,7 +106,7 @@ async function onDeckDelete(id: string | undefined) {
 <style lang="scss" scoped>
     .decks-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 20px;
     }
 </style>

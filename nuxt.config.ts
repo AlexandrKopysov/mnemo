@@ -26,7 +26,8 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@sidebase/nuxt-auth',
     "vuetify-nuxt-module",
-    "@nuxtjs/tailwindcss"
+    "@nuxtjs/tailwindcss",
+    "@pinia/nuxt"
   ],
   googleFonts: {
     families: {

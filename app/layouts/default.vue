@@ -38,6 +38,6 @@ import MnemoHeader from '~/components/header/mnemo-header.vue'
 }
 
 .layout__content {
-    margin-top: 96px;
+    // margin-top: 96px;
 }
 </style>

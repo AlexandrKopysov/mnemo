@@ -1,9 +1,9 @@
 <template>
     <div>
-        <mnemo-form-header
+        <!-- <mnemo-form-header
             :breadcrumbs="breadcrumbs"
             :title="title"
-        />
+        /> -->
         <div class="form">
             <div class="flex justify-between mb-10">
                 <div>
@@ -37,13 +37,13 @@ const props = defineProps<IPropsHeader>()
 .form {
     width: 100%;
     min-height: 520px;
-    height: calc(100vh - 302px);
+    height: calc(100vh - 370px);
     display: flex;
     flex-direction: column;
     padding: 28px;
     border-radius: 8px;
 
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(247, 250, 251);
     backdrop-filter: blur(10px);
 
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);

@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
                     lapses: true,
                     intervalDays: true,
                     repetitions: true,
+                    dueAt: true
                 }
             },
             _count: {
