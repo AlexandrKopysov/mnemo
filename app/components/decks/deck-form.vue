@@ -49,17 +49,14 @@ const props = withDefaults(defineProps<IProps>(), {
     mode: 'create'
 })
 
+const { setBreadcrumbs } = useBreadcrumbs()
+
 const form = ref<IDeck>({
     title: '',
     description: '',
 })
 
 const buttonName = computed(() => props.mode === 'create' ? 'Создать' : 'Сохранить')
-
-onMounted(async () => {
-    if (props.mode != 'edit') return 
-    form.value = await getDeck(props.deckId as string)
-})
 
 const onSave = async () => {
     if (props.mode === 'create') {
@@ -73,4 +70,29 @@ const onSave = async () => {
 const onLeave = () => {
     return navigateTo('/')
 }
+onMounted(async () => {
+    if (props.mode != 'edit') return 
+    form.value = await getDeck(props.deckId as string)
+})
+
+watchEffect(() => {
+    if(!form.value.id) {
+        setBreadcrumbs([{
+            title: 'Ваши колоды',
+            to: '/'
+            },
+            {
+                title: 'Создание новой колоды',
+            }
+        ])
+    } else {
+        setBreadcrumbs([{
+            title: 'Ваши колоды',
+            to: '/',
+        }, {
+            title: `${form.value.title}`
+        }])
+    }
+})
+
 </script>

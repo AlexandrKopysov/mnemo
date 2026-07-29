@@ -1,7 +1,6 @@
 <template>
     <mnemo-form
         :title="title"
-        :breadcrumbs="breadcrumbs"
     >
         <template v-slot:toolbar-left>
             <mnemo-button 
@@ -43,18 +42,14 @@ import { getCardList, deleteCard } from '~/entities/cards/api/api'
 import type { ICardList } from '@shared/types'
 
 const title = computed(() => deck.value?.title)
-const breadcrumbs = [
-    {
-        title: 'Главная',
-        to: '/'
-    }
-]
 
 const route = useRoute()
 const deckId = computed(() => String(route.params.deckId))
 const deck = ref<IDeck>()
 const cards = ref<ICardList[]>([])
 const search = ref('')
+
+const { setBreadcrumbs } = useBreadcrumbs()
 
 const onAddCard = async () => {
     return navigateTo({
@@ -97,5 +92,16 @@ async function getData() {
 
 onMounted(async () => {
     await getData()
+})
+
+watchEffect(() => {
+    if(!deck.value?.id) return
+
+    setBreadcrumbs([{
+        title: 'Ваши колоды',
+        to: '/',
+    }, {
+        title: `${deck.value.title}`
+    }])
 })
 </script>

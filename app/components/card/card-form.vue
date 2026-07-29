@@ -47,6 +47,7 @@
     import type { ICardCreate } from "shared/types/card"
     import { createCard, updateCard, getCard } from '~/entities/cards/api/api'
 
+    const { setLastBreadcrumbs } = useBreadcrumbs() 
 
     interface IProps {
         mode?: 'create' | 'edit'
@@ -100,6 +101,21 @@
 
         form.value = await getCard(props.deckId, props.cardId)
     })
+
+    watchEffect(() => {
+        if (!props.deckId) return
+
+        setLastBreadcrumbs(
+            `/decks/${props.deckId}/cards`,
+            {
+                title: props.mode !== 'edit' 
+                    ? 'Создание карточки' 
+                    : 'Редактирование карточки'
+            }
+        )
+
+    })
+
 </script>
 
 <style scoped lang="scss">

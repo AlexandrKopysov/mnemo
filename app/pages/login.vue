@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import RegisterForm from "@components/auth/register-form/ui/index.vue"
-import LoginFormNew from "@components/auth/login-form/ui/index.vue"
-
-const mode = ref<'login' | 'register'>('login')
-
-definePageMeta({
-  layout: false
-})
-</script>
-
 <template>
   <v-container fluid class="auth-page">
     <v-row
@@ -36,6 +25,17 @@ definePageMeta({
     </v-row>
   </v-container>
 </template>
+
+<script setup lang="ts">
+import RegisterForm from "@components/auth/register-form/ui/index.vue"
+import LoginFormNew from "@components/auth/login-form/ui/index.vue"
+
+const mode = ref<'login' | 'register'>('login')
+
+definePageMeta({
+  layout: false
+})
+</script>
 
 <style scoped>
   .auth-page {

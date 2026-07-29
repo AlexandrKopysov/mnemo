@@ -64,6 +64,8 @@ const route = useRoute()
 const deckId = computed(() => String(route.params.deckId))
 const cardId = computed(() => String((route.params as Record<string, string>).cardId))
 
+const { setLastBreadcrumbs } = useBreadcrumbs()
+
 const card = ref<ICardCreate>({
     front: '',
     back: '',
@@ -81,6 +83,18 @@ async function onAnswer(answer: Answer) {
 
 onMounted(async () => {
     await getData()
+})
+
+watchEffect(() => {
+    if (!deckId.value || !card.value?.id) return
+
+    setLastBreadcrumbs(
+        `/decks/${deckId.value}/cards`,
+        {
+            title: `Изучение - ${card.value.front}`
+        }
+    )
+
 })
 </script>
 

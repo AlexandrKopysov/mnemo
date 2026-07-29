@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <mnemo-repeat-form class="mt-6"/>
-        <mnemo-form class="mt-6">
+    <div class="deck-page">
+        <mnemo-repeat-form class="deck-page__review"/>
+        <mnemo-form class="deck-page__list">
             <template v-slot:toolbar-left>
                 <mnemo-button 
                     @click="addDeck"
@@ -43,17 +43,12 @@ import { deleteDeck, getDecks } from "~/entities/decks/api/api"
 import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repeat-store"
 
 const { getSessionData } = useMnemoSessionStore()
+const { setBreadcrumbs } = useBreadcrumbs()
 
-definePageMeta({
+setBreadcrumbs([{
     title: 'Ваши колоды',
-    breadcrumbs: [
-        {
-            title: 'Главная',
-            to: '/'
-        }
-        
-    ]
-})
+    to: '/'
+}])
 
 const decks = ref<IDeck[]>([])
 
@@ -108,5 +103,22 @@ async function onDeckDelete(id: string | undefined) {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 20px;
+    }
+
+    .deck-page {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        gap: 16px;
+        min-height: 0px;
+
+        &__review {
+            flex: 0 0 auto;
+        }
+
+        &__list {
+            flex: 1 1 0;
+            min-height: 400px;
+        }
     }
 </style>

@@ -1,28 +1,20 @@
 <template>
-    <div>
-        <!-- <mnemo-form-header
-            :breadcrumbs="breadcrumbs"
-            :title="title"
-        /> -->
-        <div class="form">
-            <div class="flex justify-between mb-10">
-                <div>
-                    <slot name="toolbar-left"></slot>
-                </div>
-                <div>
-                    <slot name="toolbar-right"></slot>
-                </div>
+    <section class="mnemo-form">
+        <header class="mnemo-form__toolbar">
+            <div class="mnemo-form__toolbar-left">
+                <slot name="toolbar-left"></slot>
             </div>
-            <div class="form-content">
-                <slot />
+            <div class="mnemo-form__toolbar-right">
+                <slot name="toolbar-right"></slot>
             </div>
+        </header>
+        <div class="mnemo-form__content">
+            <slot />
         </div>
-    </div>
+    </section>
 </template>
 
 <script setup lang="ts">
-import type { IBreadcrumb } from './mnemo-breadcrumbs.vue';
-import MnemoFormHeader from './mnemo-form-header.vue'
 
 interface IPropsHeader {
     title?: string,
@@ -34,27 +26,28 @@ const props = defineProps<IPropsHeader>()
 </script>
 
 <style scoped lang="scss">
-.form {
-    width: 100%;
-    min-height: 520px;
-    height: calc(100vh - 370px);
-    display: flex;
-    flex-direction: column;
-    padding: 28px;
-    border-radius: 8px;
+    .mnemo-form {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        min-height: 0;
+        background: rgba(247, 250, 251);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
 
-    background: rgba(247, 250, 251);
-    backdrop-filter: blur(10px);
-
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-}
-
-.form-content {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-
+        &__toolbar {
+            display: flex; 
+            flex: 0 0 auto;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        
+        &__content {
+            flex: 1 1 auto;
+            min-height: 0;
+            padding: 20px 20px;
+            overflow-y: auto;
+        }
+    }
 </style>
