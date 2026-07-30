@@ -27,27 +27,36 @@ const props = defineProps<IPropsHeader>()
 
 <style scoped lang="scss">
     .mnemo-form {
-        display: flex;
-        flex: 1 1 auto;
-        flex-direction: column;
-        min-height: 0;
-        background: rgba(247, 250, 251);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
 
-        &__toolbar {
-            display: flex; 
-            flex: 0 0 auto;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-        }
-        
-        &__content {
-            flex: 1 1 auto;
-            min-height: 0;
-            padding: 20px 20px;
-            overflow-y: auto;
-        }
+    min-height: 0;
+
+    overflow: hidden;
+
+    background: #fff;
+    box-shadow: 0 4px 16px rgb(31 50 71 / 18%);
+
+    &__toolbar {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 20px;
     }
+
+    &__content {
+        flex: 1 1 auto;
+        min-height: 0;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        padding: 16px 20px 24px;
+
+        scrollbar-gutter: stable;
+    }
+}
 </style>

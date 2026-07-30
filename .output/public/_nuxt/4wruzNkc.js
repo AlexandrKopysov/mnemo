@@ -1,1 +1,0 @@
-import{D as t}from"./8n2kHnSQ.js";import{d as r,Y as c,M as s,P as a,k as d,x as m}from"./3Ivq-jpN.js";import"./WxWnfOeK.js";import"./DkzWTVOg.js";import"./Cet5vCip.js";import"./D4VTr5w5.js";const B=r({__name:"edit",setup(n){const e=c(),o=d(()=>String(e.params.deckId));return(p,i)=>(m(),s(t,{mode:"edit","deck-id":a(o)},null,8,["deck-id"]))}});export{B as default};

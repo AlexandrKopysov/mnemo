@@ -113,7 +113,7 @@ $counter-bg: rgb(255, 255, 255);
     padding: 28px;
     border-radius: 8px;
 
-    background: rgba(247, 250, 251, 0.9);
+    background: #fff;
     backdrop-filter: blur(10px);
 
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
