@@ -5,6 +5,7 @@ import type {
     IReviewSessionPreview, 
     IReviewSessionDeckSummary } from "shared/types/session"
 import { getReviewSession, createReviewSession } from "~/entities/review-session/api"
+import { Answer } from "@shared/types/card"
 
 export const useMnemoSessionStore = defineStore("mnemo-session", () => {
     const reviewSession = ref<IReviewSessionPreview | null>(null)
@@ -67,13 +68,13 @@ export const useMnemoSessionStore = defineStore("mnemo-session", () => {
     }
 
     function completeCurrentCard(
-        answer: "hard" | "normal" | "easy"
+        answer: Answer
     ) {
         if(!currentCard.value) return
 
-        if (answer === "hard") hardCount.value++
-        if (answer === "easy") easyCount.value++
-        if (answer === "normal") normalCount.value++
+        if (answer === Answer.HARD) hardCount.value++
+        if (answer === Answer.EASY) easyCount.value++
+        if (answer === Answer.NORMAL) normalCount.value++
 
         completedCount.value++
     }

@@ -22,7 +22,6 @@
 interface IPropsForm {
     title?: string,
     useToolbar?: boolean
-    breadcrumbs?: IBreadcrumb[]
 }
 
 const props = withDefaults(defineProps<IPropsForm>(), {
@@ -33,36 +32,37 @@ const props = withDefaults(defineProps<IPropsForm>(), {
 
 <style scoped lang="scss">
     .mnemo-form {
-    display: flex;
-    flex: 1 1 0;
-    flex-direction: column;
-
-    min-height: 0;
-
-    overflow: hidden;
-
-    background: #fff;
-    box-shadow: 0 4px 16px rgb(31 50 71 / 18%);
-
-    &__toolbar {
         display: flex;
-        flex: 0 0 auto;
-        align-items: center;
-        justify-content: space-between;
+        flex: 1 1 0;
+        flex-direction: column;
 
-        padding: 20px;
-    }
-
-    &__content {
-        flex: 1 1 auto;
         min-height: 0;
 
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden;
 
-        padding: 16px 20px 24px;
+        background: #fff;
+        box-shadow: 0 4px 16px rgb(31 50 71 / 18%);
+        border-radius: 20px;
 
-        scrollbar-gutter: stable;
+        &__toolbar {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 20px;
+        }
+
+        &__content {
+            flex: 1 1 auto;
+            min-height: 0;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            padding: 24px;
+
+            scrollbar-gutter: stable;
+        }
     }
-}
 </style>
