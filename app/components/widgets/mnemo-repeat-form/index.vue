@@ -73,7 +73,10 @@
                 Текущая серия
             </span>
 
-            <mnemo-button class="session-preview__button">
+            <mnemo-button 
+                class="session-preview__button"
+                @click="startRepeat()"
+            >
                 Начать повторение
             </mnemo-button>
         </div>
@@ -88,6 +91,12 @@ import MnemoButton from "@components/ui/mnemo-button.vue"
 const sessionStore = useMnemoSessionStore()
 
 const { reviewSession } = storeToRefs(sessionStore)
+
+const startRepeat = () => {
+    return navigateTo({
+        name: 'learn-session'
+    })
+}
 
 
 

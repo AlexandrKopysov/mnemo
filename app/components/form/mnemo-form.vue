@@ -1,6 +1,9 @@
 <template>
     <section class="mnemo-form">
-        <header class="mnemo-form__toolbar">
+        <header 
+            v-if="props.useToolbar"
+            class="mnemo-form__toolbar"
+        >
             <div class="mnemo-form__toolbar-left">
                 <slot name="toolbar-left"></slot>
             </div>
@@ -16,12 +19,15 @@
 
 <script setup lang="ts">
 
-interface IPropsHeader {
+interface IPropsForm {
     title?: string,
+    useToolbar?: boolean
     breadcrumbs?: IBreadcrumb[]
 }
 
-const props = defineProps<IPropsHeader>()
+const props = withDefaults(defineProps<IPropsForm>(), {
+    useToolbar: true
+})
 
 </script>
 

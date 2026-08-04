@@ -1,18 +1,36 @@
-export interface ReviewSessionStateType {
-    deckId: string | null
+export interface IReviewSessionStateType {
+    startedAt: string | null
 
-    cardIds: string[]
+    queue: IReviewSessionCard[]
+    decks: IReviewSessionDeckSummary[]
 
-    initialTotal: number
+    totalCards: number
     completedCount: number
-
-    currentCardIndex: number
 
     hardCount: number
     normalCount: number
     easyCount: number
+}
 
-    startedAt: string | null
+export interface IReviewSessionDeckSummary {
+    id: string
+    title: string
+    cardsCount: number
+}
+
+export interface IReviewSessionCard {
+    id: string
+    deckId: string
+    deckTitle: string
+    front: string
+    back: string
+}
+
+export interface IReviewSession {
+    startedAt: string
+    totalCards: number
+    decks: IReviewSessionDeckSummary[]
+    queue: IReviewSessionCard[]
 }
 
 export interface IReviewSessionPreview {
