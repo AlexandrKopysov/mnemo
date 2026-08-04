@@ -83,9 +83,6 @@ async function onAnswer(answer: Answer) {
 
 onMounted(async () => {
     await getData()
-})
-
-watchEffect(() => {
     if (!deckId.value || !card.value?.id) return
 
     setLastBreadcrumbs(
@@ -94,7 +91,6 @@ watchEffect(() => {
             title: `Изучение - ${card.value.front}`
         }
     )
-
 })
 </script>
 

@@ -221,8 +221,11 @@ $counter-bg: rgb(255, 255, 255);
     }
 
     &__streak {
-        display: grid;
-        place-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
 
         width: 100px;
         height: 100px;
@@ -240,12 +243,18 @@ $counter-bg: rgb(255, 255, 255);
 
         color: $accent-color;
         font-size: 18px;
+        font-weight: 600;
+        line-height: 1;
     }
 
     &__streak-days,
     &__streak-label {
         font-size: 14px;
         font-weight: 500;
+    }
+
+    &__streak-days {
+        line-height: 1;
     }
 
     &__streak-label {

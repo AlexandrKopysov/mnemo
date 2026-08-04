@@ -1,0 +1,1 @@
+import{t as e}from"./tutKESrZ.js";var t=()=>{let t=e(`breadcrumbs`,()=>[]),n=e=>{t.value=e},r=()=>{t.value=[]},i=e=>{let n=t.value[t.value.length-1];n&&(t.value[t.value.length-1]={...n,to:e})},a=e=>{t.value.push(e)};return{breadcrumbs:t,setBreadcrumbs:n,clearBreadcrumbs:r,setLastBreadcrumbs:(e,t)=>{i(e),a(t)}}};export{t};

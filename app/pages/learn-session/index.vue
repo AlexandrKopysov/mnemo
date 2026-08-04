@@ -19,7 +19,7 @@ import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repe
 
     const { startSession, resetSession, completeCurrentCard } =  mnemoSessionStore
 
-    const { currentCard, completedCount, totalCards, progressPercent } = storeToRefs(mnemoSessionStore)
+    const { currentCard, completedCount, totalCards, progressPercent } = storeToRefs(mnemoSessionStore )
 
     const { setBreadcrumbs } = useBreadcrumbs()
 
@@ -28,15 +28,13 @@ import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repe
     }
 
     onMounted(async () => {
-        await startSession()
-    })
-
-    watchEffect(() => {
         setBreadcrumbs([{
             title: 'Ваши колоды',
             to: '/',
         }, {
             title: 'Дневная сессия'
         }])
+
+        await startSession()
     })
 </script>

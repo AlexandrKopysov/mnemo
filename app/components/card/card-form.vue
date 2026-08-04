@@ -97,23 +97,20 @@
     }
 
     onMounted(async () => {
+        if (props.deckId) {
+            setLastBreadcrumbs(
+                `/decks/${props.deckId}/cards`,
+                {
+                    title: props.mode !== 'edit'
+                        ? 'Создание карточки'
+                        : 'Редактирование карточки'
+                }
+            )
+        }
+
         if (props.mode !== 'edit' || !props.cardId) return
 
         form.value = await getCard(props.deckId, props.cardId)
-    })
-
-    watchEffect(() => {
-        if (!props.deckId) return
-
-        setLastBreadcrumbs(
-            `/decks/${props.deckId}/cards`,
-            {
-                title: props.mode !== 'edit' 
-                    ? 'Создание карточки' 
-                    : 'Редактирование карточки'
-            }
-        )
-
     })
 
 </script>

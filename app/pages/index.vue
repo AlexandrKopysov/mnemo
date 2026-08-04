@@ -45,11 +45,6 @@ import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repe
 const { getSessionData } = useMnemoSessionStore()
 const { setBreadcrumbs } = useBreadcrumbs()
 
-setBreadcrumbs([{
-    title: 'Ваши колоды',
-    to: '/'
-}])
-
 const decks = ref<IDeck[]>([])
 
 async function getAllDecks() {
@@ -58,6 +53,11 @@ async function getAllDecks() {
 }
 
 onMounted(async () => {
+    setBreadcrumbs([{
+        title: 'Ваши колоды',
+        to: '/'
+    }])
+
     await getAllDecks()
 })
 

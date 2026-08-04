@@ -1,7 +1,6 @@
 <template>
     <div class="mnemo-breadcrumbs">
         <nav
-            v-if="breadcrumbs.length"
             class="mnemo-breadcrumbs__container"
             aria-label="Навигационная цепочка"
         >

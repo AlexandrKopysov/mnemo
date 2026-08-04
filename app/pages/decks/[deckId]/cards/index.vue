@@ -92,9 +92,6 @@ async function getData() {
 
 onMounted(async () => {
     await getData()
-})
-
-watchEffect(() => {
     if(!deck.value?.id) return
 
     setBreadcrumbs([{

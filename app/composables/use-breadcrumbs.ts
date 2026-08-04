@@ -1,10 +1,7 @@
 import type { IBreadcrumb } from "shared/types/breadcrumbs"
 
 export const useBreadcrumbs = () => {
-    const breadcrumbs = useState<IBreadcrumb[]>('breadcrumbs', () => [{
-        title: '',
-        to: '/'
-    }])
+    const breadcrumbs = useState<IBreadcrumb[]>('breadcrumbs', () => [])
 
     const setBreadcrumbs = (items: IBreadcrumb[]) => {
         breadcrumbs.value = items

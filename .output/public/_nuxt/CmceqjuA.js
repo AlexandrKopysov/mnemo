@@ -1,0 +1,1 @@
+import{A as e,It as t,O as n,R as r,rt as i}from"./BrcPVpU8.js";import{p as a}from"./D0IiVIIE.js";import{t as o}from"./BCYhwILM.js";var s=r({__name:`edit`,setup(r){let s=a(),c=n(()=>String(s.params.deckId)),l=n(()=>String(s.params.cardId));return(n,r)=>{let a=o;return i(),e(a,{mode:`edit`,"deck-id":t(c),"card-id":t(l)},null,8,[`deck-id`,`card-id`])}}});export{s as default};

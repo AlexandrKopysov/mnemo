@@ -71,11 +71,10 @@ const onLeave = () => {
     return navigateTo('/')
 }
 onMounted(async () => {
-    if (props.mode != 'edit') return 
-    form.value = await getDeck(props.deckId as string)
-})
+    if (props.mode === 'edit') {
+        form.value = await getDeck(props.deckId as string)
+    }
 
-watchEffect(() => {
     if(!form.value.id) {
         setBreadcrumbs([{
             title: 'Ваши колоды',

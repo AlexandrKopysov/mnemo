@@ -7,6 +7,8 @@ import type {
 import { getReviewSession, createReviewSession } from "~/entities/review-session/api"
 import { Answer } from "@shared/types/card"
 
+import { reviewCard } from "~/entities/cards/api/api"
+
 export const useMnemoSessionStore = defineStore("mnemo-session", () => {
     const reviewSession = ref<IReviewSessionPreview | null>(null)
     const startedAt = ref<string | null>(null)
@@ -67,7 +69,7 @@ export const useMnemoSessionStore = defineStore("mnemo-session", () => {
         easyCount.value = 0
     }
 
-    function completeCurrentCard(
+    async function completeCurrentCard(
         answer: Answer
     ) {
         if(!currentCard.value) return
@@ -75,6 +77,13 @@ export const useMnemoSessionStore = defineStore("mnemo-session", () => {
         if (answer === Answer.HARD) hardCount.value++
         if (answer === Answer.EASY) easyCount.value++
         if (answer === Answer.NORMAL) normalCount.value++
+
+        try {
+            await reviewCard(currentCard.value.deckId, currentCard.value.id, answer)
+        } catch {
+            // TO-Do надо добавить всплывашку с ошибкой
+            return
+        }
 
         completedCount.value++
     }

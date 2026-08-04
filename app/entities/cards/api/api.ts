@@ -24,7 +24,7 @@ export async function getCard(deckId: string, cardId: string): Promise<ICardCrea
     })
 }
 
-export async function getCardList(deckId: string) {
+export async function getCardList(deckId: string):Promise<ICardList[]> {
     return await $fetch(`/api/decks/${deckId}/cards`, {
         method: 'GET'
     })
