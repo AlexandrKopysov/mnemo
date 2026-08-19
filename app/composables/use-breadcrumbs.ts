@@ -1,4 +1,4 @@
-import type { IBreadcrumb } from "shared/types/breadcrumbs"
+import type { IBreadcrumb } from "@shared/types/breadcrumbs"
 
 export const useBreadcrumbs = () => {
     const breadcrumbs = useState<IBreadcrumb[]>('breadcrumbs', () => [])

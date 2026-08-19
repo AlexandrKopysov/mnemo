@@ -1,5 +1,5 @@
-import type { IDeck, IDeckCalculate } from "@shared/types"
 import { calculateKnowledgeScore } from "@service/review/calculate-knowledge-score"
+import type { IDeck, IDeckCalculate } from "@shared/types"
 
 export function calculatePercentForDeck(decks: IDeckCalculate[]) {
   const newDeckList: IDeck[] = decks.map((deck) => {
@@ -36,28 +36,40 @@ export function interleaveDeckCards(
             back: string
         }>
     }>,
-): IReviewSessionCard[] {
-    const queue: IReviewSessionCard[] = []
+) {
+    const queue: Array<{
+        cardId: string
+        deckId: string
+        cardFront: string
+        cardBack: string
+        deckTitle: string
+        position: number
+    }> = []
 
     const maxCardsCount = Math.max(
         0,
         ...decks.map(({ cards }) => cards.length),
     )
 
-    for (let index = 0; index < maxCardsCount; index++) {
+    for (
+        let cardIndex = 0;
+        cardIndex < maxCardsCount;
+        cardIndex++
+    ) {
         for (const deck of decks) {
-            const card = deck.cards[index]
+            const card = deck.cards[cardIndex]
 
             if (!card) {
                 continue
             }
 
             queue.push({
-                id: card.id,
+                cardId: card.id,
                 deckId: deck.id,
+                cardFront: card.front,
+                cardBack: card.back,
                 deckTitle: deck.title,
-                front: card.front,
-                back: card.back,
+                position: queue.length,
             })
         }
     }

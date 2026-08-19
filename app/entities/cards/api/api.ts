@@ -36,8 +36,15 @@ export async function deleteCard(deckId: string, cardId: string) {
     })
 }
 
-export async function reviewCard(deckId: string, cardId: string, answer: Answer) {
+export async function reviewCard(deckId: string, cardId: string, answer: ANSWER) {
     return await $fetch(`/api/decks/${deckId}/cards/${cardId}/review`, {
+        method: 'POST',
+        body: { answer }
+    })
+}
+
+export async function reviewSessionCard(sessionId: string, itemId: string, answer: ANSWER) {
+    return await $fetch(`/api/review-sessions/${sessionId}/items/${itemId}/answer`, {
         method: 'POST',
         body: { answer }
     })

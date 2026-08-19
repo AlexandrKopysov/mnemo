@@ -44,7 +44,7 @@
     import MnemoInput from '@components/ui/mnemo-input.vue'
     import MnemoTextarea from '@components/ui/mnemo-textarea.vue'
 
-    import type { ICardCreate } from "shared/types/card"
+    import type { ICardCreate } from "@shared/types/card"
     import { createCard, updateCard, getCard } from '~/entities/cards/api/api'
 
     const { setLastBreadcrumbs } = useBreadcrumbs() 

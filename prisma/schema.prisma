@@ -12,14 +12,28 @@ enum CardStatus {
   REVIEW
 }
 
+enum ReviewSessionStatus {
+  IN_PROGRESS
+  COMPLETED
+  /*Отменен*/
+  ABANDONED
+}
+
+enum ReviewAnswer {
+  HARD
+  NORMAL
+  EASY
+}
+
 model User {
-  id           Int      @id @default(autoincrement())
-  login        String?  @unique
-  email        String   @unique
-  name         String?
-  passwordHash String?  @map("password_hash")
-  createdAt    DateTime @default(now())
-  decks        Deck[]
+  id             Int             @id @default(autoincrement())
+  login          String?         @unique
+  email          String          @unique
+  name           String?
+  passwordHash   String?         @map("password_hash")
+  createdAt      DateTime        @default(now())
+  decks          Deck[]
+  reviewSessions ReviewSession[]
 }
 
 model Deck {
@@ -36,6 +50,8 @@ model Deck {
 
   user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   cards Card[]
+
+  reviewSessionItems ReviewSessionItem[]
 
   @@index([userId])
   @@index([isPublic])
@@ -59,7 +75,59 @@ model Card {
 
   deck Deck @relation(fields: [deckId], references: [id], onDelete: Cascade)
 
+  reviewSessionItems ReviewSessionItem[]
+
   @@index([deckId])
   @@index([status])
   @@index([dueAt])
+}
+
+model ReviewSession {
+  id     String @id @default(cuid())
+  userId Int
+
+  // Размер сессии в момент её создания
+  totalCards     Int
+  // Количество элементов, на которые пользователь дал ответ
+  completedCount Int @default(0)
+
+  hardCount   Int @default(0)
+  normalCount Int @default(0)
+  easyCount   Int @default(0)
+
+  status ReviewSessionStatus @default(IN_PROGRESS)
+
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  items ReviewSessionItem[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@index([userId, startedAt])
+}
+
+model ReviewSessionItem {
+  id        String  @id @default(cuid())
+  sessionId String
+  cardId    String?
+  deckId    String?
+
+  position Int
+
+  answer     ReviewAnswer?
+  answeredAt DateTime?
+
+  cardFront String
+  cardBack  String
+  deckTitle String
+
+  session ReviewSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  card    Card?         @relation(fields: [cardId], references: [id], onDelete: SetNull)
+  deck    Deck?         @relation(fields: [deckId], references: [id], onDelete: SetNull)
+
+  @@unique([sessionId, position])
+  @@index([cardId])
+  @@index([deckId])
 }

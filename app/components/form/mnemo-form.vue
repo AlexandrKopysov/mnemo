@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<IPropsForm>(), {
         overflow: hidden;
 
         background: #fff;
-        box-shadow: 0 4px 16px rgb(31 50 71 / 18%);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
         border-radius: 20px;
 
         &__toolbar {

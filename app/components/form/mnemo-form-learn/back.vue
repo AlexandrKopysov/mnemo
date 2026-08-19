@@ -32,17 +32,17 @@
             <mnemo-button 
                 variant="danger"
                 width="120"
-                @click="emit('click', Answer.HARD)"
+                @click="emit('click', ANSWER.HARD)"
             >Повторить</mnemo-button>
             <mnemo-button 
                 variant="dark"
                 width="120"
-                @click="emit('click', Answer.NORMAL)"
+                @click="emit('click', ANSWER.NORMAL)"
             >Трудно</mnemo-button>
             <mnemo-button 
                 variant="primary"
                 width="120"
-                @click="emit('click', Answer.EASY)"
+                @click="emit('click', ANSWER.EASY)"
             >Легко</mnemo-button>
         </div>
     </mnemo-form>
@@ -52,7 +52,7 @@
 import MnemoForm from "@components/form/mnemo-form.vue"
 import MnemoButton from "@components/ui/mnemo-button.vue"
 import MnemoProgress from "@components/ui/mnemo-progress.vue"
-import { Answer } from "@shared/types/card"
+import { ANSWER } from "@shared/types/card"
 
 interface IProps {
     front: string,
@@ -66,7 +66,7 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const emit = defineEmits<{
-    (e: "click", variant: Answer): void
+    (e: "click", variant: ANSWER): void
 }>()
 
 const totalProgress = computed(() => `${props?.completedCount + 1} из ${props.totalCards}`)

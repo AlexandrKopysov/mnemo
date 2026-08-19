@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ICardList } from "shared/types/card"
+import type { ICardList } from "@shared/types/card"
 import { formatReviewDate } from "@composables/use-date-time"
 
 type iconCircleType = {

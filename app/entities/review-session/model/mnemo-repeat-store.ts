@@ -1,19 +1,21 @@
+import { ANSWER } from "@shared/types/card"
 import { defineStore } from "pinia"
-import type { 
-    IReviewSession, 
-    IReviewSessionCard , 
-    IReviewSessionPreview, 
-    IReviewSessionDeckSummary } from "shared/types/session"
-import { getReviewSession, createReviewSession } from "~/entities/review-session/api"
-import { Answer } from "@shared/types/card"
+import type {
+    IReviewSession,
+    IReviewSessionCard,
+    IReviewSessionItem,
+    IReviewSessionDeckSummary,
+    IReviewSessionPreview
+} from "@shared/types/session"
+import { createReviewSession, getReviewSession } from "~/entities/review-session/api"
 
-import { reviewCard } from "~/entities/cards/api/api"
+import { reviewCard, reviewSessionCard } from "~/entities/cards/api/api"
 
 export const useMnemoSessionStore = defineStore("mnemo-session", () => {
     const reviewSession = ref<IReviewSessionPreview | null>(null)
     const startedAt = ref<string | null>(null)
     
-    const queue = ref<IReviewSessionCard[]>([])
+    const queue = ref<IReviewSessionItem[]>([])
     const decks = ref<IReviewSessionDeckSummary[]>([])
 
     const totalCards = ref(0)
@@ -36,14 +38,17 @@ export const useMnemoSessionStore = defineStore("mnemo-session", () => {
     const progressPercent = computed(() => {
         if (!totalCards.value) return 0
 
+        // To-Do вопросики к рассчету
         return Math.round(
             (completedCount.value / totalCards.value) * 100
         )
     })
 
     const isCompleted = computed(() => {
+        if (!totalCards.value) return true
+
         return (
-            totalCards.value > 0 && completedCount.value >= totalCards.value
+            completedCount.value >= totalCards.value
         )
     })
 
@@ -58,7 +63,7 @@ export const useMnemoSessionStore = defineStore("mnemo-session", () => {
     function applySession(session: IReviewSession) {
         startedAt.value = session.startedAt
         
-        queue.value = session.queue
+        queue.value = session.session.items
         decks.value = session.decks
 
         totalCards.value = session.totalCards
@@ -70,22 +75,22 @@ export const useMnemoSessionStore = defineStore("mnemo-session", () => {
     }
 
     async function completeCurrentCard(
-        answer: Answer
+        answer: ANSWER
     ) {
         if(!currentCard.value) return
 
-        if (answer === Answer.HARD) hardCount.value++
-        if (answer === Answer.EASY) easyCount.value++
-        if (answer === Answer.NORMAL) normalCount.value++
+        if (answer === ANSWER.HARD) hardCount.value++
+        if (answer === ANSWER.EASY) easyCount.value++
+        if (answer === ANSWER.NORMAL) normalCount.value++
 
         try {
-            await reviewCard(currentCard.value.deckId, currentCard.value.id, answer)
+            const result = await reviewSessionCard(currentCard.value.sessionId, currentCard.value.id, answer)
+            completedCount.value++
         } catch {
             // TO-Do надо добавить всплывашку с ошибкой
             return
         }
 
-        completedCount.value++
     }
 
     function resetSession(){

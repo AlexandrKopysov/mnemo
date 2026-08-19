@@ -1,7 +1,8 @@
+import { interleaveDeckCards } from "@service/deck.service"
+import { SESSION_CARDS_PER_DECK_LIMIT } from "@shared/const"
 import { prisma } from "@utils/db"
 import { getSessionUserId } from "@utils/server-session"
-import { SESSION_CARDS_PER_DECK_LIMIT } from "@shared/const"
-import { interleaveDeckCards } from "@service/deck.service"
+import { REVIEW_SESSION_STATUS } from "@shared/types/session"
 
 
 export default defineEventHandler(async (event) => {
@@ -30,6 +31,7 @@ export default defineEventHandler(async (event) => {
                     id: true,
                     front: true,
                     back: true,
+                    dueAt: true
                 },
 
                 orderBy: {
@@ -45,6 +47,62 @@ export default defineEventHandler(async (event) => {
 
     const queue = interleaveDeckCards(nonEmptyDecks)
 
+    if (!queue.length) {
+        throw createError({
+            statusCode: 409,
+            statusMessage: "Нет доступных к изучению карточек"
+        })
+    }
+
+    // Поиск активной сессии
+    const activeSession = await prisma.reviewSession.findFirst({
+        where: {
+            userId: sessionUserId,
+            status: REVIEW_SESSION_STATUS.IN_PROGRESS
+        },
+
+        orderBy: {
+            startedAt: 'desc'
+        },
+
+        include: {
+            items: {
+                orderBy: {
+                    position: 'asc'
+                }
+            }
+        }
+
+    })
+
+    // Создание сессии пользователя
+    const session = activeSession 
+        ? activeSession
+        : await prisma.reviewSession.create({
+        data: {
+            userId: sessionUserId,
+            totalCards: queue.length,
+            items: {
+                create: queue.map((item) => ({
+                    cardId: item.cardId,
+                    deckId: item.deckId,
+                    position: item.position,
+                    cardFront: item.cardFront,
+                    cardBack: item.cardBack,
+                    deckTitle: item.deckTitle,
+                })),
+            },
+        },
+
+        include: {
+            items: {
+                orderBy: {
+                    position: "asc",
+                },
+            },
+        },
+    })
+
     return {
         startedAd: startedAt.toISOString(),
         totalCards: queue.length,
@@ -55,6 +113,6 @@ export default defineEventHandler(async (event) => {
                 cardsCount: cards.length,
             }),
         ),
-        queue
+        session
     }
 })

@@ -1,8 +1,8 @@
 <template>
     <mnemo-form-learn
         :title="currentCard?.deckTitle"
-        :front="currentCard?.front"
-        :back="currentCard?.back"
+        :front="currentCard?.cardFront"
+        :back="currentCard?.cardBack"
         :completed-count
         :total-cards
         :progress-percent
@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
     import MnemoFormLearn from "@components/form/mnemo-form-learn/index.vue"
-import type { Answer } from "@shared/types/card"
+import type { ANSWER } from "@shared/types/card"
 import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repeat-store"
 
     const mnemoSessionStore = useMnemoSessionStore()
@@ -23,7 +23,7 @@ import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repe
 
     const { setBreadcrumbs } = useBreadcrumbs()
 
-    const onClick = (variant: Answer) => {
+    const onClick = (variant: ANSWER) => {
         completeCurrentCard(variant)
     }
 

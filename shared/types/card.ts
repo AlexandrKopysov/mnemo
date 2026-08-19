@@ -44,14 +44,14 @@ export type ICardList = Omit<ICard,
   createdAt: string,
 }
 
-export enum Answer {
-  EASY = 'easy',
-  NORMAL = 'normal',
-  HARD = 'hard',
+export enum ANSWER {
+  EASY = 'EASY',
+  NORMAL = 'NORMAL',
+  HARD = 'HARD',
 }
 
 export type ICardReview = {
   cardId: string,
   deckId: string,
-  answer: Answer,
+  answer: ANSWER,
 }

@@ -1,10 +1,10 @@
-import { Answer } from "@shared/types/card"
+import { ANSWER } from "@shared/types/card"
 
 type CalculateIntervalDaysParams = {
     currentIntervalDays: number
     currentRepetitions: number
     currentEaseFactor: number
-    answer: Answer
+    answer: ANSWER
 }
 
 const HARD_INTERVAL_DAYS = 1
@@ -20,11 +20,11 @@ export function calculateIntervalDays(params: CalculateIntervalDaysParams): numb
         answer,
     } = params
 
-    if (answer === Answer.HARD) {
+    if (answer === ANSWER.HARD) {
         return HARD_INTERVAL_DAYS
     }
 
-    if (answer === Answer.NORMAL) {
+    if (answer === ANSWER.NORMAL) {
         if (currentRepetitions === 0) {
             return FIRST_NORMAL_INTERVAL_DAYS
         }

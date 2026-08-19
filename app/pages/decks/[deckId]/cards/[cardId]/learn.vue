@@ -27,21 +27,21 @@
                         <mnemo-button
                             width="110"
                             variant="danger"
-                            @click="onAnswer(Answer.HARD)"
+                            @click="onAnswer(ANSWER.HARD)"
                         >
                             Не вспомнил
                         </mnemo-button>
                         <mnemo-button
                             width="110"
                             variant="dark"
-                            @click="onAnswer(Answer.NORMAL)"
+                            @click="onAnswer(ANSWER.NORMAL)"
                         >
                             Нормально
                         </mnemo-button>
                         <mnemo-button
                             width="110"
                             variant="success"
-                            @click="onAnswer(Answer.EASY)"
+                            @click="onAnswer(ANSWER.EASY)"
                         >
                             Легко
                         </mnemo-button>
@@ -53,12 +53,11 @@
 </template>
 
 <script lang="ts" setup>
+import type { ANSWER } from '@shared/types/card';
 import mnemoForm from '~/components/form/mnemo-form.vue';
 import mnemoButton from '~/components/ui/mnemo-button.vue';
 import MnemoTextarea from '~/components/ui/mnemo-textarea.vue';
-import { getCard } from '~/entities/cards/api/api';
-import type { Answer } from '@shared/types/card';
-import { reviewCard } from '~/entities/cards/api/api';
+import { getCard, reviewCard } from '~/entities/cards/api/api';
 
 const route = useRoute()
 const deckId = computed(() => String(route.params.deckId))
@@ -77,7 +76,7 @@ async function getData() {
     card.value = await getCard(deckId.value, cardId.value)
 }
 
-async function onAnswer(answer: Answer) {
+async function onAnswer(answer: ANSWER) {
     await reviewCard(deckId.value, cardId.value, answer)
 }
 

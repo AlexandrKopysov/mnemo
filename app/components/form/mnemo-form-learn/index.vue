@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Answer } from "@shared/types/card";
+import type { ANSWER } from "@shared/types/card";
 import BackForm from "./back.vue";
 import FrontForm from "./front.vue";
 
@@ -42,12 +42,12 @@ const props = withDefaults(defineProps<IProps>(), {
 })
 
 const emit = defineEmits<{
-    (e: "click", variant: Answer): void
+    (e: "click", variant: ANSWER): void
 }>()
 
 const inverted = ref(false)
 
-const onClick = (variant: Answer) => {
+const onClick = (variant: ANSWER) => {
     emit('click', variant)
     inverted.value = !inverted.value
 }

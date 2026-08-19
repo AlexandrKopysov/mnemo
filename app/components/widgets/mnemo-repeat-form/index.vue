@@ -90,7 +90,7 @@ import MnemoButton from "@components/ui/mnemo-button.vue"
 
 const sessionStore = useMnemoSessionStore()
 
-const { reviewSession } = storeToRefs(sessionStore)
+const { reviewSession, isCompleted } = storeToRefs(sessionStore)
 
 const startRepeat = () => {
     return navigateTo({
@@ -116,11 +116,11 @@ $counter-bg: rgb(255, 255, 255);
         minmax(240px, 1.2fr)
         auto;
 
-    align-items: center;
+    align-items: flex-start;
     gap: 32px;
 
     padding: 28px;
-    border-radius: 8px;
+    border-radius: 24px;
 
     background: #fff;
     backdrop-filter: blur(10px);
@@ -140,6 +140,7 @@ $counter-bg: rgb(255, 255, 255);
 
     &__info {
         display: flex;
+        height: 100%;
         flex-direction: column;
     }
 
@@ -174,7 +175,7 @@ $counter-bg: rgb(255, 255, 255);
 
     &__decks {
         padding-left: 24px;
-
+        height: 100%;
         border-left: 1px solid $border-color;
     }
 

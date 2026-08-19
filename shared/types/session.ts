@@ -1,3 +1,4 @@
+import { ANSWER } from "@shared/types"
 export interface IReviewSessionStateType {
     startedAt: string | null
 
@@ -30,7 +31,33 @@ export interface IReviewSession {
     startedAt: string
     totalCards: number
     decks: IReviewSessionDeckSummary[]
-    queue: IReviewSessionCard[]
+    session: ISession
+}
+
+export interface ISession {
+    id: string
+    userId: number
+    totalCards: number
+    completedCount: number
+    hardCount: number
+    normalCount: number
+    easyCount: number
+    status: REVIEW_SESSION_STATUS
+    startedAt: string
+    completedAt: string
+    items: IReviewSessionItem[]
+}
+export interface IReviewSessionItem {
+    id: string
+    sessionId: string
+    cardId: string
+    deckId: string
+    position: number
+    answer: ANSWER
+    answeredAt: string
+    cardFront: string
+    cardBack: string
+    deckTitle: string
 }
 
 export interface IReviewSessionPreview {
@@ -63,4 +90,10 @@ export interface IReviewSessionPreviewDeck {
      * Максимум SESSION_CARDS_PER_DECK_LIMIT.
      */
     cardsCount: number
+}
+
+export enum REVIEW_SESSION_STATUS {
+    IN_PROGRESS = "IN_PROGRESS",
+    COMPLETED = "COMPLETED",
+    ABANDONED = "ABANDONED"
 }
