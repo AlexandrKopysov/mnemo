@@ -104,8 +104,8 @@ export default defineEventHandler(async (event) => {
     })
 
     return {
-        startedAd: startedAt.toISOString(),
-        totalCards: queue.length,
+        startedAt: startedAt.toISOString(),
+        totalCards: session.totalCards,
         decks: nonEmptyDecks.map(
             ({ id, title, cards }) => ({
                 deckId: id,

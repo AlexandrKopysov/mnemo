@@ -17,7 +17,7 @@ import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repe
 
     const mnemoSessionStore = useMnemoSessionStore()
 
-    const { startSession, resetSession, completeCurrentCard } =  mnemoSessionStore
+    const { startSession, completeCurrentCard } =  mnemoSessionStore
 
     const { currentCard, completedCount, totalCards, progressPercent } = storeToRefs(mnemoSessionStore )
 

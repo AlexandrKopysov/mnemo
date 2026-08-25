@@ -42,14 +42,12 @@ import DeckTile from "@components/decks/deck-tile.vue"
 import { deleteDeck, getDecks } from "~/entities/decks/api/api"
 import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repeat-store"
 
-const { getSessionData } = useMnemoSessionStore()
 const { setBreadcrumbs } = useBreadcrumbs()
 
 const decks = ref<IDeck[]>([])
 
 async function getAllDecks() {
     decks.value = await getDecks()
-    await getSessionData()
 }
 
 onMounted(async () => {

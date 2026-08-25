@@ -111,7 +111,7 @@ export default defineEventHandler(async (event) => {
                                 : item.session.normalCount,
 
                         easyCount:
-                            body.answer === ANSWER.HARD
+                            body.answer === ANSWER.EASY
                                 ? item.session.easyCount + 1
                                 : item.session.easyCount,
 
@@ -123,6 +123,14 @@ export default defineEventHandler(async (event) => {
                             ? new Date()
                             : null,
                     },
+
+                    include: {
+                        items: {
+                            orderBy: {
+                                position: 'asc'
+                            }
+                        }
+                    }
                 })
 
             return {

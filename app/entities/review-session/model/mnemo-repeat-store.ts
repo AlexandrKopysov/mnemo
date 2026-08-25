@@ -1,141 +1,74 @@
-import { ANSWER } from "@shared/types/card"
-import { defineStore } from "pinia"
 import type {
-    IReviewSession,
-    IReviewSessionCard,
-    IReviewSessionItem,
-    IReviewSessionDeckSummary,
     IReviewSessionPreview
 } from "@shared/types/session"
-import { createReviewSession, getReviewSession } from "~/entities/review-session/api"
+import { defineStore } from "pinia"
+import { reviewSessionCard } from "../../cards/api/api"
+import { createReviewSession, getReviewSession } from "../api"
 
-import { reviewCard, reviewSessionCard } from "~/entities/cards/api/api"
 
 export const useMnemoSessionStore = defineStore("mnemo-session", () => {
-    const reviewSession = ref<IReviewSessionPreview | null>(null)
-    const startedAt = ref<string | null>(null)
-    
-    const queue = ref<IReviewSessionItem[]>([])
-    const decks = ref<IReviewSessionDeckSummary[]>([])
 
-    const totalCards = ref(0)
-    const completedCount = ref(0)
-    
-    const hardCount = ref(0)
-    const normalCount = ref(0)
-    const easyCount = ref(0)
+    const preview = ref<IReviewSessionPreview | null>(null)
+    const activeSession = ref<ISession | null>(null)
 
     const currentCard = computed(() => {
-        return queue.value[completedCount.value] ?? null
+        return activeSession.value?.items.find(item => !item.answeredAt) ?? null
     })
 
-    const remainingCount = computed(() => {
-        return Math.max(
-            totalCards.value - completedCount.value, 0
-        )
+    const totalCards = computed(() => {
+        return activeSession.value?.totalCards ?? 0
+    })
+
+    const isCompleted = computed(() => {
+        return activeSession.value?.status === REVIEW_SESSION_STATUS.COMPLETED
+    })
+
+    const completedCount = computed(() => {
+        return activeSession.value?.completedCount ?? 0
     })
 
     const progressPercent = computed(() => {
         if (!totalCards.value) return 0
 
-        // To-Do вопросики к рассчету
         return Math.round(
-            (completedCount.value / totalCards.value) * 100
-        )
-    })
-
-    const isCompleted = computed(() => {
-        if (!totalCards.value) return true
-
-        return (
-            completedCount.value >= totalCards.value
+            completedCount.value / totalCards.value * 100
         )
     })
 
     async function startSession() {
-        const session = await createReviewSession()
-
-        if (!session) return
-
-        applySession(session)
+        const result = await createReviewSession()
+        activeSession.value = result.session
     }
 
-    function applySession(session: IReviewSession) {
-        startedAt.value = session.startedAt
-        
-        queue.value = session.session.items
-        decks.value = session.decks
-
-        totalCards.value = session.totalCards
-        
-        completedCount.value = 0
-        hardCount.value = 0
-        normalCount.value = 0
-        easyCount.value = 0
+    async function loadPreview() {
+        preview.value = await getReviewSession()
     }
 
-    async function completeCurrentCard(
-        answer: ANSWER
-    ) {
-        if(!currentCard.value) return
+    async function completeCurrentCard(answer: ANSWER) {
+        const card = currentCard.value
 
-        if (answer === ANSWER.HARD) hardCount.value++
-        if (answer === ANSWER.EASY) easyCount.value++
-        if (answer === ANSWER.NORMAL) normalCount.value++
+        if (!card) return
 
-        try {
-            const result = await reviewSessionCard(currentCard.value.sessionId, currentCard.value.id, answer)
-            completedCount.value++
-        } catch {
-            // TO-Do надо добавить всплывашку с ошибкой
-            return
-        }
+        const result = await reviewSessionCard(
+            card.sessionId,
+            card.id,
+            answer
+        ) as any
 
-    }
-
-    function resetSession(){
-        startedAt.value = null
-
-        queue.value = []
-        decks.value = []
-
-        totalCards.value = 0
-        completedCount.value = 0
-
-        hardCount.value = 0
-        easyCount.value = 0
-        normalCount.value = 0
-    }
-
-    async function getSessionData() {
-        const res = await getReviewSession()
-        if (!res) return
-        reviewSession.value = res
+        activeSession.value = result.session
     }
 
     return {
-        startedAt,
-
-        queue,
-        decks,
-
         totalCards,
         completedCount,
-
-        hardCount,
-        normalCount,
-        easyCount,
-
+        preview,
+        activeSession,
         currentCard,
-        remainingCount,
         progressPercent,
         isCompleted,
-
+        
+        loadPreview,
         startSession,
         completeCurrentCard,
-        resetSession,
-
-        reviewSession,
-        getSessionData,
     }
 })

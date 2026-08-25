@@ -16,7 +16,7 @@
 
             <div class="session-preview__total">
                 <span class="session-preview__total-value">
-                    {{ reviewSession?.totalCards ?? 0 }}
+                    {{ preview?.totalCards ?? 0 }}
                 </span>
 
                 <span class="session-preview__total-label">
@@ -25,7 +25,7 @@
             </div>
 
             <span class="session-preview__estimated">
-                ~ {{ reviewSession?.estimatedMinutes ?? 0 }} минут
+                ~ {{ preview?.estimatedMinutes ?? 0 }} минут
             </span>
         </div>
 
@@ -36,7 +36,7 @@
 
             <div class="session-preview__decks-list">
                 <div
-                    v-for="deck in reviewSession?.decks ?? []"
+                    v-for="deck in preview?.decks ?? []"
                     :key="deck.deckId"
                     class="session-preview__deck"
                 >
@@ -90,13 +90,17 @@ import MnemoButton from "@components/ui/mnemo-button.vue"
 
 const sessionStore = useMnemoSessionStore()
 
-const { reviewSession, isCompleted } = storeToRefs(sessionStore)
+const { preview } = storeToRefs(sessionStore)
 
 const startRepeat = () => {
     return navigateTo({
         name: 'learn-session'
     })
 }
+
+onMounted(async () => {
+    await sessionStore.loadPreview()
+})
 
 
 
