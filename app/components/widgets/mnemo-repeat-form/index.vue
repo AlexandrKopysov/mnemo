@@ -74,6 +74,7 @@
             </span>
 
             <mnemo-button 
+                v-if="preview?.totalCards"
                 class="session-preview__button"
                 @click="startRepeat()"
             >
@@ -89,20 +90,25 @@ import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repe
 import MnemoButton from "@components/ui/mnemo-button.vue"
 
 const sessionStore = useMnemoSessionStore()
+const { startSession } = sessionStore
 
-const { preview } = storeToRefs(sessionStore)
+const { preview, activeSession } = storeToRefs(sessionStore)
 
-const startRepeat = () => {
+const startRepeat = async () => {
+    await startSession()
+    const sessionId = activeSession.value?.id
+
     return navigateTo({
-        name: 'learn-session'
+        name: 'learn-session-sessionId',
+        params: {
+            sessionId: sessionId
+        }
     })
 }
 
 onMounted(async () => {
     await sessionStore.loadPreview()
 })
-
-
 
 </script>
 

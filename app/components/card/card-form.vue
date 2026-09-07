@@ -26,12 +26,13 @@
                     />
                 </div>
                 <div class="mt-4 card-back-field">
-                    <mnemo-textarea
+                    <!-- <mnemo-textarea
                         v-model="form.back"
                         label="Описание карточки"
                         placeholder="Введите описание карточки"
                         full-height
-                    />
+                    /> -->
+                    <mnemo-markdown-editor v-model="form.back" />
                 </div>
             </div>
         </template>
@@ -43,6 +44,7 @@
     import MnemoButton from '@components/ui/mnemo-button.vue'
     import MnemoInput from '@components/ui/mnemo-input.vue'
     import MnemoTextarea from '@components/ui/mnemo-textarea.vue'
+    import MnemoMarkdownEditor from '@components/ui/editor/mnemo-markdown-editor.vue'
 
     import type { ICardCreate } from "@shared/types/card"
     import { createCard, updateCard, getCard } from '~/entities/cards/api/api'

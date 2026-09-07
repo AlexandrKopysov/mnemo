@@ -3,7 +3,7 @@
         :title="title"
     >
         <template v-slot:toolbar-left>
-            <mnemo-button 
+            <mnemo-button
                 @click="onAddCard"
                 width="150"
             >
@@ -20,16 +20,16 @@
         </template>
         <template v-slot:default>
             <div class="decks-grid">
-                <card-tile 
+                <card-tile
                     v-for="card in cards" :key="card.id"
                     class="mb-4"
                     :card="card"
-                    @click="onCardClick(card.id)"
+                    @click="onCardEdit(card.id)"
                     @edit="onCardEdit(card.id)"
                     @delete="onCardDelete(card.id)"
                 />
             </div>
-        </template> 
+        </template>
     </mnemo-form>
 </template>
 
@@ -56,16 +56,6 @@ const onAddCard = async () => {
         name: 'decks-deckId-cards-new',
         params: {
             deckId: deckId.value,
-        },
-    })
-}
-
-function onCardClick(cardId: string) {
-    return navigateTo({
-        name: 'decks-deckId-cards-cardId-learn',
-        params: {
-            deckId: deckId.value,
-            cardId,
         },
     })
 }

@@ -1,7 +1,9 @@
 import { prisma } from "@utils/db"
 import { getSessionUserId } from "@utils/server-session"
 import { SESSION_CARDS_PER_DECK_LIMIT, AVERAGE_CARD_REVIEW_SECONDS } from "@shared/const"
+import { startOfTomorrow } from "@utils/date-helper"
 
+// Функция для расчета предполагаемой продолжительности сессии
 export function calculateEstimatedSessionMinutes( cardsCount: number): number {
     if (cardsCount === 0) {
         return 0
@@ -15,7 +17,7 @@ export function calculateEstimatedSessionMinutes( cardsCount: number): number {
 export default defineEventHandler(async (event) => {
     const sessionUserId = await getSessionUserId(event)
 
-    const now = new Date()
+    const endOfToday = startOfTomorrow()
 
     const decks = await prisma.deck.findMany({
         where: {
@@ -30,7 +32,7 @@ export default defineEventHandler(async (event) => {
             cards: {
                 where: {
                     dueAt: {
-                        lte: now,
+                        lt: endOfToday,
                     }
                 },
 

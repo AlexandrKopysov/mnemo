@@ -3,7 +3,7 @@ import type {
 } from "@shared/types/session"
 import { defineStore } from "pinia"
 import { reviewSessionCard } from "../../cards/api/api"
-import { createReviewSession, getReviewSession } from "../api"
+import { createReviewSession, getPreviewSession } from "../api"
 
 
 export const useMnemoSessionStore = defineStore("mnemo-session", () => {
@@ -41,7 +41,7 @@ export const useMnemoSessionStore = defineStore("mnemo-session", () => {
     }
 
     async function loadPreview() {
-        preview.value = await getReviewSession()
+        preview.value = await getPreviewSession()
     }
 
     async function completeCurrentCard(answer: ANSWER) {
@@ -56,6 +56,10 @@ export const useMnemoSessionStore = defineStore("mnemo-session", () => {
         ) as any
 
         activeSession.value = result.session
+
+        if (result.session.status === REVIEW_SESSION_STATUS.COMPLETED) {
+            navigateTo(`/final-session/${result.session.id}`)
+        }
     }
 
     return {

@@ -12,14 +12,14 @@
 
 <script lang="ts" setup>
     import MnemoFormLearn from "@components/form/mnemo-form-learn/index.vue"
-import type { ANSWER } from "@shared/types/card"
-import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repeat-store"
+    import type { ANSWER } from "@shared/types/card"
+    import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repeat-store"
 
-    const mnemoSessionStore = useMnemoSessionStore()
+    const sessionStore = useMnemoSessionStore()
 
-    const { startSession, completeCurrentCard } =  mnemoSessionStore
+    const { completeCurrentCard } =  sessionStore
 
-    const { currentCard, completedCount, totalCards, progressPercent } = storeToRefs(mnemoSessionStore )
+    const { currentCard, completedCount, totalCards, progressPercent } = storeToRefs(sessionStore )
 
     const { setBreadcrumbs } = useBreadcrumbs()
 
@@ -32,9 +32,8 @@ import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repe
             title: 'Ваши колоды',
             to: '/',
         }, {
-            title: 'Дневная сессия'
+            title: 'Текущая сессия'
         }])
-
-        await startSession()
     })
 </script>
+

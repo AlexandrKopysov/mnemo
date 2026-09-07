@@ -3,12 +3,13 @@ import { SESSION_CARDS_PER_DECK_LIMIT } from "@shared/const"
 import { prisma } from "@utils/db"
 import { getSessionUserId } from "@utils/server-session"
 import { REVIEW_SESSION_STATUS } from "@shared/types/session"
+import { startOfTomorrow } from "@utils/date-helper"
 
 
 export default defineEventHandler(async (event) => {
     const sessionUserId = await getSessionUserId(event)
 
-    const startedAt = new Date()
+    const endOfToday = startOfTomorrow()
 
     const decks = await prisma.deck.findMany({
         where: {
@@ -23,7 +24,7 @@ export default defineEventHandler(async (event) => {
             cards: {
                 where: {
                     dueAt: {
-                        lte: startedAt
+                        lt: endOfToday
                     }
                 },
 
@@ -104,7 +105,7 @@ export default defineEventHandler(async (event) => {
     })
 
     return {
-        startedAt: startedAt.toISOString(),
+        startedAt: new Date().toISOString(),
         totalCards: session.totalCards,
         decks: nonEmptyDecks.map(
             ({ id, title, cards }) => ({

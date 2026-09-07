@@ -24,9 +24,9 @@
             <div class="front">
                 <span>{{ front }}</span>
             </div>
-            <div>
-                <p>{{  back }}</p>
-            </div>
+            <mnemo-markdown-preview 
+                :content="back" 
+            />
         </div>
         <div class="button-toolbar">
             <mnemo-button 
@@ -49,6 +49,7 @@
 </template>
 
 <script lang="ts" setup>
+import mnemoMarkdownPreview from "~/components/ui/editor/mnemo-markdown-preview.vue"
 import MnemoForm from "@components/form/mnemo-form.vue"
 import MnemoButton from "@components/ui/mnemo-button.vue"
 import MnemoProgress from "@components/ui/mnemo-progress.vue"
