@@ -235,4 +235,15 @@ const buttonClass = computed(() => [
     background: $success-active;
   }
 }
+
+@media (max-width: 1279px) {
+  .mnemo-btn {
+    min-height: 44px;
+    max-height: none;
+    height: auto;
+    max-width: 100%;
+    white-space: normal;
+  }
+  .mnemo-btn :deep(.v-btn__content) { min-width: 0; white-space: normal; overflow-wrap: anywhere; }
+}
 </style>

@@ -11,13 +11,13 @@
                 @click="onLeave"
                 width="150"
                 variant="secondary"
-                class="ml-2"
+                class="form-action-secondary"
             >
                 Закрыть
             </mnemo-button> 
         </template>
         <template #default>
-            <div class="flex flex-col gap-4 w-1/2">
+            <div class="form-fields flex flex-col gap-4 w-1/2">
                 <mnemo-input
                     v-model="form.title"
                     label="Название колоды"
@@ -95,3 +95,15 @@ onMounted(async () => {
 })
 
 </script>
+
+<style scoped lang="scss">
+.form-action-secondary { margin-left: 8px; }
+
+@media (max-width: 1279px) {
+    .form-action-secondary { margin-left: 0; }
+    .form-fields { width: 75%; min-width: 0; }
+}
+@media (max-width: 767px) {
+    .form-fields { width: 100%; }
+}
+</style>

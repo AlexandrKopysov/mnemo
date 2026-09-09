@@ -11,14 +11,14 @@
                 @click="onLeave"
                 width="150"
                 variant="secondary"
-                class="ml-2"
+                class="form-action-secondary"
             >
                 Закрыть
             </mnemo-button> 
         </template>
         <template #default>
             <div class="card-form-content">
-                <div class="flex flex-col gap-4 w-1/2">
+                <div class="form-fields flex flex-col gap-4 w-1/2">
                     <mnemo-input
                         v-model="form.front"
                         label="Название карточки"
@@ -133,5 +133,18 @@
 
 .card-back-field :deep(.mnemo-textarea) {
     flex: 1;
+}
+
+.form-action-secondary { margin-left: 8px; }
+
+@media (max-width: 1279px) {
+    .form-action-secondary { margin-left: 0; }
+    .form-fields { width: 75%; min-width: 0; }
+    .card-form-content, .card-back-field { min-width: 0; max-width: 100%; }
+    // Preserve the editor's panels and existing local scrolling.
+    .card-back-field > :deep(.md-editor) { width: 100%; min-width: 0; max-width: 100%; }
+}
+@media (max-width: 767px) {
+    .form-fields { width: 100%; }
 }
 </style>

@@ -61,4 +61,26 @@ definePageMeta({
       padding: 25px;
     }
   }
+
+/* The original &__form is in plain CSS, not SCSS.
+   Leave its desktop behavior unchanged; use an explicit responsive selector. */
+@media (max-width: 1279px) {
+  .auth-page { min-height: 100dvh; padding: 24px; }
+  .auth-page > .v-row { margin: 0; min-width: 0; }
+  .auth-page .v-col { padding: 0; min-width: 0; }
+  .auth-page .auth-page__form {
+    width: 100%;
+    max-width: 380px;
+    min-width: 0;
+    padding: 24px;
+    overflow-wrap: anywhere;
+  }
+}
+@media (max-width: 767px) {
+  .auth-page { padding: 16px; }
+  .auth-page .auth-page__form { padding: 16px; }
+}
+@media (max-width: 1279px) and (max-height: 600px) {
+  .auth-page { align-items: flex-start; }
+}
 </style>

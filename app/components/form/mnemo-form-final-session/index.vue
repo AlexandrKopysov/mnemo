@@ -162,4 +162,17 @@ onMounted(() => {
             margin-top: 30px;
         }
     }
+
+@media (max-width: 1279px) {
+    .container { width: 100%; min-width: 0; }
+    .final-session-card { min-width: 0; width: 500px; max-width: 100%; overflow-wrap: anywhere; }
+    .final-session-card .tile-result .row { gap: 12px; }
+    .final-session-card .row-title { min-width: 0; }
+    .final-session-card .row-value, .final-session-card .row-value-red { flex-shrink: 0; }
+}
+@media (max-width: 767px) {
+    .final-session-card { padding: 20px 16px; text-align: center; }
+    .final-session-card .subtitle { font-size: 22px; }
+    .final-session-card .tile-result { padding: 12px; text-align: left; }
+}
 </style>

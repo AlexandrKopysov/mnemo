@@ -59,4 +59,12 @@ function OnClickLogin() {
         line-height: 24px;
     }
 }
+
+@media (max-width: 1279px) {
+    .mnemo-header__container { padding-inline: $container-padding-tablet; gap: 16px; min-width: 0; }
+    .logo { flex-shrink: 0; }
+}
+@media (max-width: 767px) {
+    .mnemo-header__container { padding: 12px $container-padding-mobile; }
+}
 </style>

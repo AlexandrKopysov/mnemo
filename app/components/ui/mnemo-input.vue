@@ -107,5 +107,16 @@
     align-items: center;
   }
 }
+
+@media (max-width: 1279px) {
+  .mnemo-input {
+    min-width: 0;
+    max-width: 100%;
+    :deep(.v-input__control), :deep(.v-field), :deep(.v-field__field) { min-width: 0; }
+    :deep(.v-field), :deep(.v-field__input) { height: 44px; min-height: 44px; }
+    :deep(.v-field__prepend-inner), :deep(.v-field__append-inner) { height: 44px; }
+    :deep(input) { min-width: 0; font-size: 16px; }
+  }
+}
 </style>
 

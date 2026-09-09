@@ -64,4 +64,24 @@
             }
         }
     }
+
+@media (max-width: 1279px) {
+    .mnemo-breadcrumbs__container {
+        height: auto;
+        min-height: 24px;
+        min-width: 0;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding-inline: $container-padding-tablet;
+    }
+    .mnemo-breadcrumbs__container-link, .mnemo-breadcrumbs__container-current {
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+}
+@media (max-width: 767px) {
+    .mnemo-breadcrumbs__container { padding-inline: $container-padding-mobile; }
+    .mnemo-breadcrumbs__container a, .mnemo-breadcrumbs__container-current { font-size: 16px; }
+}
 </style>

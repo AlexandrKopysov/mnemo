@@ -161,4 +161,15 @@ const onDeleteClick = () => {
       display: none;
     }
   }
+
+@media (max-width: 1279px) {
+  .tile-container { min-width: 0; padding: 0 12px 16px; }
+  .tile-info { align-items: flex-start; }
+  .tile-title { min-width: 0; overflow-wrap: anywhere; font-size: 22px; }
+  .tile-content { gap: 12px; align-items: center; }
+  .tile-content > div:first-child { min-width: 0; overflow-wrap: anywhere; }
+  .tile-content > :deep(.progress-circle) { flex-shrink: 0; }
+  .tile-due { padding: 5px 10px; }
+  .dot-menu-btn { width: 44px; min-width: 44px; height: 44px; flex-shrink: 0; }
+}
 </style>

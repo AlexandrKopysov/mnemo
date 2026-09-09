@@ -119,4 +119,15 @@ async function onDeckDelete(id: string | undefined) {
             min-height: 400px;
         }
     }
+
+@media (max-width: 1279px) {
+    .deck-page, .decks-grid > * { min-width: 0; }
+    .decks-grid { gap: 16px; }
+}
+@media (max-width: 1023px) {
+    .decks-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+    .decks-grid { grid-template-columns: minmax(0, 1fr); }
+}
 </style>

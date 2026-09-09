@@ -276,4 +276,43 @@ $counter-bg: rgb(255, 255, 255);
         margin-top: 12px;
     }
 }
+
+@media (max-width: 1279px) {
+    .session-preview {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 24px;
+        padding: 24px;
+        position: relative;
+    }
+    .session-preview > * { min-width: 0; }
+    .session-preview__calendar { position: absolute; top: 24px; left: 24px; width: 56px; height: 56px; }
+    .session-preview__calendar :deep(.v-icon) { font-size: 36px; }
+    .session-preview__info { padding-left: 72px; }
+    .session-preview__title { font-size: 22px; }
+    .session-preview__total { flex-wrap: wrap; }
+    .session-preview__total-value { font-size: 48px; overflow-wrap: anywhere; }
+    .session-preview__total-label { font-size: 26px; }
+    .session-preview__estimated { overflow-wrap: anywhere; }
+    .session-preview__deck { grid-template-columns: minmax(0, 1fr) minmax(0, auto); }
+    .session-preview__deck-count { overflow-wrap: anywhere; }
+    .session-preview__actions {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 12px;
+    }
+    .session-preview__streak { width: 64px; height: 64px; }
+    .session-preview__streak-label, .session-preview__button { margin-top: 0; }
+}
+@media (max-width: 767px) {
+    .session-preview { grid-template-columns: minmax(0, 1fr); padding: 16px; gap: 20px; }
+    .session-preview__calendar { top: 16px; left: 16px; }
+    .session-preview__title { font-size: 20px; }
+    .session-preview__total-value { font-size: 44px; }
+    .session-preview__total-label { font-size: 24px; }
+    .session-preview__decks { padding-left: 0; padding-top: 16px; border-left: 0; border-top: 1px solid $border-color; }
+    .session-preview__decks-title { font-size: 20px; }
+    .session-preview__actions { grid-template-columns: auto minmax(0, 1fr); }
+    .session-preview__button { grid-column: 1 / -1; width: 100%; }
+}
 </style>

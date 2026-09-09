@@ -1,7 +1,7 @@
 <template>
-    <v-container class="p-0 m-0">
+    <v-container class="p-0 m-0 profile">
         <v-row class="justify-center">
-        <v-menu min-width="200px">
+        <v-menu min-width="200px" max-width="calc(100vw - 32px)">
             <template 
                 v-slot:activator="{ props }">
             <v-btn
@@ -53,3 +53,8 @@ function onExit() {
 }
 
 </script>
+<style scoped lang="scss">
+@media (max-width: 1279px) {
+    .profile :deep(.v-row) { margin: 0; }
+}
+</style>

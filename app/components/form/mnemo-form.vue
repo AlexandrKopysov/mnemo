@@ -65,4 +65,27 @@ const props = withDefaults(defineProps<IPropsForm>(), {
             scrollbar-gutter: stable;
         }
     }
+
+@media (max-width: 1279px) {
+    .mnemo-form, .mnemo-form__content, .mnemo-form__toolbar,
+    .mnemo-form__toolbar-left, .mnemo-form__toolbar-right { min-width: 0; }
+    .mnemo-form__toolbar { gap: 12px; }
+    .mnemo-form__toolbar-left, .mnemo-form__toolbar-right {
+        display: flex;
+        gap: 8px;
+        max-width: 100%;
+    }
+}
+@media (max-width: 767px) {
+    .mnemo-form__toolbar { flex-direction: column; align-items: stretch; padding: 16px; }
+    .mnemo-form__toolbar-left, .mnemo-form__toolbar-right { width: 100%; }
+    .mnemo-form__toolbar-left:empty, .mnemo-form__toolbar-right:empty { display: none; }
+    // Flex basis allows controls with inline presentation widths to shrink.
+    .mnemo-form__toolbar :deep(.mnemo-btn), .mnemo-form__toolbar :deep(.mnemo-input) {
+        flex: 1 1 0;
+        min-width: 0;
+        max-width: 100%;
+    }
+    .mnemo-form__content { padding: 16px; }
+}
 </style>

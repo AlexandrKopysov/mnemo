@@ -133,4 +133,25 @@ const onDeleteClick = () => {
         display: none;
         }
     }
+
+@media (max-width: 1279px) {
+    .tile-container { min-width: 0; gap: 16px; padding: 12px 16px; }
+    .tile-info { min-width: 0; flex: 1; }
+    .tile-title { overflow-wrap: anywhere; }
+    .tile-left-container { min-width: 0; flex: 0 1 280px; }
+    .dot-menu-btn { width: 44px; min-width: 44px; height: 44px; flex-shrink: 0; }
+}
+@media (max-width: 767px) {
+    .tile-container {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 44px;
+        align-items: start;
+        gap: 12px 8px;
+        padding: 12px;
+    }
+    .tile-title { font-size: 20px; line-height: 1.3; }
+    .tile-left-container { display: contents; }
+    .tile-left-container > :deep(.card-tile-status) { grid-column: 1 / -1; grid-row: 2; }
+    .dot-menu-btn { grid-column: 2; grid-row: 1; }
+}
 </style>
