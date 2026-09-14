@@ -1,0 +1,17 @@
+@use "./vars" as *;
+
+@mixin editor-fields {
+    .form-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        min-width: 0;
+        width: 50%;
+        @media (max-width: ($breakpoint-desktop - 1px)) {
+            width: 75%;
+        }
+        @media (max-width: ($breakpoint-mobile - 1px)) {
+            width: 100%;
+        }
+    }
+}

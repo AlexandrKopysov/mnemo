@@ -73,85 +73,59 @@ const onDeleteClick = () => {
 </script>
 
 <style lang="scss" scoped>
-
-    $deck-bg: rgba(255, 255, 255, 0.35);
-    $deck-bg-hover: rgba(255, 255, 255, 0.55);
-    $deck-border: rgba(255, 255, 255, 0.25);
-    $deck-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-    $deck-shadow-hover: 0 0 15px rgba(0, 0, 0, 0.35);
-    $deck-font-color: rgba(22, 38, 55, 0.75);
-
-    .tile-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        min-height: 100px;
-        padding: 0px 20px;
-        border-radius: 10px;
-        background-color: $deck-bg;
-        box-shadow: $deck-shadow;
-        border: 1px solid $deck-border;
-        cursor: pointer;
-        
-        &:hover {
-        transition: all 0.2s ease;
-        background-color: $deck-bg-hover;
-        box-shadow: $deck-shadow-hover;
-        }
-    }
-
-    .tile-info {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        color: $deck-font-color;
-    }
-
-    .tile-title {
-        font-size: 24px;
-        font-weight: 500;
-        line-height: 24px;
-    }
-
-    .tile-subtitle {
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 14px;
-    }
-
-    .tile-left-container {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .dot-menu-btn {
-        &:deep(.v-btn__overlay),
-        &:deep(.v-btn__underlay),
-        &:deep(.v-ripple__container) {
-        display: none;
-        }
-    }
-
-@media (max-width: 1279px) {
-    .tile-container { min-width: 0; gap: 16px; padding: 12px 16px; }
-    .tile-info { min-width: 0; flex: 1; }
-    .tile-title { overflow-wrap: anywhere; }
-    .tile-left-container { min-width: 0; flex: 0 1 280px; }
-    .dot-menu-btn { width: 44px; min-width: 44px; height: 44px; flex-shrink: 0; }
+@use "~/assets/scss/tiles" as tiles;
+@include tiles.tile;
+.tile-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100px;
 }
-@media (max-width: 767px) {
+
+.tile-info {
+    flex-direction: column;
+}
+
+@media (max-width: ($breakpoint-desktop - 1px)) {
+    .tile-container {
+        min-width: 0;
+        gap: 16px;
+        padding: 12px 16px;
+    }
+    .tile-info {
+        min-width: 0;
+        flex: 1;
+    }
+    .tile-title {
+        overflow-wrap: anywhere;
+    }
+    .tile-left-container {
+        min-width: 0;
+        flex: 0 1 280px;
+    }
+}
+@media (max-width: ($breakpoint-mobile - 1px)) {
     .tile-container {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 44px;
+        grid-template-columns: minmax(0, 1fr) $touch-target;
         align-items: start;
         gap: 12px 8px;
         padding: 12px;
     }
-    .tile-title { font-size: 20px; line-height: 1.3; }
-    .tile-left-container { display: contents; }
-    .tile-left-container > :deep(.card-tile-status) { grid-column: 1 / -1; grid-row: 2; }
-    .dot-menu-btn { grid-column: 2; grid-row: 1; }
+    .tile-title {
+        font-size: 20px;
+        line-height: 1.3;
+    }
+    .tile-left-container {
+        display: contents;
+    }
+    .tile-left-container > :deep(.card-tile-status) {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+    .dot-menu-btn {
+        grid-column: 2;
+        grid-row: 1;
+    }
 }
 </style>

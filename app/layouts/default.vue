@@ -16,11 +16,12 @@ import MnemoBreadcrumbs from '~/components/breadcrumbs/mnemo-breadcrumbs.vue'
 </script>
 
 <style scoped lang="scss">
+@use "~/assets/scss/layout" as layout;
 .app-layout {
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
-    background-image: url('~/assets/images/background.png');
+    background-image: url("~/assets/images/background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -29,6 +30,7 @@ import MnemoBreadcrumbs from '~/components/breadcrumbs/mnemo-breadcrumbs.vue'
         display: flex;
         flex: 1;
         min-height: 0;
+        min-width: 0;
     }
 
     &__container {
@@ -36,21 +38,16 @@ import MnemoBreadcrumbs from '~/components/breadcrumbs/mnemo-breadcrumbs.vue'
         flex: 1;
         flex-direction: column;
 
-        width: 100%;
-        max-width: $container-max-width;
-        margin: 0 auto;
+        @include layout.page-container;
         padding-bottom: 40px;
+        min-width: 0;
 
         min-height: 0;
     }
 }
 
-@media (max-width: 1279px) {
-    .app-layout__main, .app-layout__container { min-width: 0; }
-    .app-layout__container { padding-inline: $container-padding-tablet; }
-    .app-layout__container > :deep(*) { min-width: 0; max-width: 100%; }
-}
-@media (max-width: 767px) {
-    .app-layout__container { padding-inline: $container-padding-mobile; }
+.app-layout__container > :deep(*) {
+    min-width: 0;
+    max-width: 100%;
 }
 </style>

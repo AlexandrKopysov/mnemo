@@ -1,4 +1,3 @@
-$primary: #111;
 $link: rgb(90, 162, 146);
 $error: rgb(215, 65, 65);
 
@@ -34,6 +33,37 @@ $container-max-width: 1280px;
 
 $container-padding-mobile: 16px;
 $container-padding-tablet: 24px;
-$container-padding-desktop: 32px;
 
-$header-height: 72px;
+// Shared layout and surface tokens. Breakpoints are exclusive upper bounds.
+$breakpoint-desktop: 1280px;
+$breakpoint-preview: 1200px;
+$breakpoint-tablet: 1024px;
+$breakpoint-mobile: 768px;
+$breakpoint-small: 480px;
+$control-height: 38px;
+$touch-target: 44px;
+$radius-control: 8px;
+$radius-tile: 10px;
+$radius-surface: 20px;
+$surface: #fff;
+$shadow-surface: 0 0 20px rgba(0, 0, 0, 0.25);
+$shadow-tile: 0 0 10px rgba(0, 0, 0, 0.25);
+$shadow-tile-hover: 0 0 15px rgba(0, 0, 0, 0.35);
+$shadow-logo: 1px 1px 5px rgba(0, 0, 0, 0.25);
+$tile-bg: rgba(255, 255, 255, 0.35);
+$tile-bg-hover: rgba(255, 255, 255, 0.55);
+$tile-border: rgba(255, 255, 255, 0.25);
+$tile-text: rgba(22, 38, 55, 0.75);
+$deck-due: rgb(217, 240, 228);
+$deck-due-color: rgb(77, 164, 117);
+$outline-active: #e8eef3;
+
+$result-text: rgba(21, 64, 84, 0.8);
+$result-border: rgba(24, 68, 91, 0.08);
+$result-shadow:
+    0 16px 40px rgba(21, 64, 84, 0.08),
+    0 2px 8px rgba(21, 64, 84, 0.04);
+$result-correct: green;
+$result-incorrect: red;
+$breadcrumb-link: rgb(56, 75, 139);
+$breadcrumb-current: black;

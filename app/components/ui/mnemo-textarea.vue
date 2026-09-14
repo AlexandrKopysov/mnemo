@@ -47,8 +47,8 @@ const effectiveAutoGrow = computed(() => props.fullHeight ? false : props.autoGr
     width: 100%;
 
     :deep(.v-field) {
-        background: #ffffff;
-        border-radius: 8px;
+        background: $surface;
+        border-radius: $radius-control;
     }
 
     :deep(.v-field__input) {
@@ -59,10 +59,6 @@ const effectiveAutoGrow = computed(() => props.fullHeight ? false : props.autoGr
 
     :deep(textarea) {
         resize: vertical;
-    }
-
-    :deep(.v-input__details) {
-        display: none;
     }
 
     &--full-height {

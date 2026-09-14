@@ -94,8 +94,15 @@ const iconCircle: ComputedRef<iconCircleType[]> = computed(() => {
     min-width: 300px;
 }
 
-@media (max-width: 1279px) {
-    .card-tile-status { min-width: 0; gap: 4px; overflow-wrap: anywhere; }
-    .card-tile-status > div:first-child { display: flex; flex-wrap: nowrap; }
+@media (max-width: ($breakpoint-desktop - 1px)) {
+    .card-tile-status {
+        min-width: 0;
+        gap: 4px;
+        overflow-wrap: anywhere;
+    }
+    .card-tile-status > div:first-child {
+        display: flex;
+        flex-wrap: nowrap;
+    }
 }
 </style>

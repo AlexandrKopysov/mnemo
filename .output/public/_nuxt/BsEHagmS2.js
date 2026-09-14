@@ -1,1 +1,0 @@
-import{A as e,It as t,O as n,R as r,rt as i}from"./BrcPVpU8.js";import{p as a}from"./D0IiVIIE.js";import{t as o}from"./DxR4me7i.js";var s=r({__name:`edit`,setup(r){let s=a(),c=n(()=>String(s.params.deckId));return(n,r)=>(i(),e(o,{mode:`edit`,"deck-id":t(c)},null,8,[`deck-id`]))}});export{s as default};

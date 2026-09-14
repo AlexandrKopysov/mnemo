@@ -113,29 +113,8 @@ async function onRegister() {
 </script>
 
 <style scoped lang="scss">
-  .logo {
-    width: 50px;
-    height: 50px;
-  }
-
-  .title {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 18px;
-  }
-
-  .error {
-    color: $error;
-  }
-
-  .sub-title, .link, .error {
-    font-size: 14px;
-  }
-
-  .link {
-    color: $link;
-    cursor: pointer;
-  }
+@use "~/assets/scss/auth" as auth;
+@include auth.auth-form;
 </style>
 
 

@@ -28,6 +28,7 @@ function OnClickLogin() {
 </script>
 
 <style lang="scss" scoped>
+@use "~/assets/scss/layout" as layout;
 .mnemo-header {
     flex: 0 0 auto;
     width: 100%;
@@ -36,20 +37,18 @@ function OnClickLogin() {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 100%;
-        max-width: $container-max-width;
-        margin: 0 auto;
-        padding: 24px 0;
+        @include layout.page-container;
+        padding-block: 24px;
     }
 }
 
 .logo {
     display: flex;
     align-items: center;
-    background-color: #fff;
+    background-color: $surface;
     border-radius: 50px;
     height: 48px;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: $shadow-logo;
     padding: 0px 10px;
     gap: 5px;
     cursor: pointer;
@@ -60,11 +59,18 @@ function OnClickLogin() {
     }
 }
 
-@media (max-width: 1279px) {
-    .mnemo-header__container { padding-inline: $container-padding-tablet; gap: 16px; min-width: 0; }
-    .logo { flex-shrink: 0; }
+@media (max-width: ($breakpoint-desktop - 1px)) {
+    .mnemo-header__container {
+        gap: 16px;
+        min-width: 0;
+    }
+    .logo {
+        flex-shrink: 0;
+    }
 }
-@media (max-width: 767px) {
-    .mnemo-header__container { padding: 12px $container-padding-mobile; }
+@media (max-width: ($breakpoint-mobile - 1px)) {
+    .mnemo-header__container {
+        padding-block: 12px;
+    }
 }
 </style>

@@ -35,6 +35,8 @@
 
 <script lang="ts" setup>
 import mnemoButton from "~/components/ui/mnemo-button.vue"
+import { ANSWER } from '@shared/types/card'
+import { ANSWER_LABELS } from '~/entities/review-session/model/answer-labels'
 import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repeat-store"
 import type { IReviewSessionItem } from "shared/types/session"
 
@@ -48,17 +50,17 @@ interface IProps {
 const tiles = computed(() => {
   return {
     easy: {
-      label: 'Легко',
+      label: ANSWER_LABELS[ANSWER.EASY],
       value: props.easy.length,
       class: 'row-value'
     },
     normal: {
-      label: 'Сложно',
+      label: ANSWER_LABELS[ANSWER.NORMAL],
       value: props.normal.length,
       class: 'row-value'
     },
     hard: {
-      label: 'Не вспомнил',
+      label: ANSWER_LABELS[ANSWER.HARD],
       value: props.hard.length,
       class: 'row-value-red'
     },
@@ -84,95 +86,115 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-    .container {
-        display: flex;
-        min-height: 100%;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+.container {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.final-session-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 500px;
+    padding: 25px;
+    overflow: hidden;
+
+    background: $surface;
+    border: 1px solid $result-border;
+    border-radius: $radius-surface;
+    box-shadow: $result-shadow;
+
+    .title {
+        font-size: 36px;
+        font-weight: 500;
     }
 
-    .final-session-card {
-        position: relative;
+    .subtitle {
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    .annotation {
+        font-size: 14px;
+        color: $result-text;
+    }
+
+    .tile-result {
+        width: 100%;
+        padding: 15px;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        min-width: 500px;
-        padding: 25px;
-        overflow: hidden;
-
-        background: #fff;
-        border: 1px solid rgba(24, 68, 91, 0.08);
-        border-radius: 20px;
-        box-shadow:
-            0 16px 40px rgba(21, 64, 84, 0.08),
-            0 2px 8px rgba(21, 64, 84, 0.04);
-
-        .title {
-            font-size: 36px;
-            font-weight: 500;
-        }
-
-        .subtitle {
-            font-size: 24px;
-            font-weight: 500;
-        }
-
-        .annotation {
-            font-size: 14px;
-            color: rgba(21, 64, 84, 0.8);
-        }
-
-        .tile-result {
-            width: 100%;
-            padding: 15px;
+        gap: 15px;
+        border-radius: $radius-tile;
+        margin-top: 20px;
+        box-shadow: $shadow-tile;
+        .row {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-            .row {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                color: rgba(21, 64, 84, 0.8);
-                &-title {
-                    font-size: 16px;
-                };
-                &-value {
-                    font-size: 16px;
-                    font-weight: 500;
-                    // TO-DO Изменить цвета на глобальные переменные
-                    &-green {
-                        color: green
-                    }
-                    &-red {
-                        color: red
-                    }
+            align-items: center;
+            justify-content: space-between;
+            color: $result-text;
+            &-title {
+                font-size: 16px;
+            }
+            &-value {
+                font-size: 16px;
+                font-weight: 500;
+                &-green {
+                    color: $result-correct;
+                }
+                &-red {
+                    color: $result-incorrect;
                 }
             }
-            .title {
-                font-size: 18px
-            }
         }
-
-        .button {
-            width: 100%;
-            margin-top: 30px;
+        .title {
+            font-size: 18px;
         }
     }
 
-@media (max-width: 1279px) {
-    .container { width: 100%; min-width: 0; }
-    .final-session-card { min-width: 0; width: 500px; max-width: 100%; overflow-wrap: anywhere; }
-    .final-session-card .tile-result .row { gap: 12px; }
-    .final-session-card .row-title { min-width: 0; }
-    .final-session-card .row-value, .final-session-card .row-value-red { flex-shrink: 0; }
+    .button {
+        width: 100%;
+        margin-top: 30px;
+    }
 }
-@media (max-width: 767px) {
-    .final-session-card { padding: 20px 16px; text-align: center; }
-    .final-session-card .subtitle { font-size: 22px; }
-    .final-session-card .tile-result { padding: 12px; text-align: left; }
+
+@media (max-width: ($breakpoint-desktop - 1px)) {
+    .container {
+        width: 100%;
+        min-width: 0;
+    }
+    .final-session-card {
+        min-width: 0;
+        width: 500px;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+    .final-session-card .tile-result .row {
+        gap: 12px;
+    }
+    .final-session-card .row-title {
+        min-width: 0;
+    }
+    .final-session-card .row-value,
+    .final-session-card .row-value-red {
+        flex-shrink: 0;
+    }
+}
+@media (max-width: ($breakpoint-mobile - 1px)) {
+    .final-session-card {
+        padding: 20px 16px;
+        text-align: center;
+    }
+    .final-session-card .subtitle {
+        font-size: 22px;
+    }
+    .final-session-card .tile-result {
+        padding: 12px;
+        text-align: left;
+    }
 }
 </style>

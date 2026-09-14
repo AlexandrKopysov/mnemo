@@ -1,0 +1,12 @@
+@use "./vars" as *;
+
+@mixin page-container {
+    width: 100%;
+    max-width: $container-max-width;
+    margin-inline: auto;
+    padding-inline: $container-padding-tablet;
+
+    @media (max-width: ($breakpoint-mobile - 1px)) {
+        padding-inline: $container-padding-mobile;
+    }
+}

@@ -1,11 +1,11 @@
 <template>
-    <md-preview :content="content" />
+    <md-preview class="mnemo-markdown" :model-value="content" language="en-US" />
 </template>
 
 <script lang="ts" setup>
 import 'md-editor-v3/lib/style.css';
 import { MdPreview } from "md-editor-v3"
 
-const content = defineModel<string>("")
+defineProps<{ content: string }>()
 
 </script>

@@ -1,1 +1,0 @@
-import{A as e,R as t,rt as n}from"./BrcPVpU8.js";import{t as r}from"./DxR4me7i.js";var i=t({__name:`new`,setup(t){return(t,i)=>(n(),e(r,{mode:`create`}))}});export{i as default};

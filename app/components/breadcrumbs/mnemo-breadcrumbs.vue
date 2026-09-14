@@ -39,49 +39,50 @@
     const { breadcrumbs } = useBreadcrumbs()
 </script>
 
-<style lang='scss' scope>
-    .mnemo-breadcrumbs {
-        flex: 0 0 auto;
-        width: 100%;
+<style lang="scss" scoped>
+@use "~/assets/scss/layout" as layout;
+.mnemo-breadcrumbs {
+    flex: 0 0 auto;
+    width: 100%;
 
-        &__container {
-            display: flex;
-            align-items: center;
-            height: 24px;
-            max-width: $container-max-width;
-            margin: 0 auto;
-
-            a {
-                font-size: 18px;
-                font-weight: 300;
-                color: rgb(56, 75, 139);
-            }
-
-            &-current {
-                font-size: 18px;
-                font-weight: 300;
-                color: black;
-            }
-        }
-    }
-
-@media (max-width: 1279px) {
-    .mnemo-breadcrumbs__container {
-        height: auto;
+    &__container {
+        display: flex;
+        align-items: center;
         min-height: 24px;
-        min-width: 0;
         flex-wrap: wrap;
         gap: 4px;
-        padding-inline: $container-padding-tablet;
+        @include layout.page-container;
+        overflow-wrap: anywhere;
+
+        a {
+            font-size: 18px;
+            font-weight: 300;
+            color: $breadcrumb-link;
+        }
+
+        &-current {
+            font-size: 18px;
+            font-weight: 300;
+            color: $breadcrumb-current;
+        }
     }
-    .mnemo-breadcrumbs__container-link, .mnemo-breadcrumbs__container-current {
+}
+
+@media (max-width: ($breakpoint-desktop - 1px)) {
+    .mnemo-breadcrumbs__container {
+        min-width: 0;
+    }
+    .mnemo-breadcrumbs__container-link,
+    .mnemo-breadcrumbs__container-current {
         min-width: 0;
         max-width: 100%;
         overflow-wrap: anywhere;
     }
 }
-@media (max-width: 767px) {
-    .mnemo-breadcrumbs__container { padding-inline: $container-padding-mobile; }
-    .mnemo-breadcrumbs__container a, .mnemo-breadcrumbs__container-current { font-size: 16px; }
+@media (max-width: ($breakpoint-mobile - 1px)) {
+    .mnemo-breadcrumbs__container a,
+    .mnemo-breadcrumbs__container-current {
+        font-size: 16px;
+    }
 }
 </style>

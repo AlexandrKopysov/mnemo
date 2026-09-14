@@ -6,6 +6,9 @@ const isProd = process.env.NODE_ENV === 'production'
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  experimental: {
+    viteEnvironmentApi: true,
+  },
   alias: {
     '@components': resolve(__dirname, './app/components/'),
     '@composables': resolve(__dirname, './app/composables/'),
@@ -27,7 +30,8 @@ export default defineNuxtConfig({
     '@sidebase/nuxt-auth',
     "vuetify-nuxt-module",
     "@nuxtjs/tailwindcss",
-    "@pinia/nuxt"
+    "@pinia/nuxt",
+    '@nuxt/eslint',
   ],
   googleFonts: {
     families: {
@@ -66,6 +70,14 @@ export default defineNuxtConfig({
     },
   },
   vite: {
+    optimizeDeps: {
+      include: [
+        'dayjs-nuxt > dayjs',
+        'dayjs-nuxt > dayjs/plugin/updateLocale',
+        'dayjs-nuxt > dayjs/plugin/relativeTime',
+        'dayjs-nuxt > dayjs/plugin/utc',
+      ],
+    },
     css: {
       preprocessorOptions: {
         scss: {

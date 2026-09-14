@@ -54,7 +54,9 @@ function onExit() {
 
 </script>
 <style scoped lang="scss">
-@media (max-width: 1279px) {
-    .profile :deep(.v-row) { margin: 0; }
+@media (max-width: ($breakpoint-desktop - 1px)) {
+    .profile :deep(.v-row) {
+        margin: 0;
+    }
 }
 </style>

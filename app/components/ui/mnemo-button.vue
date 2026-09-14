@@ -42,35 +42,30 @@ const variantConfig = computed(() => {
     case BUTTON_VARIANT.DANGER:
       return {
         vuetifyVariant: 'flat' as const,
-        color: 'mnemo-danger',
         className: 'mnemo-btn--danger',
       }
 
     case BUTTON_VARIANT.DARK:
       return {
         vuetifyVariant: 'flat' as const,
-        color: 'mnemo-dark',
         className: 'mnemo-btn--dark',
       }
 
     case BUTTON_VARIANT.OUTLINE:
       return {
         vuetifyVariant: 'outlined' as const,
-        color: 'mnemo-outline',
         className: 'mnemo-btn--outline',
       }
 
     case BUTTON_VARIANT.SECONDARY:
       return {
         vuetifyVariant: 'flat' as const,
-        color: 'mnemo-secondary',
         className: 'mnemo-btn--secondary',
       }
 
     case BUTTON_VARIANT.SUCCESS:
       return {
         vuetifyVariant: 'flat' as const,
-        color: 'mnemo-success',
         className: 'mnemo-btn--success',
       }
 
@@ -78,7 +73,6 @@ const variantConfig = computed(() => {
     default:
       return {
         vuetifyVariant: 'flat' as const,
-        color: 'mnemo-primary',
         className: 'mnemo-btn--primary',
       }
   }
@@ -102,7 +96,6 @@ const buttonClass = computed(() => [
     :prepend-icon="prependIcon || undefined"
     :size="size"
     :variant="variantConfig.vuetifyVariant"
-    :color="variantConfig.color"
     :class="buttonClass"
     @click="handleClick"
   >
@@ -112,138 +105,65 @@ const buttonClass = computed(() => [
 
 <style scoped lang="scss">
 .mnemo-btn {
-  min-height: 38px;
-  max-height: 38px;
-  border-radius: 8px;
-  padding: 0 16px;
+    min-height: $control-height;
+    max-height: $control-height;
+    border-radius: $radius-control;
+    padding: 0 16px;
 
-  font-weight: 400;
-  font-size: 14px;
-  letter-spacing: 0;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0;
 
-  text-transform: none;
+    text-transform: none;
 
-  transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
 }
 
 .mnemo-btn--block {
-  width: 100%;
+    width: 100%;
 }
 
-/* =========================
-   PRIMARY
-========================= */
-
-.mnemo-btn--primary {
-  background: $primary;
-  color: $text-light;
-
-  &:hover {
-    background: $primary-hover;
-  }
-
-  &:active {
-    background: $primary-active;
-  }
+@each $name, $normal, $hover, $active,
+    $text
+        in (
+            primary $primary $primary-hover $primary-active $text-light,
+            secondary $secondary $secondary-hover $secondary-active $text-dark,
+            danger $danger $danger-hover $danger-active $text-light,
+            dark $dark $dark-hover $dark-active $text-light,
+            success $success $success-hover $success-active $text-light,
+            outline transparent $outline-hover $outline-active $text-dark
+        )
+{
+    .mnemo-btn--#{$name} {
+        background: $normal;
+        color: $text;
+        &:hover {
+            background: $hover;
+        }
+        &:active {
+            background: $active;
+        }
+    }
 }
-
-/* =========================
-   SECONDARY
-========================= */
-
-.mnemo-btn--secondary {
-  background: $secondary;
-  color: $text-dark;
-
-  &:hover {
-    background: $secondary-hover;
-  }
-
-  &:active {
-    background: $secondary-active;
-  }
-}
-
-/* =========================
-   DANGER
-========================= */
-
-.mnemo-btn--danger {
-  background: $danger;
-  color: $text-light;
-
-  &:hover {
-    background: $danger-hover;
-  }
-
-  &:active {
-    background: $danger-active;
-  }
-}
-
-/* =========================
-   DARK
-========================= */
-
-.mnemo-btn--dark {
-  background: $dark;
-  color: $text-light;
-
-  &:hover {
-    background: $dark-hover;
-  }
-
-  &:active {
-    background: $dark-active;
-  }
-}
-
-/* =========================
-   OUTLINE
-========================= */
-
 .mnemo-btn--outline {
-  background: transparent;
-  border: 1px solid $outline-border;
-  color: $text-dark;
-
-  &:hover {
-    background: $outline-hover;
-  }
-
-  &:active {
-    background: #e8eef3;
-  }
+    border: 1px solid $outline-border;
 }
 
-/* =========================
-   SUCCESS
-========================= */
-
-.mnemo-btn--success {
-  background: $success;
-  color: $text-light;
-
-  &:hover {
-    background: $success-hover;
-  }
-
-  &:active {
-    background: $success-active;
-  }
-}
-
-@media (max-width: 1279px) {
-  .mnemo-btn {
-    min-height: 44px;
-    max-height: none;
-    height: auto;
-    max-width: 100%;
-    white-space: normal;
-  }
-  .mnemo-btn :deep(.v-btn__content) { min-width: 0; white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: ($breakpoint-desktop - 1px)) {
+    .mnemo-btn {
+        min-height: $touch-target;
+        max-height: none;
+        height: auto;
+        max-width: 100%;
+        white-space: normal;
+    }
+    .mnemo-btn :deep(.v-btn__content) {
+        min-width: 0;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
 }
 </style>

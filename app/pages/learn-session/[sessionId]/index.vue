@@ -1,5 +1,8 @@
 <template>
     <mnemo-form-learn
+        :card-id="currentCard?.id"
+        :busy="busy"
+        :error="error"
         :title="currentCard?.deckTitle"
         :front="currentCard?.cardFront"
         :back="currentCard?.cardBack"
@@ -23,8 +26,19 @@
 
     const { setBreadcrumbs } = useBreadcrumbs()
 
-    const onClick = (variant: ANSWER) => {
-        completeCurrentCard(variant)
+    const busy = ref(false)
+    const error = ref('')
+    const onClick = async (variant: ANSWER) => {
+        if (busy.value) return
+        busy.value = true
+        error.value = ''
+        try {
+            await completeCurrentCard(variant)
+        } catch {
+            error.value = 'Не удалось сохранить оценку. Попробуйте ещё раз.'
+        } finally {
+            busy.value = false
+        }
     }
 
     onMounted(async () => {

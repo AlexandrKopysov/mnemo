@@ -56,67 +56,69 @@
 
 <style scoped lang="scss">
 .mnemo-input {
-  :deep(.v-field) {
-    height: 38px;
-    min-height: 38px;
-    background: #ffffff;
-    background-color: #ffffff;
-    border-radius: 4px;
-  }
+    --input-height: #{$control-height};
+    :deep(.v-field) {
+        height: var(--input-height);
+        min-height: var(--input-height);
+        background: $surface;
+        border-radius: 4px;
+    }
 
-  :deep(.v-field__overlay) {
-    background: transparent;
-  }
+    :deep(.v-field__overlay) {
+        background: transparent;
+    }
 
-  :deep(.v-field__input) {
-    height: 38px;
-    min-height: 38px;
-    padding-top: 0;
-    padding-bottom: 0;
-    background: transparent;
-    box-shadow: none;
-    outline: none;
-    appearance: none;
-  }
+    :deep(.v-field__input) {
+        height: var(--input-height);
+        min-height: var(--input-height);
+        padding-top: 0;
+        padding-bottom: 0;
+        background: transparent;
+        box-shadow: none;
+        outline: none;
+        appearance: none;
+    }
 
-  :deep(input) {
-    background: transparent;
-    box-shadow: none;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-  }
+    :deep(input) {
+        background: transparent;
+        box-shadow: none;
+        outline: none;
+        appearance: none;
+        -webkit-appearance: none;
+    }
 
-  :deep(input:-webkit-autofill),
-  :deep(input:-webkit-autofill:hover),
-  :deep(input:-webkit-autofill:focus),
-  :deep(input:-webkit-autofill:active) {
-    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
-    -webkit-text-fill-color: #334155 !important;
-    transition: background-color 9999s ease-in-out 0s;
-  }
+    :deep(input:-webkit-autofill),
+    :deep(input:-webkit-autofill:hover),
+    :deep(input:-webkit-autofill:focus),
+    :deep(input:-webkit-autofill:active) {
+        -webkit-box-shadow: 0 0 0 1000px $surface inset !important;
+        -webkit-text-fill-color: $text-dark !important;
+        transition: background-color 9999s ease-in-out 0s;
+    }
 
-  :deep(.v-input__details) {
-    display: none;
-  }
-
-  :deep(.v-field__prepend-inner),
-  :deep(.v-field__append-inner) {
-    height: 38px;
-    padding-top: 0;
-    align-items: center;
-  }
+    :deep(.v-field__prepend-inner),
+    :deep(.v-field__append-inner) {
+        height: var(--input-height);
+        padding-top: 0;
+        align-items: center;
+    }
 }
 
-@media (max-width: 1279px) {
-  .mnemo-input {
-    min-width: 0;
-    max-width: 100%;
-    :deep(.v-input__control), :deep(.v-field), :deep(.v-field__field) { min-width: 0; }
-    :deep(.v-field), :deep(.v-field__input) { height: 44px; min-height: 44px; }
-    :deep(.v-field__prepend-inner), :deep(.v-field__append-inner) { height: 44px; }
-    :deep(input) { min-width: 0; font-size: 16px; }
-  }
+@media (max-width: ($breakpoint-desktop - 1px)) {
+    .mnemo-input {
+        min-width: 0;
+        max-width: 100%;
+        :deep(.v-input__control),
+        :deep(.v-field),
+        :deep(.v-field__field) {
+            min-width: 0;
+        }
+        --input-height: #{$touch-target};
+        :deep(input) {
+            min-width: 0;
+            font-size: 16px;
+        }
+    }
 }
 </style>
 

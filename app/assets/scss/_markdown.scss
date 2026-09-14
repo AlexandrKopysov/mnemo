@@ -1,0 +1,26 @@
+.mnemo-markdown {
+    min-width: 0;
+    max-width: 100%;
+    .md-editor-preview,
+    .md-editor-html {
+        word-break: normal;
+        overflow-wrap: anywhere;
+        min-width: 0;
+    }
+    pre {
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: pre;
+        overflow-wrap: normal;
+    }
+    table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        word-break: normal;
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}

@@ -1,5 +1,0 @@
-globalThis.__timing__.logStart('Load chunks/build/default-styles-2-BWhuISjR.mjs');//#region app/components/header/mnemo-header.vue?vue&type=style&index=0&scoped=7790e712&inline&used&lang.scss
-var mnemo_header_vue_vue_type_style_index_0_scoped_7790e712_inline_used_lang_default = ".mnemo-header[data-v-7790e712]{flex:none;width:100%}.mnemo-header__container[data-v-7790e712]{justify-content:space-between;width:100%;max-width:1280px;margin:0 auto;padding:24px 0}.logo[data-v-7790e712],.mnemo-header__container[data-v-7790e712]{align-items:center;display:flex}.logo[data-v-7790e712]{cursor:pointer;background-color:#fff;border-radius:50px;gap:5px;height:48px;padding:0 10px;box-shadow:1px 1px 5px #00000040}.logo-text[data-v-7790e712]{font-size:24px;line-height:24px}";
-
-export { mnemo_header_vue_vue_type_style_index_0_scoped_7790e712_inline_used_lang_default as m };;globalThis.__timing__.logEnd('Load chunks/build/default-styles-2-BWhuISjR.mjs');
-//# sourceMappingURL=default-styles-2.mjs-BWhuISjR.mjs.map

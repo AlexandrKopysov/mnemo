@@ -5,6 +5,7 @@
             <template v-slot:toolbar-left>
                 <mnemo-button 
                     @click="addDeck"
+                    variant="secondary"
                     width="150"
                 >
                     Добавить колоду
@@ -97,37 +98,46 @@ async function onDeckDelete(id: string | undefined) {
 </script>
 
 <style lang="scss" scoped>
+.decks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.deck-page {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 0px;
+
+    &__review {
+        flex: 0 0 auto;
+    }
+
+    &__list {
+        flex: 1 1 0;
+        min-height: 400px;
+    }
+}
+
+@media (max-width: ($breakpoint-desktop - 1px)) {
+    .deck-page,
+    .decks-grid > * {
+        min-width: 0;
+    }
     .decks-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 20px;
-    }
-
-    .deck-page {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
         gap: 16px;
-        min-height: 0px;
-
-        &__review {
-            flex: 0 0 auto;
-        }
-
-        &__list {
-            flex: 1 1 0;
-            min-height: 400px;
-        }
     }
-
-@media (max-width: 1279px) {
-    .deck-page, .decks-grid > * { min-width: 0; }
-    .decks-grid { gap: 16px; }
 }
-@media (max-width: 1023px) {
-    .decks-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: ($breakpoint-tablet - 1px)) {
+    .decks-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
-@media (max-width: 767px) {
-    .decks-grid { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: ($breakpoint-mobile - 1px)) {
+    .decks-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }
 </style>

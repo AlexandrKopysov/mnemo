@@ -1,318 +1,361 @@
-<template>
-    <section class="session-preview">
-        <div class="session-preview__calendar">
-            <v-icon
-                size="50"
-                color="rgba(1, 154, 93, 0.75)"
-            >
-                mdi-calendar-clock
-            </v-icon>
-        </div>
-
-        <div class="session-preview__info">
-            <span class="session-preview__title">
-                Сегодня к повторению
-            </span>
-
-            <div class="session-preview__total">
-                <span class="session-preview__total-value">
-                    {{ preview?.totalCards ?? 0 }}
-                </span>
-
-                <span class="session-preview__total-label">
-                    карточек
-                </span>
+﻿<template>
+    <section class="session-preview" aria-label="Сегодня к повторению">
+        <template v-if="preview && preview.totalCards > 0">
+            <img class="session-preview__illustration" src="~/assets/images/review-cards.svg" alt="" >
+            <h2 class="session-preview__title">Сегодня к повторению</h2>
+            <div class="session-preview__stats">
+                <p class="session-preview__total">
+                    <strong>{{ preview.totalCards }}</strong>
+                    <span>{{ pluralRu(preview.totalCards, ['карточка', 'карточки', 'карточек']) }}</span>
+                </p>
+                <p v-if="preview.estimatedMinutes > 0" class="session-preview__estimated">
+                    <span class="session-preview__icon session-preview__icon--clock" aria-hidden="true" />
+                    {{ estimatedTime }}
+                </p>
             </div>
-
-            <span class="session-preview__estimated">
-                ~ {{ preview?.estimatedMinutes ?? 0 }} минут
-            </span>
-        </div>
-
-        <div class="session-preview__decks">
-            <span class="session-preview__decks-title">
-                По колодам
-            </span>
-
-            <div class="session-preview__decks-list">
-                <div
-                    v-for="deck in preview?.decks ?? []"
-                    :key="deck.deckId"
-                    class="session-preview__deck"
+            <div v-if="preview.decks.length" class="session-preview__decks">
+                <span class="session-preview__decks-label">{{ decksLabel }}</span>
+                <button
+                    class="session-preview__decks-toggle"
+                    type="button"
+                    :aria-expanded="decksExpanded"
+                    :aria-controls="decksId"
+                    @click="decksExpanded = !decksExpanded"
                 >
-                    <span class="session-preview__deck-title">
-                        {{ deck.title }}
-                    </span>
-
-                    <span class="session-preview__deck-count">
-                        {{ deck.cardsCount }}
-                    </span>
-                </div>
+                    {{ decksLabel }}
+                    <span class="session-preview__icon session-preview__icon--chevron" aria-hidden="true" :class="{ 'is-expanded': decksExpanded }" />
+                </button>
+                <ul :id="decksId" class="session-preview__decks-list" :class="{ 'is-expanded': decksExpanded }">
+                    <li v-for="deck in preview.decks" :key="deck.deckId" class="session-preview__deck">
+                        <span>{{ deck.title }}</span><span>· {{ deck.cardsCount }}</span>
+                    </li>
+                </ul>
             </div>
-        </div>
-
-        <div class="session-preview__actions">
-            <div class="session-preview__streak">
-                <div class="session-preview__streak-value">
-                    <v-icon
-                        size="24"
-                        color="rgba(1, 154, 93, 0.75)"
-                    >
-                        mdi-fire
-                    </v-icon>
-
-                    <span>5</span>
-                </div>
-
-                <span class="session-preview__streak-days">
-                    дней
-                </span>
-            </div>
-
-            <span class="session-preview__streak-label">
-                Текущая серия
-            </span>
-
-            <mnemo-button 
-                v-if="preview?.totalCards"
-                class="session-preview__button"
-                @click="startRepeat()"
-            >
-                Начать повторение
-            </mnemo-button>
-        </div>
+            <button class="session-preview__button" type="button" :disabled="isStarting" :aria-busy="isStarting" @click="startRepeat">
+                {{ isStarting ? 'Запускаем…' : 'Начать повторение' }}
+                <span class="session-preview__icon session-preview__icon--arrow" aria-hidden="true" />
+            </button>
+        </template>
+        <p v-else-if="preview" class="session-preview__message">На сегодня повторений нет</p>
+        <p v-else-if="!error" class="session-preview__message" role="status">Загружаем очередь повторения…</p>
+        <p v-if="error" class="session-preview__message session-preview__error" role="alert">{{ error }}</p>
     </section>
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from "pinia"
-import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repeat-store"
-import MnemoButton from "@components/ui/mnemo-button.vue"
+import { storeToRefs } from 'pinia'
+import { useMnemoSessionStore } from '~/entities/review-session/model/mnemo-repeat-store'
+import { pluralRu } from '~/utils/plural-ru'
 
 const sessionStore = useMnemoSessionStore()
-const { startSession } = sessionStore
-
 const { preview, activeSession } = storeToRefs(sessionStore)
+const decksExpanded = ref(false)
+const decksId = useId()
+const isStarting = ref(false)
+const error = ref('')
+const decksLabel = computed(() => {
+    const count = preview.value?.decks.length ?? 0
+    return `Из ${count} ${pluralRu(count, ['колоды', 'колод', 'колод'])}`
+})
+const estimatedTime = computed(() => {
+    const minutes = preview.value?.estimatedMinutes ?? 0
+    return minutes === 1 ? 'Около минуты' : `Около ${minutes} ${pluralRu(minutes, ['минуты', 'минут', 'минут'])}`
+})
 
 const startRepeat = async () => {
-    await startSession()
-    const sessionId = activeSession.value?.id
-
-    return navigateTo({
-        name: 'learn-session-sessionId',
-        params: {
-            sessionId: sessionId
-        }
-    })
+    if (isStarting.value) return
+    isStarting.value = true
+    error.value = ''
+    try {
+        await sessionStore.startSession()
+        const sessionId = activeSession.value?.id
+        if (!sessionId) throw new Error('Missing session')
+        await navigateTo({ name: 'learn-session-sessionId', params: { sessionId } })
+    } catch {
+        error.value = 'Не удалось начать повторение. Попробуйте ещё раз.'
+    } finally {
+        isStarting.value = false
+    }
 }
 
 onMounted(async () => {
-    await sessionStore.loadPreview()
+    try {
+        await sessionStore.loadPreview()
+    } catch {
+        error.value = 'Не удалось загрузить очередь повторения. Обновите страницу.'
+    }
 })
-
 </script>
 
 <style scoped lang="scss">
-$accent-color: rgba(1, 154, 93, 0.75);
-$calendar-bg: rgb(228, 243, 237);
-$border-color: rgb(234, 234, 234);
-$counter-bg: rgb(255, 255, 255);
-
+@use "~/assets/scss/review" as review;
 .session-preview {
     display: grid;
-    grid-template-columns:
-        auto
-        minmax(220px, 1fr)
-        minmax(240px, 1.2fr)
-        auto;
+    grid-template-columns: 2$touch-target minmax(0, 1fr) auto;
+    grid-template-areas: "art title title" "art stats stats" "art decks action";
+    align-items: center;
+    column-gap: 32px;
+    row-gap: 16px;
+    padding: 30px 28px 32px;
+    border: 1px solid review.$border;
+    border-radius: $radius-surface;
+    background: $surface;
+    color: review.$text;
+    box-shadow: review.$shadow;
 
-    align-items: flex-start;
-    gap: 32px;
-
-    padding: 28px;
-    border-radius: 24px;
-
-    background: #fff;
-    backdrop-filter: blur(10px);
-
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-
-    &__calendar {
-        display: grid;
-        place-items: center;
-
-        width: 100px;
-        height: 100px;
-
-        border-radius: 50%;
-        background: $calendar-bg;
+    &__icon {
+        display: inline-block;
+        background-color: currentColor;
+        mask-position: center;
+        mask-repeat: no-repeat;
+        mask-size: contain;
     }
-
-    &__info {
-        display: flex;
-        height: 100%;
-        flex-direction: column;
+    &__icon--clock {
+        mask-image: url("~/assets/icons/clock-outline.svg");
     }
-
+    &__icon--chevron {
+        mask-image: url("~/assets/icons/chevron-down.svg");
+    }
+    &__icon--arrow {
+        mask-image: url("~/assets/icons/arrow-right.svg");
+    }
+    &__illustration {
+        grid-area: art;
+        width: 210px;
+        max-width: 100%;
+        justify-self: center;
+    }
     &__title {
-        color: $accent-color;
-        font-size: 24px;
-        font-weight: 500;
+        grid-area: title;
+        margin: 0;
+        font-size: 30px;
+        line-height: 1.25;
+        font-weight: 700;
     }
-
+    &__stats {
+        grid-area: stats;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px 36px;
+        min-width: 0;
+    }
     &__total {
         display: flex;
         align-items: baseline;
-        gap: 8px;
-    }
-
-    &__total-value {
-        font-size: 64px;
-        font-weight: 600;
-        line-height: 1;
-    }
-
-    &__total-label {
-        font-size: 36px;
-        line-height: 1;
-    }
-
-    &__estimated {
-        margin-top: 12px;
-
-        font-size: 18px;
-    }
-
-    &__decks {
-        padding-left: 24px;
-        height: 100%;
-        border-left: 1px solid $border-color;
-    }
-
-    &__decks-title {
+        gap: 16px;
+        margin: 0;
         font-size: 24px;
         font-weight: 500;
     }
-
+    &__total strong {
+        font-size: 80px;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -2px;
+    }
+    &__estimated {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        font-size: 18px;
+    }
+    &__estimated .session-preview__icon {
+        width: 24px;
+        height: 24px;
+        flex: none;
+        color: review.$muted;
+    }
+    &__decks {
+        grid-area: decks;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+        min-width: 0;
+        font-size: 18px;
+    }
+    &__decks-label {
+        flex-shrink: 0;
+    }
+    &__decks-toggle {
+        display: none;
+        border: 0;
+        background: transparent;
+    }
     &__decks-list {
         display: flex;
-        flex-direction: column;
-        gap: 6px;
-
-        margin-top: 12px;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        min-width: 0;
     }
-
     &__deck {
-        display: grid;
-        grid-template-columns: minmax(0, 240px) 24px;
-        align-items: center;
-        column-gap: 12px;
-    }
-
-    &__deck-title {
-        overflow: hidden;
-
+        display: flex;
+        align-items: baseline;
+        gap: 5px;
+        max-width: 100%;
+        padding: 9px 16px;
+        border-radius: 18px;
+        background: review.$badge-bg;
+        color: review.$badge-text;
         font-size: 16px;
-        font-weight: 500;
-
+        line-height: 1.4;
+        font-weight: 700;
+    }
+    &__deck span:first-child {
+        overflow-wrap: anywhere;
+        min-width: 0;
+    }
+    &__deck span:last-child {
         white-space: nowrap;
-        text-overflow: ellipsis;
     }
-
-    &__deck-count {
-        font-size: 16px;
-        font-weight: 500;
-        text-align: right;
-    }
-
-    &__actions {
+    &__button {
+        grid-area: action;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    &__streak {
-        display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 2px;
-
-        width: 100px;
-        height: 100px;
-
-        border: 1px solid $border-color;
-        border-radius: 50%;
-
-        background: $counter-bg;
-    }
-
-    &__streak-value {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-
-        color: $accent-color;
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 1;
-    }
-
-    &__streak-days,
-    &__streak-label {
-        font-size: 14px;
+        gap: 18px;
+        min-height: 60px;
+        padding: 14px 28px;
+        border: 0;
+        border-radius: 11px;
+        background: review.$action;
+        color: $surface;
+        font-size: 20px;
+        line-height: 1.4;
         font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.15s ease;
     }
-
-    &__streak-days {
-        line-height: 1;
+    &__button:hover {
+        background: review.$action-hover;
     }
-
-    &__streak-label {
-        margin-top: 12px;
+    &__button:active {
+        background: review.$action-active;
     }
-
-    &__button {
-        margin-top: 12px;
+    &__button:disabled {
+        opacity: 0.7;
+        cursor: wait;
     }
-}
-
-@media (max-width: 1279px) {
-    .session-preview {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        gap: 24px;
-        padding: 24px;
-        position: relative;
+    &__button .session-preview__icon {
+        width: 26px;
+        height: 26px;
+        flex: none;
     }
-    .session-preview > * { min-width: 0; }
-    .session-preview__calendar { position: absolute; top: 24px; left: 24px; width: 56px; height: 56px; }
-    .session-preview__calendar :deep(.v-icon) { font-size: 36px; }
-    .session-preview__info { padding-left: 72px; }
-    .session-preview__title { font-size: 22px; }
-    .session-preview__total { flex-wrap: wrap; }
-    .session-preview__total-value { font-size: 48px; overflow-wrap: anywhere; }
-    .session-preview__total-label { font-size: 26px; }
-    .session-preview__estimated { overflow-wrap: anywhere; }
-    .session-preview__deck { grid-template-columns: minmax(0, 1fr) minmax(0, auto); }
-    .session-preview__deck-count { overflow-wrap: anywhere; }
-    .session-preview__actions {
+    &__message {
         grid-column: 1 / -1;
-        display: grid;
-        grid-template-columns: auto minmax(0, 1fr) auto;
-        gap: 12px;
+        margin: 0;
+        font-size: 18px;
     }
-    .session-preview__streak { width: 64px; height: 64px; }
-    .session-preview__streak-label, .session-preview__button { margin-top: 0; }
+    &__error {
+        color: $error;
+    }
 }
-@media (max-width: 767px) {
-    .session-preview { grid-template-columns: minmax(0, 1fr); padding: 16px; gap: 20px; }
-    .session-preview__calendar { top: 16px; left: 16px; }
-    .session-preview__title { font-size: 20px; }
-    .session-preview__total-value { font-size: 44px; }
-    .session-preview__total-label { font-size: 24px; }
-    .session-preview__decks { padding-left: 0; padding-top: 16px; border-left: 0; border-top: 1px solid $border-color; }
-    .session-preview__decks-title { font-size: 20px; }
-    .session-preview__actions { grid-template-columns: auto minmax(0, 1fr); }
-    .session-preview__button { grid-column: 1 / -1; width: 100%; }
+
+@media (max-width: ($breakpoint-preview - 1px)) {
+    .session-preview {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas: "title art" "stats art" "decks action";
+        column-gap: 24px;
+        padding: 28px 30px 24px;
+        &__illustration {
+            width: 165px;
+            justify-self: end;
+        }
+        &__title {
+            font-size: 26px;
+        }
+        &__stats {
+            column-gap: 28px;
+        }
+        &__total {
+            font-size: 22px;
+            gap: 12px;
+        }
+        &__decks {
+            display: block;
+        }
+        &__decks-list {
+            margin-top: 4px;
+        }
+        &__button {
+            align-self: end;
+            padding-inline: 24px;
+        }
+    }
+}
+
+@media (max-width: ($breakpoint-mobile - 1px)) {
+    .session-preview {
+        grid-template-columns: minmax(0, 1fr) 90px;
+        grid-template-areas: "title title" "stats art" "action action" "decks decks";
+        gap: 16px 8px;
+        padding: 20px;
+        border-radius: 14px;
+        &__title {
+            font-size: 23px;
+        }
+        &__illustration {
+            width: 100px;
+            max-width: none;
+        }
+        &__stats {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+        &__total {
+            font-size: 20px;
+        }
+        &__total strong {
+            font-size: 60px;
+        }
+        &__estimated {
+            font-size: 16px;
+        }
+        &__estimated .session-preview__icon {
+            width: 22px;
+            height: 22px;
+        }
+        &__button {
+            width: 100%;
+            min-height: 56px;
+            padding-inline: 12px;
+            font-size: 18px;
+        }
+        &__decks {
+            font-size: 16px;
+        }
+        &__decks-label {
+            display: none;
+        }
+        &__decks-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 28px;
+            color: inherit;
+            cursor: pointer;
+        }
+        &__decks-toggle .session-preview__icon {
+            width: 20px;
+            height: 20px;
+            color: review.$toggle;
+        }
+        &__decks-toggle .is-expanded {
+            transform: rotate(180deg);
+        }
+        &__decks-list {
+            display: none;
+            margin-top: 12px;
+        }
+        &__decks-list.is-expanded {
+            display: flex;
+        }
+    }
 }
 </style>

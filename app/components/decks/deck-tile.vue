@@ -84,92 +84,65 @@ const onDeleteClick = () => {
 </script>
 
 <style lang="scss" scoped>
-
-  $deck-bg: rgba(255, 255, 255, 0.35);
-  $deck-bg-hover: rgba(255, 255, 255, 0.55);
-  $deck-border: rgba(255, 255, 255, 0.25);
-  $deck-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  $deck-shadow-hover: 0 0 15px rgba(0, 0, 0, 0.35);
-  $deck-font-color: rgba(22, 38, 55, 0.75);
-  $deck-due: rgba(217, 240, 228);
-  $deck-due-color: rgba(77, 164, 117);
-
-  .tile-container {
+@use "~/assets/scss/tiles" as tiles;
+@include tiles.tile;
+.tile-container {
     min-height: 160px;
-    padding: 0px 20px;
-    border-radius: 10px;
-    background-color: $deck-bg;
-    box-shadow: $deck-shadow;
-    border: 1px solid $deck-border;
-    cursor: pointer;
-    
-    &:hover {
-      transition: all 0.2s ease;
-      background-color: $deck-bg-hover;
-      box-shadow: $deck-shadow-hover;
-    }
-  }
+}
 
-  .tile-info {
+.tile-info {
     margin-top: 10px;
     width: 100%;
-    display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 4px;
-    color: $deck-font-color;
-  }
+}
 
-  .tile-content {
+.tile-content {
     display: flex;
     justify-content: space-between;
-    margin-top: 10px
-  }
+    margin-top: 10px;
+}
 
-  .tile-due {
-    border-radius: 10px;
+.tile-due {
+    border-radius: $radius-tile;
+
     background-color: $deck-due;
     color: $deck-due-color;
     padding: 5px 25px;
     margin-top: 10px;
-  }
-
-  .tile-title {
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 24px;
-  }
-
-  .tile-subtitle {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 14px;
-  }
-
-  .tile-left-container {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .dot-menu-btn {
-    width: 16px;
-    &:deep(.v-btn__overlay),
-    &:deep(.v-btn__underlay),
-    &:deep(.v-ripple__container) {
-      display: none;
+}
+.dot-menu-btn {
+    @media (min-width: $breakpoint-desktop) {
+        width: 16px;
     }
-  }
+}
 
-@media (max-width: 1279px) {
-  .tile-container { min-width: 0; padding: 0 12px 16px; }
-  .tile-info { align-items: flex-start; }
-  .tile-title { min-width: 0; overflow-wrap: anywhere; font-size: 22px; }
-  .tile-content { gap: 12px; align-items: center; }
-  .tile-content > div:first-child { min-width: 0; overflow-wrap: anywhere; }
-  .tile-content > :deep(.progress-circle) { flex-shrink: 0; }
-  .tile-due { padding: 5px 10px; }
-  .dot-menu-btn { width: 44px; min-width: 44px; height: 44px; flex-shrink: 0; }
+@media (max-width: ($breakpoint-desktop - 1px)) {
+    .tile-container {
+        min-width: 0;
+        padding: 0 12px 16px;
+    }
+    .tile-info {
+        align-items: flex-start;
+    }
+    .tile-title {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        font-size: 22px;
+    }
+    .tile-content {
+        gap: 12px;
+        align-items: center;
+    }
+    .tile-content > div:first-child {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+    .tile-content > :deep(.progress-circle) {
+        flex-shrink: 0;
+    }
+    .tile-due {
+        padding: 5px 10px;
+    }
 }
 </style>

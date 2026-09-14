@@ -37,50 +37,63 @@ definePageMeta({
 })
 </script>
 
-<style scoped>
-  .auth-page {
+<style scoped lang="scss">
+.auth-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(
-      to bottom,
-      #f5f7fa 0%,
-      #e3ecf5 30%,
-      #c9dceb 60%,
-      #9fc4dc 80%,
-      #6eaad0 100%
+        to bottom,
+        #f5f7fa 0%,
+        #e3ecf5 30%,
+        #c9dceb 60%,
+        #9fc4dc 80%,
+        #6eaad0 100%
     );
 
     &__form {
-      width: 300px;
-      background-color: rgba(253, 250, 254, 0.75);
-      border-radius: 10px;
-      border: 1px solid rgba(0, 0, 0, 0.10);
-      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-      padding: 25px;
+        width: 300px;
+        background-color: rgba(253, 250, 254, 0.75);
+        border-radius: $radius-tile;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: $shadow-logo;
+        padding: 25px;
     }
-  }
+}
 
-/* The original &__form is in plain CSS, not SCSS.
-   Leave its desktop behavior unchanged; use an explicit responsive selector. */
-@media (max-width: 1279px) {
-  .auth-page { min-height: 100dvh; padding: 24px; }
-  .auth-page > .v-row { margin: 0; min-width: 0; }
-  .auth-page .v-col { padding: 0; min-width: 0; }
-  .auth-page .auth-page__form {
-    width: 100%;
-    max-width: 380px;
-    min-width: 0;
-    padding: 24px;
-    overflow-wrap: anywhere;
-  }
+@media (max-width: ($breakpoint-desktop - 1px)) {
+    .auth-page {
+        min-height: 100dvh;
+        padding: 24px;
+    }
+    .auth-page > .v-row {
+        margin: 0;
+        min-width: 0;
+    }
+    .auth-page .v-col {
+        padding: 0;
+        min-width: 0;
+    }
+    .auth-page .auth-page__form {
+        width: 100%;
+        max-width: 380px;
+        min-width: 0;
+        padding: 24px;
+        overflow-wrap: anywhere;
+    }
 }
-@media (max-width: 767px) {
-  .auth-page { padding: 16px; }
-  .auth-page .auth-page__form { padding: 16px; }
+@media (max-width: ($breakpoint-mobile - 1px)) {
+    .auth-page {
+        padding: 16px;
+    }
+    .auth-page .auth-page__form {
+        padding: 16px;
+    }
 }
-@media (max-width: 1279px) and (max-height: 600px) {
-  .auth-page { align-items: flex-start; }
+@media (max-width: ($breakpoint-desktop - 1px)) and (max-height: 600px) {
+    .auth-page {
+        align-items: flex-start;
+    }
 }
 </style>

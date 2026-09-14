@@ -1,0 +1,25 @@
+@use "./vars" as *;
+
+@mixin auth-form {
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+    .title {
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 18px;
+    }
+    .sub-title,
+    .link,
+    .error {
+        font-size: 14px;
+    }
+    .error {
+        color: $error;
+    }
+    .link {
+        color: $link;
+        cursor: pointer;
+    }
+}
