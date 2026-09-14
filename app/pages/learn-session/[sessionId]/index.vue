@@ -18,6 +18,8 @@
     import type { ANSWER } from "@shared/types/card"
     import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repeat-store"
 
+    definePageMeta({ contained: true })
+
     const sessionStore = useMnemoSessionStore()
 
     const { completeCurrentCard } =  sessionStore
@@ -50,4 +52,3 @@
         }])
     })
 </script>
-

@@ -1,5 +1,5 @@
 <template>
-    <div class="app-layout">
+    <div class="app-layout" :class="{ 'app-layout--contained': route.meta.contained }">
         <mnemo-header />
         <mnemo-breadcrumbs class="mb-6"/>
         <main class="app-layout__main">
@@ -13,6 +13,8 @@
 <script setup lang="ts">
 import MnemoHeader from '~/components/header/mnemo-header.vue'
 import MnemoBreadcrumbs from '~/components/breadcrumbs/mnemo-breadcrumbs.vue'
+
+const route = useRoute()
 </script>
 
 <style scoped lang="scss">
@@ -26,6 +28,10 @@ import MnemoBreadcrumbs from '~/components/breadcrumbs/mnemo-breadcrumbs.vue'
     background-position: center;
     background-repeat: no-repeat;
 
+    &--contained {
+        height: 100dvh;
+    }
+
     &__main {
         display: flex;
         flex: 1;
@@ -37,6 +43,7 @@ import MnemoBreadcrumbs from '~/components/breadcrumbs/mnemo-breadcrumbs.vue'
         display: flex;
         flex: 1;
         flex-direction: column;
+        justify-content: center;
 
         @include layout.page-container;
         padding-bottom: 40px;
