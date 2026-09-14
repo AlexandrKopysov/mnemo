@@ -1,14 +1,14 @@
-import { prisma } from "@utils/db"
-import type { ICardUpdate } from "@shared/types/card"
+import { prisma } from '@utils/db'
+import type { ICardUpdate } from '@shared/types/card'
 
 export default defineEventHandler(async (event) => {
-    const deckId = getRouterParam(event, "deckId")
-    const cardId = getRouterParam(event, "cardId")
+    const deckId = getRouterParam(event, 'deckId')
+    const cardId = getRouterParam(event, 'cardId')
 
     if (!deckId || !cardId) {
         throw createError({
             statusCode: 400,
-            statusMessage: "Некорректный запрос",
+            statusMessage: 'Некорректный запрос',
         })
     }
 
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     if (body.front === undefined && body.back === undefined) {
         throw createError({
             statusCode: 400,
-            statusMessage: "Нет данных для обновления",
+            statusMessage: 'Нет данных для обновления',
         })
     }
 
@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
     if (updateResult.count === 0) {
         throw createError({
             statusCode: 404,
-            statusMessage: "Карточка не существует",
+            statusMessage: 'Карточка не существует',
         })
     }
 

@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-    const route = useRoute()
-    const deckId = computed(() => String(route.params.deckId))
-    const cardId = computed(() => String((route.params as Record<string, string>).cardId))
+const route = useRoute()
+const deckId = computed(() => String(route.params.deckId))
+const cardId = computed(() => String((route.params as Record<string, string>).cardId))
 </script>

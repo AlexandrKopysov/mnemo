@@ -1,4 +1,4 @@
-import type { IBreadcrumb } from "@shared/types/breadcrumbs"
+import type { IBreadcrumb } from '@shared/types/breadcrumbs'
 
 export const useBreadcrumbs = () => {
     const breadcrumbs = useState<IBreadcrumb[]>('breadcrumbs', () => [])
@@ -12,11 +12,11 @@ export const useBreadcrumbs = () => {
     }
 
     const setToForLastCrumb = (to: string) => {
-        let lastItem = breadcrumbs.value[breadcrumbs.value.length - 1] 
+        const lastItem = breadcrumbs.value[breadcrumbs.value.length - 1]
         if (!lastItem) return
-        breadcrumbs.value[breadcrumbs.value.length - 1]  = {
+        breadcrumbs.value[breadcrumbs.value.length - 1] = {
             ...lastItem,
-            to
+            to,
         }
     }
 
@@ -25,14 +25,14 @@ export const useBreadcrumbs = () => {
     }
 
     const setLastBreadcrumbs = (to: string, item: IBreadcrumb) => {
-        setToForLastCrumb(to);
-        setLastCrumb(item);
+        setToForLastCrumb(to)
+        setLastCrumb(item)
     }
 
     return {
         breadcrumbs,
         setBreadcrumbs,
         clearBreadcrumbs,
-        setLastBreadcrumbs
+        setLastBreadcrumbs,
     }
 }

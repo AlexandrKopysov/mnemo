@@ -1,27 +1,30 @@
 <template>
     <div class="deck-page">
-        <mnemo-repeat-form class="deck-page__review"/>
+        <mnemo-repeat-form class="deck-page__review" />
         <mnemo-form class="deck-page__list">
-            <template v-slot:toolbar-left>
-                <mnemo-button 
-                    @click="addDeck"
+            <template #toolbar-left>
+                <mnemo-button
                     variant="secondary"
                     width="150"
+                    @click="addDeck"
                 >
                     Добавить колоду
                 </mnemo-button>
             </template>
-            <template v-slot:toolbar-right>
+            <template #toolbar-right>
                 <mnemo-input
                     width="380"
                     placeholder="Поиск"
                     prepend-inner-icon="mdi-magnify"
                 />
             </template>
-            <template v-slot:default>
+            <template #default>
                 <div class="decks-grid">
-                    <div v-for="deck in decks" :key="deck.id">
-                        <deck-tile 
+                    <div
+                        v-for="deck in decks"
+                        :key="deck.id"
+                    >
+                        <deck-tile
                             :deck="deck"
                             @click="onDeckClick(deck.id)"
                             @edit="onDeckEdit(deck.id)"
@@ -35,13 +38,13 @@
 </template>
 
 <script lang="ts" setup>
-import MnemoRepeatForm from "@components/widgets/mnemo-repeat-form/index.vue"
-import MnemoForm from "@components/form/mnemo-form.vue" 
-import MnemoButton from "@components/ui/mnemo-button.vue"
-import MnemoInput from "@components/ui/mnemo-input.vue"
-import DeckTile from "@components/decks/deck-tile.vue"
-import { deleteDeck, getDecks } from "~/entities/decks/api/api"
-import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repeat-store"
+import MnemoRepeatForm from '@components/widgets/mnemo-repeat-form/index.vue'
+import MnemoForm from '@components/form/mnemo-form.vue'
+import MnemoButton from '@components/ui/mnemo-button.vue'
+import MnemoInput from '@components/ui/mnemo-input.vue'
+import DeckTile from '@components/decks/deck-tile.vue'
+import { deleteDeck, getDecks } from '~/entities/decks/api/api'
+import { useMnemoSessionStore } from '~/entities/review-session/model/mnemo-repeat-store'
 
 const { setBreadcrumbs } = useBreadcrumbs()
 
@@ -52,10 +55,12 @@ async function getAllDecks() {
 }
 
 onMounted(async () => {
-    setBreadcrumbs([{
-        title: 'Ваши колоды',
-        to: '/'
-    }])
+    setBreadcrumbs([
+        {
+            title: 'Ваши колоды',
+            to: '/',
+        },
+    ])
 
     await getAllDecks()
 })
@@ -94,7 +99,6 @@ async function onDeckDelete(id: string | undefined) {
     await deleteDeck(id as string)
     await getAllDecks()
 }
-
 </script>
 
 <style lang="scss" scoped>

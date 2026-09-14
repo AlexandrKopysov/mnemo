@@ -1,20 +1,18 @@
 export const BUTTON_VARIANT = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  OUTLINE: 'outline',
-  DANGER: 'danger',
-  DARK: 'dark',
-  SUCCESS: 'success',
+    PRIMARY: 'primary',
+    SECONDARY: 'secondary',
+    OUTLINE: 'outline',
+    DANGER: 'danger',
+    DARK: 'dark',
+    SUCCESS: 'success',
 } as const
 
-export type ButtonVariant =
-  typeof BUTTON_VARIANT[keyof typeof BUTTON_VARIANT]
+export type ButtonVariant = (typeof BUTTON_VARIANT)[keyof typeof BUTTON_VARIANT]
 
 export const BUTTON_NATIVE_TYPE = {
-  BUTTON: 'button',
-  SUBMIT: 'submit',
-  RESET: 'reset',
+    BUTTON: 'button',
+    SUBMIT: 'submit',
+    RESET: 'reset',
 } as const
 
-export type ButtonNativeType =
-  typeof BUTTON_NATIVE_TYPE[keyof typeof BUTTON_NATIVE_TYPE]
+export type ButtonNativeType = (typeof BUTTON_NATIVE_TYPE)[keyof typeof BUTTON_NATIVE_TYPE]

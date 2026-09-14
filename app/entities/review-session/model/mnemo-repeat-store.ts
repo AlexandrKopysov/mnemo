@@ -1,18 +1,14 @@
-import type {
-    IReviewSessionPreview
-} from "@shared/types/session"
-import { defineStore } from "pinia"
-import { reviewSessionCard } from "../../cards/api/api"
-import { createReviewSession, getPreviewSession } from "../api"
+import type { IReviewSessionPreview } from '@shared/types/session'
+import { defineStore } from 'pinia'
+import { reviewSessionCard } from '../../cards/api/api'
+import { createReviewSession, getPreviewSession } from '../api'
 
-
-export const useMnemoSessionStore = defineStore("mnemo-session", () => {
-
+export const useMnemoSessionStore = defineStore('mnemo-session', () => {
     const preview = ref<IReviewSessionPreview | null>(null)
     const activeSession = ref<ISession | null>(null)
 
     const currentCard = computed(() => {
-        return activeSession.value?.items.find(item => !item.answeredAt) ?? null
+        return activeSession.value?.items.find((item) => !item.answeredAt) ?? null
     })
 
     const totalCards = computed(() => {
@@ -30,9 +26,7 @@ export const useMnemoSessionStore = defineStore("mnemo-session", () => {
     const progressPercent = computed(() => {
         if (!totalCards.value) return 0
 
-        return Math.round(
-            completedCount.value / totalCards.value * 100
-        )
+        return Math.round((completedCount.value / totalCards.value) * 100)
     })
 
     async function startSession() {
@@ -49,11 +43,7 @@ export const useMnemoSessionStore = defineStore("mnemo-session", () => {
 
         if (!card) return
 
-        const result = await reviewSessionCard(
-            card.sessionId,
-            card.id,
-            answer
-        ) as any
+        const result = (await reviewSessionCard(card.sessionId, card.id, answer)) as any
 
         activeSession.value = result.session
 
@@ -70,7 +60,7 @@ export const useMnemoSessionStore = defineStore("mnemo-session", () => {
         currentCard,
         progressPercent,
         isCompleted,
-        
+
         loadPreview,
         startSession,
         completeCurrentCard,

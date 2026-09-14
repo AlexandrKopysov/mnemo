@@ -1,6 +1,12 @@
 <template>
-    <section class="mnemo-form" :class="{ 'mnemo-form--page-scroll': pageScroll, 'mnemo-form--sticky-toolbar': stickyToolbar }">
-        <header 
+    <section
+        class="mnemo-form"
+        :class="{
+            'mnemo-form--page-scroll': pageScroll,
+            'mnemo-form--sticky-toolbar': stickyToolbar,
+        }"
+    >
+        <header
             v-if="props.useToolbar"
             class="mnemo-form__toolbar"
         >
@@ -18,18 +24,16 @@
 </template>
 
 <script setup lang="ts">
-
 interface IPropsForm {
-    title?: string,
-    useToolbar?: boolean,
-    pageScroll?: boolean,
+    title?: string
+    useToolbar?: boolean
+    pageScroll?: boolean
     stickyToolbar?: boolean
 }
 
 const props = withDefaults(defineProps<IPropsForm>(), {
-    useToolbar: true
+    useToolbar: true,
 })
-
 </script>
 
 <style scoped lang="scss">

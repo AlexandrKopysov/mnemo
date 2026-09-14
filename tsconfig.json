@@ -1,35 +1,17 @@
 {
-  "extends": "./.nuxt/tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "~/*": [
-        "app/*"
-      ],
-      "@components/*": [
-        "app/components/*"
-      ],
-      "@composables/*": [
-        "app/composables/*"
-      ],
-      "@types/*": [
-        "app/types/*"
-      ],
-      "@shared/*": [
-        "shared/*"
-      ],
-      "@utils/*": [
-        "server/utils/*"
-      ],
-      "@api/*": [
-        "server/api/*"
-      ],
-      "@service/*": [
-        "server/service/*"
-      ]
-    }
-  },
-  "exclude": [
-    "prisma/generated"
-  ]
+    "extends": "./.nuxt/tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "~/*": ["app/*"],
+            "@components/*": ["app/components/*"],
+            "@composables/*": ["app/composables/*"],
+            "@types/*": ["app/types/*"],
+            "@shared/*": ["shared/*"],
+            "@utils/*": ["server/utils/*"],
+            "@api/*": ["server/api/*"],
+            "@service/*": ["server/service/*"]
+        }
+    },
+    "exclude": ["prisma/generated"]
 }

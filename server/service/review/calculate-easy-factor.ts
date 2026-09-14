@@ -1,4 +1,4 @@
-import { ANSWER } from "@shared/types/card"
+import { ANSWER } from '@shared/types/card'
 
 const EASE_FACTOR_CHANGE = {
     [ANSWER.EASY]: 0.15,
@@ -12,9 +12,6 @@ const MAX_EASE_FACTOR = 3.5
 export function calculateEaseFactor(currentEaseFactor: number, answer: ANSWER): number {
     return Math.min(
         MAX_EASE_FACTOR,
-        Math.max(
-            MIN_EASE_FACTOR,
-            currentEaseFactor + EASE_FACTOR_CHANGE[answer]
-        )
+        Math.max(MIN_EASE_FACTOR, currentEaseFactor + EASE_FACTOR_CHANGE[answer]),
     )
 }

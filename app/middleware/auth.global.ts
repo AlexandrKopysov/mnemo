@@ -5,11 +5,11 @@ export default defineNuxtRouteMiddleware((to) => {
 
     const isPublicPage = publicPage.includes(to.path)
 
-    if (status.value === "unauthenticated" && !isPublicPage) {
+    if (status.value === 'unauthenticated' && !isPublicPage) {
         return navigateTo('/login')
     }
 
-    if (status.value === "authenticated" && isPublicPage) {
+    if (status.value === 'authenticated' && isPublicPage) {
         return navigateTo('/')
     }
 })

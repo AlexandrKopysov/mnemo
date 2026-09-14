@@ -1,19 +1,19 @@
 <template>
     <mnemo-form>
-        <template v-slot:toolbar-left>
-            <mnemo-button 
-                @click="onSave"
+        <template #toolbar-left>
+            <mnemo-button
                 width="150"
+                @click="onSave"
             >
                 {{ buttonName }}
             </mnemo-button>
-            <mnemo-button 
-                @click="onLeave"
+            <mnemo-button
                 width="150"
                 variant="secondary"
+                @click="onLeave"
             >
                 Закрыть
-            </mnemo-button> 
+            </mnemo-button>
         </template>
         <template #default>
             <div class="form-fields">
@@ -36,8 +36,8 @@
 import MnemoForm from '@components/form/mnemo-form.vue'
 import MnemoButton from '@components/ui/mnemo-button.vue'
 import MnemoInput from '@components/ui/mnemo-input.vue'
-import type { IDeck } from "@shared/types"
-import { createDeck, updateDeck, getDeck } from "~/entities/decks/api/api"
+import type { IDeck } from '@shared/types'
+import { createDeck, updateDeck, getDeck } from '~/entities/decks/api/api'
 
 interface IProps {
     mode?: 'create' | 'edit'
@@ -45,7 +45,7 @@ interface IProps {
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-    mode: 'create'
+    mode: 'create',
 })
 
 const { setBreadcrumbs } = useBreadcrumbs()
@@ -55,7 +55,7 @@ const form = ref<IDeck>({
     description: '',
 })
 
-const buttonName = computed(() => props.mode === 'create' ? 'Создать' : 'Сохранить')
+const buttonName = computed(() => (props.mode === 'create' ? 'Создать' : 'Сохранить'))
 
 const onSave = async () => {
     if (props.mode === 'create') {
@@ -74,28 +74,31 @@ onMounted(async () => {
         form.value = await getDeck(props.deckId as string)
     }
 
-    if(!form.value.id) {
-        setBreadcrumbs([{
-            title: 'Ваши колоды',
-            to: '/'
+    if (!form.value.id) {
+        setBreadcrumbs([
+            {
+                title: 'Ваши колоды',
+                to: '/',
             },
             {
                 title: 'Создание новой колоды',
-            }
+            },
         ])
     } else {
-        setBreadcrumbs([{
-            title: 'Ваши колоды',
-            to: '/',
-        }, {
-            title: `${form.value.title}`
-        }])
+        setBreadcrumbs([
+            {
+                title: 'Ваши колоды',
+                to: '/',
+            },
+            {
+                title: `${form.value.title}`,
+            },
+        ])
     }
 })
-
 </script>
 
 <style scoped lang="scss">
-@use "~/assets/scss/forms" as forms;
+@use '~/assets/scss/forms' as forms;
 @include forms.editor-fields;
 </style>

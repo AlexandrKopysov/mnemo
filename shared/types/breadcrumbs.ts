@@ -1,6 +1,6 @@
-import type { RouteLocationRaw } from "vue-router"
+import type { RouteLocationRaw } from 'vue-router'
 
 export interface IBreadcrumb {
-    title: string, 
+    title: string
     to?: RouteLocationRaw
 }

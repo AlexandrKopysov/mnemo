@@ -1,5 +1,5 @@
 type BaseEntity = {
-    login: string, 
+    login: string
     password: string
 }
 

@@ -1,16 +1,16 @@
-import type { IDeck } from "@shared/types"
+import type { IDeck } from '@shared/types'
 
 export async function createDeck(body: IDeck) {
     return await $fetch('/api/decks', {
         method: 'POST',
-        body
+        body,
     })
 }
 
 export async function updateDeck(id: string, body: IDeck) {
     return await $fetch(`/api/decks/${id}`, {
         method: 'PATCH',
-        body
+        body,
     })
 }
 

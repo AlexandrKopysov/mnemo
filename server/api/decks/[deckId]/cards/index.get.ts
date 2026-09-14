@@ -1,9 +1,8 @@
-import { prisma } from "@utils/db"
-import { calculateCardKnowledgeLevel } from "../../../../service/card.service"
+import { prisma } from '@utils/db'
+import { calculateCardKnowledgeLevel } from '../../../../service/card.service'
 
 export default defineEventHandler(async (event) => {
-
-    const deckId = getRouterParam(event, "deckId")
+    const deckId = getRouterParam(event, 'deckId')
 
     const cards = await prisma.card.findMany({
         select: {
@@ -20,7 +19,7 @@ export default defineEventHandler(async (event) => {
         },
         where: {
             deckId: deckId,
-        }
+        },
     })
 
     return calculateCardKnowledgeLevel(cards)

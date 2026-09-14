@@ -1,16 +1,10 @@
-import { ANSWER, type CardStatus, type ICard, type ReviewCardInput } from "@shared/types/card"
-import { calculateEaseFactor } from "./calculate-easy-factor"
-import { calculateIntervalDays } from "./calculate-interval-days"
+import { ANSWER, type CardStatus, type ICard, type ReviewCardInput } from '@shared/types/card'
+import { calculateEaseFactor } from './calculate-easy-factor'
+import { calculateIntervalDays } from './calculate-interval-days'
 
 type NextReviewResult = Pick<
     ICard,
-    | "status"
-    | "dueAt"
-    | "lastReviewedAt"
-    | "intervalDays"
-    | "easeFactor"
-    | "repetitions"
-    | "lapses"
+    'status' | 'dueAt' | 'lastReviewedAt' | 'intervalDays' | 'easeFactor' | 'repetitions' | 'lapses'
 >
 
 function addDays(date: Date, days: number): Date {
@@ -22,21 +16,15 @@ function addDays(date: Date, days: number): Date {
 }
 
 function getNextStatus(answer: ANSWER): CardStatus {
-    return answer === ANSWER.HARD
-        ? "LEARNING"
-        : "REVIEW"
+    return answer === ANSWER.HARD ? 'LEARNING' : 'REVIEW'
 }
 
 function calculateRepetitions(currentRepetitions: number, answer: ANSWER): number {
-    return answer === ANSWER.HARD
-        ? 0
-        : currentRepetitions + 1
+    return answer === ANSWER.HARD ? 0 : currentRepetitions + 1
 }
 
 function calculateLapses(currentLapses: number, answer: ANSWER): number {
-    return answer === ANSWER.HARD
-        ? currentLapses + 1
-        : currentLapses
+    return answer === ANSWER.HARD ? currentLapses + 1 : currentLapses
 }
 
 export function calculateNextReview(card: ReviewCardInput, answer: ANSWER): NextReviewResult {

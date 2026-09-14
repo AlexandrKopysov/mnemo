@@ -1,5 +1,5 @@
 <template>
-    <deck-form 
+    <deck-form
         mode="edit"
         :deck-id="deckId"
     />
@@ -10,5 +10,4 @@ import DeckForm from '@components/decks/deck-form.vue'
 
 const route = useRoute()
 const deckId = computed(() => String(route.params.deckId))
-
 </script>

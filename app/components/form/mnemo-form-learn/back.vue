@@ -1,24 +1,60 @@
 ﻿<template>
-    <mnemo-form class="learn-form" :use-toolbar="false">
+    <mnemo-form
+        class="learn-form"
+        :use-toolbar="false"
+    >
         <header class="session-toolbar">
-            <NuxtLink to="/" class="session-exit">← Выйти</NuxtLink>
+            <NuxtLink
+                to="/"
+                class="session-exit"
+                >← Выйти</NuxtLink
+            >
             <span class="session-title">{{ title }}</span>
-            <span class="session-count">{{ Math.min(completedCount + 1, totalCards) }} из {{ totalCards }}</span>
+            <span class="session-count"
+                >{{ Math.min(completedCount + 1, totalCards) }} из {{ totalCards }}</span
+            >
         </header>
-        <mnemo-progress :value="progressPercent" class="mt-4" />
+        <mnemo-progress
+            :value="progressPercent"
+            class="mt-4"
+        />
         <div class="session-body">
             <p class="session-label">Вопрос</p>
             <h2 class="session-question">{{ front }}</h2>
-            <section aria-label="Ответ" class="session-answer">
-                <h3 ref="answerHeading" tabindex="-1" class="session-label">Ответ</h3>
-                <mnemo-markdown-preview v-if="back.trim()" :key="cardId" :content="back" />
+            <section
+                aria-label="Ответ"
+                class="session-answer"
+            >
+                <h3
+                    ref="answerHeading"
+                    tabindex="-1"
+                    class="session-label"
+                >
+                    Ответ
+                </h3>
+                <mnemo-markdown-preview
+                    v-if="back.trim()"
+                    :key="cardId"
+                    :content="back"
+                />
                 <p v-else>Ответ не добавлен. Вы можете дополнить карточку в колоде.</p>
             </section>
         </div>
-        <p v-if="error" role="alert" class="session-error">{{ error }}</p>
+        <p
+            v-if="error"
+            role="alert"
+            class="session-error"
+        >
+            {{ error }}
+        </p>
         <div class="session-actions">
-            <mnemo-button v-for="rating in ratings" :key="rating.value" :variant="rating.variant"
-                :disabled="busy" @click="emit('click', rating.value)">
+            <mnemo-button
+                v-for="rating in ratings"
+                :key="rating.value"
+                :variant="rating.variant"
+                :disabled="busy"
+                @click="emit('click', rating.value)"
+            >
                 {{ ANSWER_LABELS[rating.value] }}
             </mnemo-button>
         </div>
@@ -33,11 +69,29 @@ import MnemoButton from '~/components/ui/mnemo-button.vue'
 import MnemoProgress from '~/components/ui/mnemo-progress.vue'
 import MnemoMarkdownPreview from '~/components/ui/editor/mnemo-markdown-preview.vue'
 
-withDefaults(defineProps<{
-    cardId?: string; front?: string; back?: string; title?: string;
-    completedCount?: number; totalCards?: number; progressPercent?: number;
-    busy?: boolean; error?: string;
-}>(), { front: '', back: '', title: '', completedCount: 0, totalCards: 0, progressPercent: 0, busy: false, error: '' })
+withDefaults(
+    defineProps<{
+        cardId?: string
+        front?: string
+        back?: string
+        title?: string
+        completedCount?: number
+        totalCards?: number
+        progressPercent?: number
+        busy?: boolean
+        error?: string
+    }>(),
+    {
+        front: '',
+        back: '',
+        title: '',
+        completedCount: 0,
+        totalCards: 0,
+        progressPercent: 0,
+        busy: false,
+        error: '',
+    },
+)
 const emit = defineEmits<{ click: [variant: ANSWER] }>()
 const answerHeading = ref<HTMLElement | null>(null)
 const ratings = [

@@ -1,27 +1,25 @@
 <template>
     <div class="card-tile-status">
         <div>
-            <v-icon 
-                v-for="icon in iconCircle" 
-                :key="icon.icon" 
-                :icon="icon.icon" 
-                :color="icon.color" 
+            <v-icon
+                v-for="icon in iconCircle"
+                :key="icon.icon"
+                :icon="icon.icon"
+                :color="icon.color"
                 size="20"
             />
         </div>
-        <div>
-            Следующее повторение: {{ formatReviewDate(card.dueAt) }}
-        </div>
+        <div>Следующее повторение: {{ formatReviewDate(card.dueAt) }}</div>
     </div>
 </template>
 
 <script setup lang="ts">
-import type { ICardList } from "@shared/types/card"
-import { formatReviewDate } from "@composables/use-date-time"
+import type { ICardList } from '@shared/types/card'
+import { formatReviewDate } from '@composables/use-date-time'
 
 type iconCircleType = {
-    icon: string,
-    color: string,
+    icon: string
+    color: string
 }
 
 interface IProps {
@@ -83,7 +81,6 @@ const iconCircle: ComputedRef<iconCircleType[]> = computed(() => {
             ]
     }
 })
-
 </script>
 
 <style lang="scss" scoped>

@@ -1,4 +1,4 @@
-import { ANSWER } from "@shared/types/card"
+import { ANSWER } from '@shared/types/card'
 
 type CalculateIntervalDaysParams = {
     currentIntervalDays: number
@@ -13,12 +13,7 @@ const FIRST_EASY_INTERVAL_DAYS = 3
 const EASY_INTERVAL_BONUS = 0.3
 
 export function calculateIntervalDays(params: CalculateIntervalDaysParams): number {
-    const {
-        currentIntervalDays,
-        currentRepetitions,
-        currentEaseFactor,
-        answer,
-    } = params
+    const { currentIntervalDays, currentRepetitions, currentEaseFactor, answer } = params
 
     if (answer === ANSWER.HARD) {
         return HARD_INTERVAL_DAYS
@@ -31,7 +26,7 @@ export function calculateIntervalDays(params: CalculateIntervalDaysParams): numb
 
         return Math.max(
             FIRST_NORMAL_INTERVAL_DAYS,
-            Math.round(currentIntervalDays * currentEaseFactor)
+            Math.round(currentIntervalDays * currentEaseFactor),
         )
     }
 
@@ -41,6 +36,6 @@ export function calculateIntervalDays(params: CalculateIntervalDaysParams): numb
 
     return Math.max(
         FIRST_EASY_INTERVAL_DAYS,
-        Math.round(currentIntervalDays * (currentEaseFactor + EASY_INTERVAL_BONUS))
+        Math.round(currentIntervalDays * (currentEaseFactor + EASY_INTERVAL_BONUS)),
     )
 }

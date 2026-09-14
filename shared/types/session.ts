@@ -1,4 +1,4 @@
-import { ANSWER } from "@shared/types"
+import type { ANSWER } from '@shared/types'
 export interface IReviewSessionStateType {
     startedAt: string | null
 
@@ -93,7 +93,7 @@ export interface IReviewSessionPreviewDeck {
 }
 
 export enum REVIEW_SESSION_STATUS {
-    IN_PROGRESS = "IN_PROGRESS",
-    COMPLETED = "COMPLETED",
-    ABANDONED = "ABANDONED"
+    IN_PROGRESS = 'IN_PROGRESS',
+    COMPLETED = 'COMPLETED',
+    ABANDONED = 'ABANDONED',
 }

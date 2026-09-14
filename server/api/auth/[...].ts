@@ -2,9 +2,9 @@ import { NuxtAuthHandler } from '#auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 type credentialsType = {
-    login: string,
+    login: string
     password: string
-} 
+}
 
 export default NuxtAuthHandler({
     secret: useRuntimeConfig().authSecret,
@@ -36,12 +36,12 @@ export default NuxtAuthHandler({
     // (опционально) чтобы прокинуть id в session.user
     callbacks: {
         async jwt({ token, user }) {
-        if (user) token.id = (user as any).id
-        return token
+            if (user) token.id = (user as any).id
+            return token
         },
         async session({ session, token }) {
-        ;(session.user as any).id = token.id
-        return session
+            ;(session.user as any).id = token.id
+            return session
         },
     },
 })

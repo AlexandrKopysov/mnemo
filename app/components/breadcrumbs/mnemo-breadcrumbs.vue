@@ -15,14 +15,14 @@
                 >
                     {{ item.title }}
                 </NuxtLink>
-    
+
                 <span
                     v-else
                     class="mnemo-breadcrumbs__container-current"
                 >
                     {{ item.title }}
                 </span>
-    
+
                 <v-icon
                     v-if="index < breadcrumbs.length - 1"
                     size="20"
@@ -36,11 +36,11 @@
 </template>
 
 <script lang="ts" setup>
-    const { breadcrumbs } = useBreadcrumbs()
+const { breadcrumbs } = useBreadcrumbs()
 </script>
 
 <style lang="scss" scoped>
-@use "~/assets/scss/layout" as layout;
+@use '~/assets/scss/layout' as layout;
 .mnemo-breadcrumbs {
     flex: 0 0 auto;
     width: 100%;

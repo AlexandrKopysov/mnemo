@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const model = defineModel<string>()
-const effectiveAutoGrow = computed(() => props.fullHeight ? false : props.autoGrow)
+const effectiveAutoGrow = computed(() => (props.fullHeight ? false : props.autoGrow))
 </script>
 
 <style scoped lang="scss">

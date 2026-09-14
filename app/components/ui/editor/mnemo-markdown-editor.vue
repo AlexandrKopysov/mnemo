@@ -1,22 +1,54 @@
 <template>
-    <div ref="container" class="markdown-editor mnemo-markdown">
-        <div v-if="!wide" class="editor-modes" role="group" aria-label="Режим Markdown">
-            <button type="button" :aria-pressed="mode === 'edit'" @click="mode = 'edit'">Редактор</button>
-            <button type="button" :aria-pressed="mode === 'preview'" @click="mode = 'preview'">Просмотр</button>
+    <div
+        ref="container"
+        class="markdown-editor mnemo-markdown"
+    >
+        <div
+            v-if="!wide"
+            class="editor-modes"
+            role="group"
+            aria-label="Режим Markdown"
+        >
+            <button
+                type="button"
+                :aria-pressed="mode === 'edit'"
+                @click="mode = 'edit'"
+            >
+                Редактор
+            </button>
+            <button
+                type="button"
+                :aria-pressed="mode === 'preview'"
+                @click="mode = 'preview'"
+            >
+                Просмотр
+            </button>
         </div>
-        <p v-if="wide || mode === 'edit'" class="toolbar-hint">Инструменты ↔ прокрутите панель</p>
+        <p
+            v-if="wide || mode === 'edit'"
+            class="toolbar-hint"
+        >
+            Инструменты ↔ прокрутите панель
+        </p>
         <md-editor
-            ref="editor" v-show="wide || mode === 'edit'" v-model="content" :preview="wide"
+            v-show="wide || mode === 'edit'"
+            ref="editor"
+            v-model="content"
+            :preview="wide"
             :toolbars-exclude="['preview', 'previewOnly', 'htmlPreview', 'catalog']"
-            language="en-US" @on-save="emit('save')"
+            language="en-US"
+            @on-save="emit('save')"
         />
-        <mnemo-markdown-preview v-if="!wide && mode === 'preview'" :content="content" />
+        <mnemo-markdown-preview
+            v-if="!wide && mode === 'preview'"
+            :content="content"
+        />
     </div>
 </template>
 
 <script lang="ts" setup>
-import 'md-editor-v3/lib/style.css';
-import { MdEditor, type ExposeParam } from "md-editor-v3"
+import 'md-editor-v3/lib/style.css'
+import { MdEditor, type ExposeParam } from 'md-editor-v3'
 import { useElementSize } from '@vueuse/core'
 import MnemoMarkdownPreview from './mnemo-markdown-preview.vue'
 
@@ -29,8 +61,7 @@ const { width } = useElementSize(container)
 const wide = computed(() => width.value >= 800)
 const mode = ref<'edit' | 'preview'>('edit')
 // The library reads the preview prop only at initialization.
-watch(wide, value => editor.value?.togglePreview(value), { flush: 'post' })
-
+watch(wide, (value) => editor.value?.togglePreview(value), { flush: 'post' })
 </script>
 
 <style scoped lang="scss">
@@ -49,7 +80,7 @@ watch(wide, value => editor.value?.togglePreview(value), { flush: 'post' })
     border: 1px solid $outline-border;
     border-radius: $radius-control;
 }
-.editor-modes button[aria-pressed="true"] {
+.editor-modes button[aria-pressed='true'] {
     background: $secondary;
     border-color: $primary;
 }

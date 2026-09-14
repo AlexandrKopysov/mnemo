@@ -1,9 +1,9 @@
-import type { ICardCreate, ICardUpdate } from "@shared/types/card"
+import type { ICardCreate, ICardUpdate } from '@shared/types/card'
 
 export async function createCard(body: ICardCreate) {
     return await $fetch(`/api/decks/${body.deckId}/cards`, {
         method: 'POST',
-        body
+        body,
     })
 }
 
@@ -12,7 +12,7 @@ export async function updateCard(deckId: string, cardId: string, body: ICardUpda
 
     return await $fetch(url, {
         method: 'PUT',
-        body
+        body,
     })
 }
 
@@ -20,32 +20,32 @@ export async function getCard(deckId: string, cardId: string): Promise<ICardCrea
     const url = `/api/decks/${deckId}/cards/${cardId}` as string
 
     return await $fetch<ICardCreate>(url, {
-        method: 'GET'
+        method: 'GET',
     })
 }
 
-export async function getCardList(deckId: string):Promise<ICardList[]> {
+export async function getCardList(deckId: string): Promise<ICardList[]> {
     return await $fetch(`/api/decks/${deckId}/cards`, {
-        method: 'GET'
+        method: 'GET',
     })
 }
 
 export async function deleteCard(deckId: string, cardId: string) {
     return await $fetch(`/api/decks/${deckId}/cards/${cardId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
     })
 }
 
 export async function reviewCard(deckId: string, cardId: string, answer: ANSWER) {
     return await $fetch(`/api/decks/${deckId}/cards/${cardId}/review`, {
         method: 'POST',
-        body: { answer }
+        body: { answer },
     })
 }
 
 export async function reviewSessionCard(sessionId: string, itemId: string, answer: ANSWER) {
     return await $fetch(`/api/review-sessions/${sessionId}/items/${itemId}/answer`, {
         method: 'POST',
-        body: { answer }
+        body: { answer },
     })
 }

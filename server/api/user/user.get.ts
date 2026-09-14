@@ -7,6 +7,6 @@ export default defineEventHandler(async () => {
             login: true,
             name: true,
             email: true,
-        }
+        },
     })
 })

@@ -1,7 +1,10 @@
 <template>
-    <div class="app-layout" :class="{ 'app-layout--contained': route.meta.contained }">
+    <div
+        class="app-layout"
+        :class="{ 'app-layout--contained': route.meta.contained }"
+    >
         <mnemo-header />
-        <mnemo-breadcrumbs class="mb-6"/>
+        <mnemo-breadcrumbs class="mb-6" />
         <main class="app-layout__main">
             <div class="app-layout__container">
                 <slot />
@@ -18,12 +21,12 @@ const route = useRoute()
 </script>
 
 <style scoped lang="scss">
-@use "~/assets/scss/layout" as layout;
+@use '~/assets/scss/layout' as layout;
 .app-layout {
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
-    background-image: url("~/assets/images/background.png");
+    background-image: url('~/assets/images/background.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

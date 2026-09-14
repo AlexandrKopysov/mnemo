@@ -1,4 +1,4 @@
-import { getServerSession } from "#auth"
+import { getServerSession } from '#auth'
 
 export async function getSessionUserId(event: H3Event) {
     const session = await getServerSession(event)
@@ -7,7 +7,7 @@ export async function getSessionUserId(event: H3Event) {
     if (!Number.isInteger(sessionUserId) || sessionUserId <= 0) {
         throw createError({
             statusCode: 401,
-            statusMessage: "Unauthorized",
+            statusMessage: 'Unauthorized',
         })
     }
 

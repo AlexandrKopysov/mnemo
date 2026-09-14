@@ -1,7 +1,6 @@
 import { prisma } from '@utils/db'
 import { getSessionUserId } from '@utils/server-session'
-import { calculatePercentForDeck } from "../../service/deck.service"
-
+import { calculatePercentForDeck } from '../../service/deck.service'
 
 export default defineEventHandler(async (event) => {
     const sessionUserId = await getSessionUserId(event)
@@ -17,8 +16,8 @@ export default defineEventHandler(async (event) => {
                     lapses: true,
                     intervalDays: true,
                     repetitions: true,
-                    dueAt: true
-                }
+                    dueAt: true,
+                },
             },
             _count: {
                 select: {

@@ -1,15 +1,15 @@
-import { prisma } from "@utils/db"
-import { getSessionUserId } from "@utils/server-session"
+import { prisma } from '@utils/db'
+import { getSessionUserId } from '@utils/server-session'
 
 export default defineEventHandler(async (event) => {
     const sessionUserId = await getSessionUserId(event)
-    const deckId = getRouterParam(event, "deckId")
-    const cardId = getRouterParam(event, "cardId")
+    const deckId = getRouterParam(event, 'deckId')
+    const cardId = getRouterParam(event, 'cardId')
 
     if (!deckId || !cardId) {
         throw createError({
             statusCode: 400,
-            statusMessage: "Некорректный запрос",
+            statusMessage: 'Некорректный запрос',
         })
     }
 
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     if (deleteResult.count === 0) {
         throw createError({
             statusCode: 404,
-            statusMessage: "Карточка не существует",
+            statusMessage: 'Карточка не существует',
         })
     }
 

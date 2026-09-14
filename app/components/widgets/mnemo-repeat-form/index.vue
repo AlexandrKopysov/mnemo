@@ -1,19 +1,37 @@
 ﻿<template>
-    <section class="session-preview" aria-label="Сегодня к повторению">
+    <section
+        class="session-preview"
+        aria-label="Сегодня к повторению"
+    >
         <template v-if="preview && preview.totalCards > 0">
-            <img class="session-preview__illustration" src="~/assets/images/review-cards.svg" alt="" >
+            <img
+                class="session-preview__illustration"
+                src="~/assets/images/review-cards.svg"
+                alt=""
+            />
             <h2 class="session-preview__title">Сегодня к повторению</h2>
             <div class="session-preview__stats">
                 <p class="session-preview__total">
                     <strong>{{ preview.totalCards }}</strong>
-                    <span>{{ pluralRu(preview.totalCards, ['карточка', 'карточки', 'карточек']) }}</span>
+                    <span>{{
+                        pluralRu(preview.totalCards, ['карточка', 'карточки', 'карточек'])
+                    }}</span>
                 </p>
-                <p v-if="preview.estimatedMinutes > 0" class="session-preview__estimated">
-                    <span class="session-preview__icon session-preview__icon--clock" aria-hidden="true" />
+                <p
+                    v-if="preview.estimatedMinutes > 0"
+                    class="session-preview__estimated"
+                >
+                    <span
+                        class="session-preview__icon session-preview__icon--clock"
+                        aria-hidden="true"
+                    />
                     {{ estimatedTime }}
                 </p>
             </div>
-            <div v-if="preview.decks.length" class="session-preview__decks">
+            <div
+                v-if="preview.decks.length"
+                class="session-preview__decks"
+            >
                 <span class="session-preview__decks-label">{{ decksLabel }}</span>
                 <button
                     class="session-preview__decks-toggle"
@@ -23,22 +41,61 @@
                     @click="decksExpanded = !decksExpanded"
                 >
                     {{ decksLabel }}
-                    <span class="session-preview__icon session-preview__icon--chevron" aria-hidden="true" :class="{ 'is-expanded': decksExpanded }" />
+                    <span
+                        class="session-preview__icon session-preview__icon--chevron"
+                        aria-hidden="true"
+                        :class="{ 'is-expanded': decksExpanded }"
+                    />
                 </button>
-                <ul :id="decksId" class="session-preview__decks-list" :class="{ 'is-expanded': decksExpanded }">
-                    <li v-for="deck in preview.decks" :key="deck.deckId" class="session-preview__deck">
-                        <span>{{ deck.title }}</span><span>· {{ deck.cardsCount }}</span>
+                <ul
+                    :id="decksId"
+                    class="session-preview__decks-list"
+                    :class="{ 'is-expanded': decksExpanded }"
+                >
+                    <li
+                        v-for="deck in preview.decks"
+                        :key="deck.deckId"
+                        class="session-preview__deck"
+                    >
+                        <span>{{ deck.title }}</span
+                        ><span>· {{ deck.cardsCount }}</span>
                     </li>
                 </ul>
             </div>
-            <button class="session-preview__button" type="button" :disabled="isStarting" :aria-busy="isStarting" @click="startRepeat">
+            <button
+                class="session-preview__button"
+                type="button"
+                :disabled="isStarting"
+                :aria-busy="isStarting"
+                @click="startRepeat"
+            >
                 {{ isStarting ? 'Запускаем…' : 'Начать повторение' }}
-                <span class="session-preview__icon session-preview__icon--arrow" aria-hidden="true" />
+                <span
+                    class="session-preview__icon session-preview__icon--arrow"
+                    aria-hidden="true"
+                />
             </button>
         </template>
-        <p v-else-if="preview" class="session-preview__message">На сегодня повторений нет</p>
-        <p v-else-if="!error" class="session-preview__message" role="status">Загружаем очередь повторения…</p>
-        <p v-if="error" class="session-preview__message session-preview__error" role="alert">{{ error }}</p>
+        <p
+            v-else-if="preview"
+            class="session-preview__message"
+        >
+            На сегодня повторений нет
+        </p>
+        <p
+            v-else-if="!error"
+            class="session-preview__message"
+            role="status"
+        >
+            Загружаем очередь повторения…
+        </p>
+        <p
+            v-if="error"
+            class="session-preview__message session-preview__error"
+            role="alert"
+        >
+            {{ error }}
+        </p>
     </section>
 </template>
 
@@ -59,7 +116,9 @@ const decksLabel = computed(() => {
 })
 const estimatedTime = computed(() => {
     const minutes = preview.value?.estimatedMinutes ?? 0
-    return minutes === 1 ? 'Около минуты' : `Около ${minutes} ${pluralRu(minutes, ['минуты', 'минут', 'минут'])}`
+    return minutes === 1
+        ? 'Около минуты'
+        : `Около ${minutes} ${pluralRu(minutes, ['минуты', 'минут', 'минут'])}`
 })
 
 const startRepeat = async () => {
@@ -88,11 +147,11 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-@use "~/assets/scss/review" as review;
+@use '~/assets/scss/review' as review;
 .session-preview {
     display: grid;
     grid-template-columns: 2$touch-target minmax(0, 1fr) auto;
-    grid-template-areas: "art title title" "art stats stats" "art decks action";
+    grid-template-areas: 'art title title' 'art stats stats' 'art decks action';
     align-items: center;
     column-gap: 32px;
     row-gap: 16px;
@@ -111,13 +170,13 @@ onMounted(async () => {
         mask-size: contain;
     }
     &__icon--clock {
-        mask-image: url("~/assets/icons/clock-outline.svg");
+        mask-image: url('~/assets/icons/clock-outline.svg');
     }
     &__icon--chevron {
-        mask-image: url("~/assets/icons/chevron-down.svg");
+        mask-image: url('~/assets/icons/chevron-down.svg');
     }
     &__icon--arrow {
-        mask-image: url("~/assets/icons/arrow-right.svg");
+        mask-image: url('~/assets/icons/arrow-right.svg');
     }
     &__illustration {
         grid-area: art;
@@ -259,7 +318,7 @@ onMounted(async () => {
 @media (max-width: ($breakpoint-preview - 1px)) {
     .session-preview {
         grid-template-columns: minmax(0, 1fr) auto;
-        grid-template-areas: "title art" "stats art" "decks action";
+        grid-template-areas: 'title art' 'stats art' 'decks action';
         column-gap: 24px;
         padding: 28px 30px 24px;
         &__illustration {
@@ -292,7 +351,7 @@ onMounted(async () => {
 @media (max-width: ($breakpoint-mobile - 1px)) {
     .session-preview {
         grid-template-columns: minmax(0, 1fr) 90px;
-        grid-template-areas: "title title" "stats art" "action action" "decks decks";
+        grid-template-areas: 'title title' 'stats art' 'action action' 'decks decks';
         gap: 16px 8px;
         padding: 20px;
         border-radius: 14px;

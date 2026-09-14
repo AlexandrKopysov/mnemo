@@ -2,43 +2,38 @@
     <div class="container">
         <div class="final-session-card">
             <div></div>
-            <span class="title">
-                Mnemo
-            </span>
-            <span class="subtitle">
-                Сессия повторения завершена
-            </span>
-            <span class="annotation">
-                Отличная работа - вы закрепили знания
-            </span>
+            <span class="title"> Mnemo </span>
+            <span class="subtitle"> Сессия повторения завершена </span>
+            <span class="annotation"> Отличная работа - вы закрепили знания </span>
             <div class="tile-result">
                 <div class="row">
                     <span class="row-title">Общее количество карточек:</span>
-                    <span class="row-value">{{totalCards}}</span>
+                    <span class="row-value">{{ totalCards }}</span>
                 </div>
                 <div
                     v-for="(tile, key) in tiles"
                     :key="key"
                     class="row"
                 >
-                    <span class="row-title">{{tile.label}}</span>
-                    <span :class="tile.class">{{tile.value}}</span>
+                    <span class="row-title">{{ tile.label }}</span>
+                    <span :class="tile.class">{{ tile.value }}</span>
                 </div>
             </div>
             <mnemo-button
                 class="button"
                 @click="onClick"
-            >На главную</mnemo-button>
+                >На главную</mnemo-button
+            >
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import mnemoButton from "~/components/ui/mnemo-button.vue"
+import mnemoButton from '~/components/ui/mnemo-button.vue'
 import { ANSWER } from '@shared/types/card'
 import { ANSWER_LABELS } from '~/entities/review-session/model/answer-labels'
-import { useMnemoSessionStore } from "~/entities/review-session/model/mnemo-repeat-store"
-import type { IReviewSessionItem } from "shared/types/session"
+import { useMnemoSessionStore } from '~/entities/review-session/model/mnemo-repeat-store'
+import type { IReviewSessionItem } from 'shared/types/session'
 
 interface IProps {
     totalCards: number
@@ -48,23 +43,23 @@ interface IProps {
 }
 
 const tiles = computed(() => {
-  return {
-    easy: {
-      label: ANSWER_LABELS[ANSWER.EASY],
-      value: props.easy.length,
-      class: 'row-value'
-    },
-    normal: {
-      label: ANSWER_LABELS[ANSWER.NORMAL],
-      value: props.normal.length,
-      class: 'row-value'
-    },
-    hard: {
-      label: ANSWER_LABELS[ANSWER.HARD],
-      value: props.hard.length,
-      class: 'row-value-red'
-    },
-  }
+    return {
+        easy: {
+            label: ANSWER_LABELS[ANSWER.EASY],
+            value: props.easy.length,
+            class: 'row-value',
+        },
+        normal: {
+            label: ANSWER_LABELS[ANSWER.NORMAL],
+            value: props.normal.length,
+            class: 'row-value',
+        },
+        hard: {
+            label: ANSWER_LABELS[ANSWER.HARD],
+            value: props.hard.length,
+            class: 'row-value-red',
+        },
+    }
 })
 
 const props = defineProps<IProps>()
@@ -82,7 +77,6 @@ onMounted(() => {
         console.log('not completed session')
     }
 })
-
 </script>
 
 <style lang="scss" scoped>

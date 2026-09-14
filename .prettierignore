@@ -1,0 +1,10 @@
+node_modules/
+.nuxt/
+.output/
+dist/
+coverage/
+prisma/generated/
+package-lock.json
+pnpm-lock.yaml
+.env
+.env.*

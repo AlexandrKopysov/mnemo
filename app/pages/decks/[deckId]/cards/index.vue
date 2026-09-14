@@ -1,16 +1,14 @@
 <template>
-    <mnemo-form
-        :title="title"
-    >
-        <template v-slot:toolbar-left>
+    <mnemo-form :title="title">
+        <template #toolbar-left>
             <mnemo-button
-                @click="onAddCard"
                 width="150"
+                @click="onAddCard"
             >
                 Добавить карточку
             </mnemo-button>
         </template>
-        <template v-slot:toolbar-right>
+        <template #toolbar-right>
             <mnemo-input
                 v-model="search"
                 width="380"
@@ -18,10 +16,11 @@
                 prepend-inner-icon="mdi-magnify"
             />
         </template>
-        <template v-slot:default>
+        <template #default>
             <div class="decks-grid">
                 <card-tile
-                    v-for="card in cards" :key="card.id"
+                    v-for="card in cards"
+                    :key="card.id"
                     class="mb-4"
                     :card="card"
                     @click="onCardEdit(card.id)"
@@ -82,13 +81,16 @@ async function getData() {
 
 onMounted(async () => {
     await getData()
-    if(!deck.value?.id) return
+    if (!deck.value?.id) return
 
-    setBreadcrumbs([{
-        title: 'Ваши колоды',
-        to: '/',
-    }, {
-        title: `${deck.value.title}`
-    }])
+    setBreadcrumbs([
+        {
+            title: 'Ваши колоды',
+            to: '/',
+        },
+        {
+            title: `${deck.value.title}`,
+        },
+    ])
 })
 </script>

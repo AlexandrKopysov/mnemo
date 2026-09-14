@@ -1,15 +1,15 @@
-import { prisma } from "@utils/db"
-import { getSessionUserId } from "@utils/server-session"
-import type { IDeck } from "@shared/types"
+import { prisma } from '@utils/db'
+import { getSessionUserId } from '@utils/server-session'
+import type { IDeck } from '@shared/types'
 
 export default defineEventHandler(async (event) => {
     const sessionUserId = await getSessionUserId(event)
-    const deckId = getRouterParam(event, "deckId")
+    const deckId = getRouterParam(event, 'deckId')
 
     if (!deckId) {
         throw createError({
             statusCode: 400,
-            statusMessage: "Колода не существует",
+            statusMessage: 'Колода не существует',
         })
     }
 
@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     if (!hasTitle && !hasDescription) {
         throw createError({
             statusCode: 400,
-            statusMessage: "Нет данных для обновления",
+            statusMessage: 'Нет данных для обновления',
         })
     }
 
@@ -32,17 +32,17 @@ export default defineEventHandler(async (event) => {
             userId: sessionUserId,
         },
         data: {
-            ...(hasTitle ? { title: body.title ?? "" } : {}),
+            ...(hasTitle ? { title: body.title ?? '' } : {}),
             ...(hasDescription ? { description: body.description ?? null } : {}),
-            ...(hasIcon ? { icon: body.icon ?? "" } : {}),
-            ...(hasColor ? { color: body.color ?? "" } : {}),
+            ...(hasIcon ? { icon: body.icon ?? '' } : {}),
+            ...(hasColor ? { color: body.color ?? '' } : {}),
         },
     })
 
     if (updateResult.count === 0) {
         throw createError({
             statusCode: 404,
-            statusMessage: "Колода не существует",
+            statusMessage: 'Колода не существует',
         })
     }
 

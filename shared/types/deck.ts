@@ -1,4 +1,4 @@
-import type { CardStatus } from "./card"
+import type { CardStatus } from './card'
 
 export interface IDeck {
     id?: string

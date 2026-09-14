@@ -1,16 +1,32 @@
 <template>
-    <section class="question-form" aria-label="Вопрос для повторения">
+    <section
+        class="question-form"
+        aria-label="Вопрос для повторения"
+    >
         <div class="review-card">
             <div class="review-card__content">
                 <p class="review-card__label">
-                    <span class="review-card__icon" aria-hidden="true" />
+                    <span
+                        class="review-card__icon"
+                        aria-hidden="true"
+                    />
                     Вопрос
                 </p>
-                <h2 ref="question" tabindex="-1" class="review-card__question">{{ front }}</h2>
+                <h2
+                    ref="question"
+                    tabindex="-1"
+                    class="review-card__question"
+                >
+                    {{ front }}
+                </h2>
             </div>
             <div class="review-card__footer">
                 <p class="review-card__hint">Вспомните ответ, затем откройте обратную сторону</p>
-                <mnemo-button :disabled="disabled" @click="emit('click')">Показать ответ</mnemo-button>
+                <mnemo-button
+                    :disabled="disabled"
+                    @click="emit('click')"
+                    >Показать ответ</mnemo-button
+                >
             </div>
         </div>
     </section>

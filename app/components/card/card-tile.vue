@@ -1,5 +1,5 @@
 <template>
-    <div 
+    <div
         class="tile-container"
         @click="onTileClick"
     >
@@ -13,19 +13,19 @@
             <v-menu location="bottom end">
                 <template #activator="{ props: menuProps }">
                     <v-btn
-                    icon
-                    variant="text"
-                    class="dot-menu-btn"
-                    :ripple="false"
-                    v-bind="menuProps"
-                    @click.stop
+                        icon
+                        variant="text"
+                        class="dot-menu-btn"
+                        :ripple="false"
+                        v-bind="menuProps"
+                        @click.stop
                     >
-                    <v-icon
-                        size="24"
-                        color="rgba(22, 38, 55, 0.75)"
-                    >
-                        mdi-dots-vertical
-                    </v-icon>
+                        <v-icon
+                            size="24"
+                            color="rgba(22, 38, 55, 0.75)"
+                        >
+                            mdi-dots-vertical
+                        </v-icon>
                     </v-btn>
                 </template>
                 <v-list>
@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ICardList } from '@shared/types/card';
+import type { ICardList } from '@shared/types/card'
 
 interface IProps {
     card: ICardList
@@ -54,26 +54,26 @@ interface IProps {
 
 const props = defineProps<IProps>()
 const emit = defineEmits<{
-    (e: "click", id: string | undefined): void
-    (e: "edit", deck: string | undefined): void
-    (e: "delete", deck: string | undefined): void
+    (e: 'click', id: string | undefined): void
+    (e: 'edit', deck: string | undefined): void
+    (e: 'delete', deck: string | undefined): void
 }>()
 
 const onTileClick = () => {
-    emit("click", props.card.id)
+    emit('click', props.card.id)
 }
 
 const onEditClick = () => {
-    emit("edit", props.card.id)
+    emit('edit', props.card.id)
 }
 
 const onDeleteClick = () => {
-    emit("delete", props.card.id)
+    emit('delete', props.card.id)
 }
 </script>
 
 <style lang="scss" scoped>
-@use "~/assets/scss/tiles" as tiles;
+@use '~/assets/scss/tiles' as tiles;
 @include tiles.tile;
 .tile-container {
     display: flex;

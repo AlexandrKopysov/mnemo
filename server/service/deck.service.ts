@@ -1,25 +1,26 @@
-import { calculateKnowledgeScore } from "@service/review/calculate-knowledge-score"
-import type { IDeck, IDeckCalculate } from "@shared/types"
+import { calculateKnowledgeScore } from '@service/review/calculate-knowledge-score'
+import type { IDeck, IDeckCalculate } from '@shared/types'
 
 export function calculatePercentForDeck(decks: IDeckCalculate[]) {
-  const newDeckList: IDeck[] = decks.map((deck) => {
-    const knowledgeScoreSum = deck.cards.reduce((acc, card) => {
-        return acc + calculateKnowledgeScore(card)
-    }, 0)
+    const newDeckList: IDeck[] = decks.map((deck) => {
+        const knowledgeScoreSum = deck.cards.reduce((acc, card) => {
+            return acc + calculateKnowledgeScore(card)
+        }, 0)
 
-    const total = deck._count.cards
-    const maxKnowledgeScore = total * 4
-    const nowDate = new Date()
+        const total = deck._count.cards
+        const maxKnowledgeScore = total * 4
+        const nowDate = new Date()
 
-    return {
-        id: deck.id,
-        title: deck.title,
-        description: deck.description,
-        percentCompleet: maxKnowledgeScore === 0
-            ? 0
-            : Math.round((knowledgeScoreSum / maxKnowledgeScore) * 100),
-        total,
-        dueCardsCount: deck.cards.filter((card) => card.dueAt <= nowDate).length,
+        return {
+            id: deck.id,
+            title: deck.title,
+            description: deck.description,
+            percentCompleet:
+                maxKnowledgeScore === 0
+                    ? 0
+                    : Math.round((knowledgeScoreSum / maxKnowledgeScore) * 100),
+            total,
+            dueCardsCount: deck.cards.filter((card) => card.dueAt <= nowDate).length,
         }
     })
 
@@ -46,16 +47,9 @@ export function interleaveDeckCards(
         position: number
     }> = []
 
-    const maxCardsCount = Math.max(
-        0,
-        ...decks.map(({ cards }) => cards.length),
-    )
+    const maxCardsCount = Math.max(0, ...decks.map(({ cards }) => cards.length))
 
-    for (
-        let cardIndex = 0;
-        cardIndex < maxCardsCount;
-        cardIndex++
-    ) {
+    for (let cardIndex = 0; cardIndex < maxCardsCount; cardIndex++) {
         for (const deck of decks) {
             const card = deck.cards[cardIndex]
 

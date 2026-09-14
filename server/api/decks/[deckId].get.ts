@@ -1,15 +1,15 @@
-import { prisma } from "@utils/db"
-import { getSessionUserId } from "@utils/server-session"
-import { calculatePercentForDeck } from "../../service/deck.service"
+import { prisma } from '@utils/db'
+import { getSessionUserId } from '@utils/server-session'
+import { calculatePercentForDeck } from '../../service/deck.service'
 
 export default defineEventHandler(async (event) => {
     const sessionUserId = await getSessionUserId(event)
-    const deckId = getRouterParam(event, "deckId")
+    const deckId = getRouterParam(event, 'deckId')
 
     if (!deckId) {
         throw createError({
-        statusCode: 400,
-        statusMessage: "Колода не существует",
+            statusCode: 400,
+            statusMessage: 'Колода не существует',
         })
     }
 
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
                     lapses: true,
                     intervalDays: true,
                     repetitions: true,
-                }
+                },
             },
             _count: {
                 select: {
@@ -40,8 +40,8 @@ export default defineEventHandler(async (event) => {
 
     if (!deck) {
         throw createError({
-        statusCode: 404,
-        statusMessage: "",
+            statusCode: 404,
+            statusMessage: '',
         })
     }
 

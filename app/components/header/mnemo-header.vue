@@ -1,7 +1,10 @@
 <template>
     <div class="mnemo-header">
         <div class="mnemo-header__container">
-            <div class="logo" @click.stop="OnClickLogin">
+            <div
+                class="logo"
+                @click.stop="OnClickLogin"
+            >
                 <v-img
                     src="/assets/images/logo_2.svg"
                     width="30"
@@ -19,16 +22,15 @@
 </template>
 
 <script setup lang="ts">
-import Profile from "./profile.vue"
+import Profile from './profile.vue'
 
 function OnClickLogin() {
     navigateTo('/')
 }
-
 </script>
 
 <style lang="scss" scoped>
-@use "~/assets/scss/layout" as layout;
+@use '~/assets/scss/layout' as layout;
 .mnemo-header {
     flex: 0 0 auto;
     width: 100%;

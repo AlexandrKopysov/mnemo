@@ -1,14 +1,14 @@
-import { prisma } from "@utils/db"
-import { getSessionUserId } from "@utils/server-session"
+import { prisma } from '@utils/db'
+import { getSessionUserId } from '@utils/server-session'
 
 export default defineEventHandler(async (event) => {
     const sessionUserId = await getSessionUserId(event)
-    const deckId = getRouterParam(event, "deckId")
+    const deckId = getRouterParam(event, 'deckId')
 
     if (!deckId) {
         throw createError({
             statusCode: 400,
-            statusMessage: "Колода не существует",
+            statusMessage: 'Колода не существует',
         })
     }
 
@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     if (deleteResult.count === 0) {
         throw createError({
             statusCode: 404,
-            statusMessage: "Колода не существует",
+            statusMessage: 'Колода не существует',
         })
     }
 

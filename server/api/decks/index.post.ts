@@ -1,5 +1,5 @@
-import type { IDeck } from "@shared/types"
-import { prisma } from "@utils/db"
+import type { IDeck } from '@shared/types'
+import { prisma } from '@utils/db'
 import { getSessionUserId } from '@utils/server-session'
 
 export default defineEventHandler(async (event) => {
@@ -10,10 +10,10 @@ export default defineEventHandler(async (event) => {
         data: {
             title: body.title,
             description: body.description,
-            icon: body.icon ?? "",
-            color: body.color ?? "",
+            icon: body.icon ?? '',
+            color: body.color ?? '',
             userId: sessionUserId,
-        }
+        },
     })
     return deck
 })

@@ -1,106 +1,106 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import {
-  BUTTON_NATIVE_TYPE,
-  BUTTON_VARIANT,
-  type ButtonNativeType,
-  type ButtonVariant,
+    BUTTON_NATIVE_TYPE,
+    BUTTON_VARIANT,
+    type ButtonNativeType,
+    type ButtonVariant,
 } from '~/types/ui/button'
 
 interface Props {
-  width?: string
-  loading?: boolean
-  disabled?: boolean
-  prependIcon?: string
-  size?: 'x-small' | 'small' | 'default' | 'large' | 'x-large'
-  nativeType?: ButtonNativeType
-  variant?: ButtonVariant
-  block?: boolean
+    width?: string
+    loading?: boolean
+    disabled?: boolean
+    prependIcon?: string
+    size?: 'x-small' | 'small' | 'default' | 'large' | 'x-large'
+    nativeType?: ButtonNativeType
+    variant?: ButtonVariant
+    block?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  loading: false,
-  disabled: false,
-  prependIcon: '',
-  size: 'large',
-  nativeType: BUTTON_NATIVE_TYPE.BUTTON,
-  variant: BUTTON_VARIANT.PRIMARY,
-  block: false,
-  width: ""
+    loading: false,
+    disabled: false,
+    prependIcon: '',
+    size: 'large',
+    nativeType: BUTTON_NATIVE_TYPE.BUTTON,
+    variant: BUTTON_VARIANT.PRIMARY,
+    block: false,
+    width: '',
 })
 
 const emit = defineEmits<{
-  click: []
+    click: []
 }>()
 
 function handleClick() {
-  emit('click')
+    emit('click')
 }
 
 const variantConfig = computed(() => {
-  switch (props.variant) {
-    case BUTTON_VARIANT.DANGER:
-      return {
-        vuetifyVariant: 'flat' as const,
-        className: 'mnemo-btn--danger',
-      }
+    switch (props.variant) {
+        case BUTTON_VARIANT.DANGER:
+            return {
+                vuetifyVariant: 'flat' as const,
+                className: 'mnemo-btn--danger',
+            }
 
-    case BUTTON_VARIANT.DARK:
-      return {
-        vuetifyVariant: 'flat' as const,
-        className: 'mnemo-btn--dark',
-      }
+        case BUTTON_VARIANT.DARK:
+            return {
+                vuetifyVariant: 'flat' as const,
+                className: 'mnemo-btn--dark',
+            }
 
-    case BUTTON_VARIANT.OUTLINE:
-      return {
-        vuetifyVariant: 'outlined' as const,
-        className: 'mnemo-btn--outline',
-      }
+        case BUTTON_VARIANT.OUTLINE:
+            return {
+                vuetifyVariant: 'outlined' as const,
+                className: 'mnemo-btn--outline',
+            }
 
-    case BUTTON_VARIANT.SECONDARY:
-      return {
-        vuetifyVariant: 'flat' as const,
-        className: 'mnemo-btn--secondary',
-      }
+        case BUTTON_VARIANT.SECONDARY:
+            return {
+                vuetifyVariant: 'flat' as const,
+                className: 'mnemo-btn--secondary',
+            }
 
-    case BUTTON_VARIANT.SUCCESS:
-      return {
-        vuetifyVariant: 'flat' as const,
-        className: 'mnemo-btn--success',
-      }
+        case BUTTON_VARIANT.SUCCESS:
+            return {
+                vuetifyVariant: 'flat' as const,
+                className: 'mnemo-btn--success',
+            }
 
-    case BUTTON_VARIANT.PRIMARY:
-    default:
-      return {
-        vuetifyVariant: 'flat' as const,
-        className: 'mnemo-btn--primary',
-      }
-  }
+        case BUTTON_VARIANT.PRIMARY:
+        default:
+            return {
+                vuetifyVariant: 'flat' as const,
+                className: 'mnemo-btn--primary',
+            }
+    }
 })
 
 const buttonClass = computed(() => [
-  'mnemo-btn',
-  variantConfig.value.className,
-  {
-    'mnemo-btn--block': props.block,
-  },
+    'mnemo-btn',
+    variantConfig.value.className,
+    {
+        'mnemo-btn--block': props.block,
+    },
 ])
 </script>
 
 <template>
-  <v-btn
-    :width="width"
-    :type="nativeType"
-    :loading="loading"
-    :disabled="disabled"
-    :prepend-icon="prependIcon || undefined"
-    :size="size"
-    :variant="variantConfig.vuetifyVariant"
-    :class="buttonClass"
-    @click="handleClick"
-  >
-    <slot />
-  </v-btn>
+    <v-btn
+        :width="width"
+        :type="nativeType"
+        :loading="loading"
+        :disabled="disabled"
+        :prepend-icon="prependIcon || undefined"
+        :size="size"
+        :variant="variantConfig.vuetifyVariant"
+        :class="buttonClass"
+        @click="handleClick"
+    >
+        <slot />
+    </v-btn>
 </template>
 
 <style scoped lang="scss">

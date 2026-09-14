@@ -11,15 +11,15 @@ export function formatReviewDate(date: string | Date): string {
     targetDay.setHours(0, 0, 0, 0)
 
     if (targetDay.getTime() === today.getTime()) {
-    return 'сегодня'
+        return 'сегодня'
     }
 
     if (targetDay.getTime() === tomorrow.getTime()) {
-    return 'завтра'
+        return 'завтра'
     }
 
     return new Intl.DateTimeFormat('ru-RU', {
-    day: 'numeric',
-    month: 'long',
+        day: 'numeric',
+        month: 'long',
     }).format(target)
 }

@@ -1,90 +1,84 @@
 <template>
-  <div 
-    class="tile-container"
-    @click="onTileClick"
-  >
-    <div class="tile-info">
-      <div class="tile-title">
-        {{ deck.title }}
-      </div>
-      <v-menu location="bottom end">
-          <template #activator="{ props: menuProps }">
-            <v-btn
-              icon
-              variant="text"
-              class="dot-menu-btn"
-              :ripple="false"
-              v-bind="menuProps"
-              @click.stop
-            >
-              <v-icon
-                size="24"
-                color="rgba(22, 38, 55, 0.75)"
-              >
-                mdi-dots-vertical
-              </v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-              prepend-icon="mdi-pencil"
-              title="Редактировать"
-              @click.stop="onEditClick"
-            />
-            <v-list-item
-              prepend-icon="mdi-trash-can-outline"
-              title="Удалить"
-              @click.stop="onDeleteClick"
-            />
-          </v-list>
-        </v-menu>
-    </div>
-    <div class="tile-content">
-      <div>
-        <p class="m-0">
-          Всего: {{ deck.total }} 
-        </p>
-        <div class="tile-due">
-          {{ deck.dueCardsCount }} на сегодня
+    <div
+        class="tile-container"
+        @click="onTileClick"
+    >
+        <div class="tile-info">
+            <div class="tile-title">
+                {{ deck.title }}
+            </div>
+            <v-menu location="bottom end">
+                <template #activator="{ props: menuProps }">
+                    <v-btn
+                        icon
+                        variant="text"
+                        class="dot-menu-btn"
+                        :ripple="false"
+                        v-bind="menuProps"
+                        @click.stop
+                    >
+                        <v-icon
+                            size="24"
+                            color="rgba(22, 38, 55, 0.75)"
+                        >
+                            mdi-dots-vertical
+                        </v-icon>
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item
+                        prepend-icon="mdi-pencil"
+                        title="Редактировать"
+                        @click.stop="onEditClick"
+                    />
+                    <v-list-item
+                        prepend-icon="mdi-trash-can-outline"
+                        title="Удалить"
+                        @click.stop="onDeleteClick"
+                    />
+                </v-list>
+            </v-menu>
         </div>
-      </div>
-      <deck-tile-circle-compleet
-          :value="deck.percentCompleet"
-        />
+        <div class="tile-content">
+            <div>
+                <p class="m-0">Всего: {{ deck.total }}</p>
+                <div class="tile-due">{{ deck.dueCardsCount }} на сегодня</div>
+            </div>
+            <deck-tile-circle-compleet :value="deck.percentCompleet" />
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
-import type { IDeck } from "@shared/types/deck"
-import DeckTileCircleCompleet from "./deck-tile-circle-compleet.vue"
+import type { IDeck } from '@shared/types/deck'
+import DeckTileCircleCompleet from './deck-tile-circle-compleet.vue'
 
 interface IProps {
-  deck: IDeck
+    deck: IDeck
 }
 
 const props = defineProps<IProps>()
 const emit = defineEmits<{
-  (e: "click", id: string | undefined): void
-  (e: "edit", deck: string | undefined): void
-  (e: "delete", deck: string | undefined): void
+    (e: 'click', id: string | undefined): void
+    (e: 'edit', deck: string | undefined): void
+    (e: 'delete', deck: string | undefined): void
 }>()
 
 const onTileClick = () => {
-  emit("click", props.deck.id)
+    emit('click', props.deck.id)
 }
 
 const onEditClick = () => {
-  emit("edit", props.deck.id)
+    emit('edit', props.deck.id)
 }
 
 const onDeleteClick = () => {
-  emit("delete", props.deck.id)
+    emit('delete', props.deck.id)
 }
 </script>
 
 <style lang="scss" scoped>
-@use "~/assets/scss/tiles" as tiles;
+@use '~/assets/scss/tiles' as tiles;
 @include tiles.tile;
 .tile-container {
     min-height: 160px;
